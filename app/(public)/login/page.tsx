@@ -1,3 +1,9 @@
+import LoginForm from "./form";
+
 export default function LoginPage() {
-  return <h1 className="text-9xl">Login page</h1>;
+  return (
+    <div className="w-full max-w-sm mx-auto">
+      <LoginForm />
+    </div>
+  );
 }
