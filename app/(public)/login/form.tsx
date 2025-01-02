@@ -21,13 +21,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import login from "./action";
 
 export const loginFormSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string(),
 });
 
-export default function LoginForm() {
+type LoginFormProps = {
+  error?: string;
+};
+
+export default function LoginForm({ error }: LoginFormProps) {
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -36,8 +41,8 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    await login(values);
   }
 
   return (
@@ -90,6 +95,9 @@ export default function LoginForm() {
                 <Link href="#" className="ml-auto text-sm">
                   Passwort vergessen?
                 </Link>
+                {error ? (
+                  <div className="text-red-500 text-sm">{error}</div>
+                ) : null}
               </div>
               <Button type="submit" className="w-full">
                 Login
