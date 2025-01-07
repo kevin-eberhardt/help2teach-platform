@@ -1,9 +1,14 @@
-import createMiddleware from "next-intl/middleware";
-import { routing } from "@/lib/i18n/routing";
+import { type NextRequest } from "next/server";
+import { updateSession } from "./lib/supabase/middleware";
 
-export default createMiddleware(routing);
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
+}
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ["/", "/(de|en)/:path*"],
+  matcher: [
+    "/",
+    "/(de|en)/:path*",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
