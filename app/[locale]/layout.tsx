@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/lib/i18n/routing";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import "../globals.css";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

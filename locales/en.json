@@ -6,5 +6,23 @@
   "locale-switcher": {
     "label": "Change language",
     "locale": "{locale, select, de {🇩🇪 German} en {🇺🇸 English} other {Unbekannt}}"
+  },
+  "login-page": {
+    "heading": "Sign in",
+    "description": "Please sign in with your email address and password."
+  },
+  "login-form": {
+    "email": "Email address",
+    "email-description": "Your email address",
+    "email-error": "Please enter a valid email address",
+    "password": "Password",
+    "password-description": "Your password",
+    "password-error": "Please enter your password",
+    "submit": "Sign in",
+    "forgot-password": "Forgot password?",
+    "register": "Don't have an account yet? Register here.",
+    "submit-errors": {
+      "invalid-credentials": "The entered login credentials are invalid."
+    }
   }
 }

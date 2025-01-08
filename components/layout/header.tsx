@@ -12,7 +12,7 @@ export default function Header() {
       <div className="flex-grow">Header</div>
       <div className="grid grid-cols-2 gap-2 items-center">
         <LocaleSwitcher />
-        {"<UserAvatar />"}
+        <Link href="/login">Login</Link>
       </div>
     </header>
   );

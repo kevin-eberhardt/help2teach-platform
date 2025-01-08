@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LocaleSwitcher() {
@@ -18,18 +18,17 @@ export default function LocaleSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const params = useParams();
+  const searchParams = useSearchParams();
+
+  const allParams = searchParams.toString();
+
   const [value, setValue] = useState(locale);
 
   function onChange(value: string) {
     setValue(value);
-    router.replace(
-      // @ts-expect-error -- TypeScript will validate that only known `params`
-      // are used in combination with a given `pathname`. Since the two will
-      // always match for the current route, we can skip runtime checks.
-      { pathname, params },
-      { locale: value }
-    );
+    const newPathname = allParams ? `${pathname}?${allParams}` : pathname;
+
+    router.replace(newPathname, { locale: value });
   }
 
   return (
