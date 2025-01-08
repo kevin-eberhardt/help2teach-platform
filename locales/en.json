@@ -24,5 +24,36 @@
     "submit-errors": {
       "invalid-credentials": "The entered login credentials are invalid."
     }
+  },
+  "register-page": {
+    "heading": "Register",
+    "description": "Please enter your data to register."
+  },
+  "register-form": {
+    "firstName": "First name",
+    "firstName-description": "Your first name",
+    "firstName-error": "Please enter your first name",
+    "lastName": "Last name",
+    "lastName-description": "Your last name",
+    "lastName-error": "Please enter your last name",
+    "email": "Email address",
+    "email-description": "Your email address",
+    "email-error": "Please enter a valid email address",
+    "password": "Password",
+    "password-description": "Your password",
+    "password-error": "Please enter a password with at least 8 characters",
+    "passwordConfirmation": "Confirm password",
+    "passwordConfirmation-description": "Confirm your password",
+    "passwordConfirmation-error": "Please confirm your password",
+    "passwords-do-not-match-error": "The passwords do not match",
+    "submit": "Register",
+    "login": "Already registered? Sign in here.",
+    "submit-messages": {
+      "confirmation-sent": "A confirmation email has been sent to your email address. Please confirm your email address to continue."
+    },
+    "submit-errors": {
+      "email-already-exists": "The entered email address is already registered.",
+      "user-already-exists": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
+    }
   }
 }

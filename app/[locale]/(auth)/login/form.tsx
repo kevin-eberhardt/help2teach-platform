@@ -18,6 +18,7 @@ import { z } from "zod";
 import login from "./action";
 import Link from "next/link";
 import { useTransition } from "react";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export function getLoginFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -54,9 +55,6 @@ export default function LoginForm(props: LoginFormProps) {
   });
   function onSubmit(values: LoginFormValues) {
     startTransition(() => {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-      console.log(values);
       login(values);
     });
   }
@@ -89,7 +87,7 @@ export default function LoginForm(props: LoginFormProps) {
                 </Link>
               </div>
               <FormControl>
-                <Input type="password" {...field} />
+                <PasswordInput {...field} />
               </FormControl>
               <FormDescription>{t("password-description")}</FormDescription>
               <FormMessage />

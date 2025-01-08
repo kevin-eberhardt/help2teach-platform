@@ -24,5 +24,36 @@
     "submit-errors": {
       "invalid-credentials": "Die eingegebenen Anmeldedaten sind ungültig."
     }
+  },
+  "register-page": {
+    "heading": "Registrieren",
+    "description": "Bitte gib deine Daten ein, um dich zu registrieren."
+  },
+  "register-form": {
+    "firstName": "Vorname",
+    "firstName-description": "Dein Vorname",
+    "firstName-error": "Bitte gib deinen Vornamen ein",
+    "lastName": "Nachname",
+    "lastName-description": "Dein Nachname",
+    "lastName-error": "Bitte gib deinen Nachnamen ein",
+    "email": "E-Mail-Adresse",
+    "email-description": "Deine E-Mail-Adresse",
+    "email-error": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "password": "Passwort",
+    "password-description": "Dein Passwort",
+    "password-error": "Bitte gib ein Passwort mit mindestens 8 Zeichen ein",
+    "passwordConfirmation": "Passwort bestätigen",
+    "passwordConfirmation-description": "Dein Passwort bestätigen",
+    "passwordConfirmation-error": "Bitte bestätige dein Passwort",
+    "passwords-do-not-match-error": "Die Passwörter stimmen nicht überein",
+    "submit": "Registrieren",
+    "login": "Bereits registriert? Hier anmelden.",
+    "submit-messages": {
+      "confirmation-sent": "Eine Bestätigungsmail wurde an deine E-Mail-Adresse gesendet. Bitte bestätige deine E-Mail-Adresse, um fortzufahren."
+    },
+    "submit-errors": {
+      "email-already-exists": "Die eingegebene E-Mail-Adresse ist bereits registriert.",
+      "user-already-exists": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
+    }
   }
 }
