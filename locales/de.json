@@ -56,5 +56,12 @@
       "email-already-exists": "Die eingegebene E-Mail-Adresse ist bereits registriert.",
       "user-already-exists": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
     }
+  },
+  "user-menu": {
+    "account": "Account",
+    "settings": "Einstellungen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden"
   }
 }
