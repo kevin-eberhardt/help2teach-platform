@@ -57,6 +57,40 @@
       "user-already-exists": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
     }
   },
+  "forgot-password-page": {
+    "heading": "Reset password",
+    "description": "Please enter your email address to reset your password."
+  },
+  "forgot-password-form": {
+    "email": "Email address",
+    "email-description": "Your email address",
+    "submit": "Reset password",
+    "email-error": "Please enter a valid email address",
+    "submit-messages": {
+      "reset-mail-sent": "An email to reset your password has been sent to your email address. Please check your inbox."
+    }
+  },
+  "reset-password-page": {
+    "heading": "Reset password",
+    "description": "Please enter your new password."
+  },
+  "reset-password-form": {
+    "password": "Password",
+    "password-description": "Your new password",
+    "password-error": "Please enter a password with at least 8 characters",
+    "passwordConfirmation": "Confirm password",
+    "passwordConfirmation-description": "Confirm your password",
+    "passwordConfirmation-error": "Please confirm your password",
+    "passwords-do-not-match-error": "The passwords do not match",
+    "submit": "Reset password",
+    "login-button": "To login",
+    "submit-messages": {
+      "password-reset": "Your password has been successfully reset. You can now sign in with your new password."
+    },
+    "errors": {
+      "otp-expired": "The link to reset the password has expired. Please request a new link."
+    }
+  },
   "user-menu": {
     "account": "Account",
     "settings": "Settings",

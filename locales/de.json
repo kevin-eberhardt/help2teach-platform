@@ -57,6 +57,40 @@
       "user-already-exists": "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
     }
   },
+  "forgot-password-page": {
+    "heading": "Passwort zurücksetzen",
+    "description": "Bitte gib deine E-Mail-Adresse ein, um dein Passwort zurückzusetzen."
+  },
+  "forgot-password-form": {
+    "email": "E-Mail-Adresse",
+    "email-description": "Deine E-Mail-Adresse",
+    "submit": "Passwort zurücksetzen",
+    "email-error": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "submit-messages": {
+      "reset-mail-sent": "Eine E-Mail zum Zurücksetzen deines Passworts wurde an deine E-Mail-Adresse gesendet. Bitte überprüfe deinen Posteingang."
+    }
+  },
+  "reset-password-page": {
+    "heading": "Passwort zurücksetzen",
+    "description": "Bitte gib dein neues Passwort ein."
+  },
+  "reset-password-form": {
+    "password": "Passwort",
+    "password-description": "Dein neues Passwort",
+    "password-error": "Bitte gib ein Passwort mit mindestens 8 Zeichen ein",
+    "passwordConfirmation": "Passwort bestätigen",
+    "passwordConfirmation-description": "Dein Passwort bestätigen",
+    "passwordConfirmation-error": "Bitte bestätige dein Passwort",
+    "passwords-do-not-match-error": "Die Passwörter stimmen nicht überein",
+    "submit": "Passwort zurücksetzen",
+    "login-button": "Zur Anmeldung",
+    "submit-messages": {
+      "password-reset": "Dein Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden."
+    },
+    "errors": {
+      "otp-expired": "Der Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte fordere einen neuen Link an."
+    }
+  },
   "user-menu": {
     "account": "Account",
     "settings": "Einstellungen",
