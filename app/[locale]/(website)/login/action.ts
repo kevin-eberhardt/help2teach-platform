@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { LoginFormValues } from "./form";
-import { redirect, RedirectType } from "next/navigation";
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export default async function login(values: LoginFormValues) {
@@ -19,5 +19,5 @@ export default async function login(values: LoginFormValues) {
     redirect(`/login?error=true&message=${error.message}`);
   }
   revalidatePath("/");
-  redirect("/");
+  redirect("/overview");
 }

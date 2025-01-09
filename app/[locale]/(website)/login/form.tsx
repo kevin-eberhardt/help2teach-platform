@@ -84,7 +84,6 @@ export default function LoginForm(props: LoginFormProps) {
     if (error) {
       console.error("Error logging in with Google:", error);
     }
-    router.refresh();
   }
 
   return (
