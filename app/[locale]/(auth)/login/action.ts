@@ -19,5 +19,5 @@ export default async function login(values: LoginFormValues) {
     redirect(`/login?error=true&message=${error.message}`);
   }
   revalidatePath("/");
-  redirect("/", RedirectType.push);
+  redirect("/");
 }

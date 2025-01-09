@@ -22,7 +22,7 @@ export default function LoginPage(props: {
   const { error, message } = searchParams;
   const errorBoolean = Array.isArray(error) ? error.length > 0 : Boolean(error);
   return (
-    <Card className="w-full md:max-w-md mx-auto mt-6">
+    <Card className="w-full max-w-sm mx-auto mt-6">
       <CardHeader>
         <CardTitle>{t("heading")}</CardTitle>
         <CardDescription>{t("description")}</CardDescription>

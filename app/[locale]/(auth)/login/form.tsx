@@ -19,6 +19,8 @@ import login from "./action";
 import Link from "next/link";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export function getLoginFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -43,6 +45,7 @@ type LoginFormProps = {
 export default function LoginForm(props: LoginFormProps) {
   const t = useTranslations("login-form");
   const { error, message } = props;
+  const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
 
@@ -58,6 +61,32 @@ export default function LoginForm(props: LoginFormProps) {
       login(values);
     });
   }
+
+  async function loginWithGoogle() {
+    const supabase = await createClient();
+
+    const currentUrl = new URL(window.location.href);
+
+    const cleanedPath = currentUrl.pathname
+      .replace(/\/{2,}/g, "/")
+      .split("/")
+      .slice(0, 2)
+      .join("/");
+
+    const redirectUrl = `${currentUrl.origin}${cleanedPath}/auth/callback`;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: redirectUrl,
+      },
+    });
+    if (error) {
+      console.error("Error logging in with Google:", error);
+    }
+    router.refresh();
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -99,8 +128,16 @@ export default function LoginForm(props: LoginFormProps) {
             {t("register")}
           </Link>
         </div>
-        <Button type="submit" loading={isPending}>
+        <Button type="submit" loading={isPending} className="w-full">
           {t("submit")}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={loginWithGoogle}
+        >
+          {t("login-with-google")}
         </Button>
       </form>
       {error && message === "invalid_credentials" && (

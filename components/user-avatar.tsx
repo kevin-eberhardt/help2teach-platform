@@ -1,11 +1,17 @@
 import { getUser } from "@/lib/supabase/queries";
+import LogoutButton from "./logout";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default async function UserAvatar() {
   const user = await getUser();
-  console.log(user);
   if (user) {
-    return <div>{user.email}</div>;
+    return <LogoutButton />;
   } else {
-    return <div>no user</div>;
+    return (
+      <Button variant="ghost" asChild>
+        <Link href="/login">Login</Link>
+      </Button>
+    );
   }
 }

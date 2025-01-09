@@ -19,6 +19,7 @@
     "password-description": "Your password",
     "password-error": "Please enter your password",
     "submit": "Sign in",
+    "login-with-google": "Login with Google",
     "forgot-password": "Forgot password?",
     "register": "Don't have an account yet? Register here.",
     "submit-errors": {
