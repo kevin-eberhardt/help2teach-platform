@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/lib/supabase/client";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -24,8 +24,8 @@ export default function LoggedInMenu() {
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <DropdownMenuItem>
-          <Settings />
-          <span>{t("settings")}</span>
+          <User />
+          <span>{t("profile")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={logout}>
           <LogOut />
