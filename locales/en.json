@@ -91,6 +91,11 @@
       "otp-expired": "The link to reset the password has expired. Please request a new link."
     }
   },
+  "welcome-page": {
+    "heading": "Welcome to Help2Teach!",
+    "text": "Your account has been successfully activated. You can now sign in!",
+    "login-button": "To login"
+  },
   "user-menu": {
     "account": "Account",
     "settings": "Settings",

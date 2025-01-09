@@ -10,7 +10,7 @@ import { LogOut, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export default function UserAvatarMenu() {
+export default function LoggedInMenu() {
   const router = useRouter();
   const t = useTranslations("user-menu");
   async function logout() {

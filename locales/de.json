@@ -91,6 +91,11 @@
       "otp-expired": "Der Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte fordere einen neuen Link an."
     }
   },
+  "welcome-page": {
+    "heading": "Willkommen bei Help2Teach!",
+    "text": "Dein Account wurde erfolgreich aktiviert. Du kannst dich nun einloggen!",
+    "login-button": "Zum Login"
+  },
   "user-menu": {
     "account": "Account",
     "settings": "Einstellungen",

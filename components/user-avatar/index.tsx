@@ -1,21 +1,18 @@
 import { getUser } from "@/lib/supabase/queries";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserAvatarMenu from "./menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
-import { useTranslations } from "next-intl";
+import LoggedOutMenu from "./loggedout-menu";
+import LoggedInMenu from "./loggedin-menu";
 
 export default async function UserAvatar() {
   const user = await getUser();
   if (user) {
-    console.log(user);
     const userInitials = user.user_metadata.full_name
       .split(" ")
       .map((n: string) => n[0])
@@ -33,7 +30,7 @@ export default async function UserAvatar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <UserAvatarMenu />
+          <LoggedInMenu />
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -51,21 +48,9 @@ export default async function UserAvatar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <LoginItem />
+          <LoggedOutMenu />
         </DropdownMenuContent>
       </DropdownMenu>
     );
   }
-}
-
-function LoginItem() {
-  const t = useTranslations("user-menu");
-  return (
-    <Link href="/login">
-      <DropdownMenuItem>
-        <User />
-        <span>{t("login")}</span>
-      </DropdownMenuItem>
-    </Link>
-  );
 }

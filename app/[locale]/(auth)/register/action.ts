@@ -13,7 +13,9 @@ export default async function register(values: RegisterFormValues) {
       data: {
         first_name: values.firstName,
         last_name: values.lastName,
+        full_name: `${values.firstName} ${values.lastName}`,
       },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/welcome`,
     },
   });
   if (error) {
