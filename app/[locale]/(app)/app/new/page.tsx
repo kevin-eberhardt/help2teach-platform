@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/website/footer";
 import Header from "@/components/layout/website/header";
-import CreateSchoolClassForm from "@/components/ui/classes/create-dialog/form";
+import CreateSchoolClassForm from "@/components/ui/school-classes/create-dialog/form";
 import { useTranslations } from "next-intl";
 
 export default function NewPage() {

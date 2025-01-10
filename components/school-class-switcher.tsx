@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { SchoolClassWithSchool } from "@/lib/supabase/types/additional.types";
 import { useTranslations } from "next-intl";
-import CreateSchoolClassDialog from "./ui/classes/create-dialog";
+import CreateSchoolClassDialog from "./ui/school-classes/create-dialog";
 import { useRouter } from "next/navigation";
 
 export function SchoolClassSwitcher({

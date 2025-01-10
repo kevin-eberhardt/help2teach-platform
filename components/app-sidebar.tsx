@@ -14,7 +14,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { useTranslations } from "next-intl";
-import { SchoolClassSwitcher } from "./team-switcher";
+import { SchoolClassSwitcher } from "./school-class-switcher";
 import { SchoolClassWithSchool } from "@/lib/supabase/types/additional.types";
 
 export function getToolsNavItems(t?: (key: string) => string) {
