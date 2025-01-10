@@ -1,175 +1,90 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+import * as React from "react";
+import { Combine, Settings, Users, Workflow } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { SidebarSettingsNavigation } from "@/components/sidebar-settings-nav";
+import { SidebarToolsNavigation } from "@/components/sidebar-tools-nav";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { useTranslations } from "next-intl";
+import { SchoolClassSwitcher } from "./team-switcher";
+import { SchoolClassWithSchool } from "@/lib/supabase/types/additional.types";
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
+export function getToolsNavItems(t?: (key: string) => string) {
+  return [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      title: t ? t("seating-plans") : "Seating Plans",
+      url: "/seating-plans",
+      icon: Combine,
+      isActive: true,
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
+      title: t ? t("sociograms") : "Sociograms",
+      url: "/sociograms",
+      icon: Workflow,
+      isActive: false,
+      isDisabled: true,
     },
+  ];
+}
+
+export function getSettingsNavItems(t?: (key: string) => string) {
+  return [
     {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: t ? t("school-class") : "Class",
+      url: "/classes",
+      icon: Users,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: t ? t("students") : "Students",
+          url: "/",
+          icon: Users,
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      title: t ? t("settings") : "Settings",
+      url: "/settings",
+      icon: Settings,
+      items: [],
     },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  ];
 }
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  schoolClasses,
+  currentSchoolClass,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  currentSchoolClass?: SchoolClassWithSchool;
+  schoolClasses?: SchoolClassWithSchool[] | null;
+}) {
+  const t = useTranslations("sidebar");
+  const toolsNavItems = getToolsNavItems(t);
+  const settingsNavItems = getSettingsNavItems(t);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <SchoolClassSwitcher
+          schoolClasses={schoolClasses ? schoolClasses : []}
+          currentSchoolClass={currentSchoolClass}
+        />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <SidebarToolsNavigation items={toolsNavItems} />
+        <SidebarSettingsNavigation items={settingsNavItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={props.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

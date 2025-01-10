@@ -1,14 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import createMiddleware from "next-intl/middleware";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { routing } from "../i18n/routing";
+import { Database } from "./types/database.types";
+import { handleRequest } from "../next/middleware";
+import { User } from "./types/additional.types";
 
 const intlMiddleware = createMiddleware(routing);
 
-export async function updateSession(request: NextRequest) {
+export async function updateSession(
+  request: NextRequest
+): Promise<NextResponse> {
   let intlResponse = intlMiddleware(request);
 
-  const supabase = createServerClient(
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -32,7 +37,11 @@ export async function updateSession(request: NextRequest) {
   );
 
   // refreshing the auth token
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  intlResponse = await handleRequest(request, user as unknown as User);
 
   return intlResponse;
 }

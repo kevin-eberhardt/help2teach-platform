@@ -103,5 +103,34 @@
     "login": "Sign in",
     "register": "Register",
     "logout": "Sign out"
+  },
+  "sidebar": {
+    "new-school-class": "New class",
+    "create-new-school-class": "Create a class",
+    "school-class": "Class",
+    "school-classes": "Classes",
+    "students": "Students",
+    "seating-plans": "Seating Plans",
+    "sociograms": "Sociograms",
+    "tools": "Tools",
+    "settings": "Settings"
+  },
+  "school-class": {
+    "create-page": {
+      "heading": "Getting Started",
+      "description": "Before you can start, you must first create a class. To do this, enter the name of the class and click on <quotes>Create class</quotes>."
+    },
+    "create-dialog": {
+      "heading": "Create a new class",
+      "description": "Please enter the name of the class you want to create.",
+      "name": "Name",
+      "name-description": "The name of the class",
+      "name-error": "Please enter a class name",
+      "submit": "Create class",
+      "submit-error-message": "An error occurred while creating the class. Please try again.",
+      "submit-messages": {
+        "class-created": "The class has been successfully created."
+      }
+    }
   }
 }

@@ -103,5 +103,34 @@
     "login": "Anmelden",
     "register": "Registrieren",
     "logout": "Abmelden"
+  },
+  "sidebar": {
+    "new-school-class": "Neue Klasse",
+    "create-new-school-class": "Klasse erstellen",
+    "school-class": "Klasse",
+    "school-classes": "Klassen",
+    "students": "Schüler*innen",
+    "seating-plans": "Sitzpläne",
+    "sociograms": "Soziogramme",
+    "tools": "Tools",
+    "settings": "Einstellungen"
+  },
+  "school-class": {
+    "create-page": {
+      "heading": "Erste Schritte",
+      "description": "Bevor du starten kannst, musst du zuerst eine Klasse erstellen. Gib dazu den Namen der Klasse ein und klicke auf <quotes>Klasse erstellen</quotes>."
+    },
+    "create-dialog": {
+      "heading": "Neue Klasse erstellen",
+      "description": "Bitte gib den Namen der Klasse ein, die du erstellen möchtest.",
+      "name": "Name",
+      "name-description": "Der Name der Klasse",
+      "name-error": "Bitte gib einen Klassennamen ein",
+      "submit": "Klasse erstellen",
+      "submit-error-message": "Beim Erstellen der Klasse ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      "submit-messages": {
+        "class-created": "Die Klasse wurde erfolgreich erstellt."
+      }
+    }
   }
 }

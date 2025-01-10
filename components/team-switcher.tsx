@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
+import * as React from "react";
+import { ChevronsUpDown, Plus, Users } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,25 +11,45 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { SchoolClassWithSchool } from "@/lib/supabase/types/additional.types";
+import { useTranslations } from "next-intl";
+import CreateSchoolClassDialog from "./ui/classes/create-dialog";
+import { useRouter } from "next/navigation";
 
-export function TeamSwitcher({
-  teams,
+export function SchoolClassSwitcher({
+  schoolClasses,
+  currentSchoolClass,
 }: {
-  teams: {
-    name: string
-    logo: React.ElementType
-    plan: string
-  }[]
+  schoolClasses: SchoolClassWithSchool[];
+  currentSchoolClass?: SchoolClassWithSchool;
 }) {
-  const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+  const { isMobile } = useSidebar();
+  const router = useRouter();
+  const t = useTranslations("sidebar");
+  const [activeSchoolClass, setactiveSchoolClass] = React.useState(
+    currentSchoolClass
+      ? currentSchoolClass
+      : {
+          name: t("new-school-class"),
+          id: Math.random().toString(),
+          created_at: new Date().toISOString(),
+          school: null,
+        }
+  );
+  const [openSchoolClassDialog, setOpenSchoolClassDialog] = React.useState(
+    schoolClasses.length === 0
+  );
+
+  React.useEffect(() => {
+    router.push(`/app/${activeSchoolClass.id}`);
+  }, [activeSchoolClass, router]);
 
   return (
     <SidebarMenu>
@@ -41,13 +61,15 @@ export function TeamSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <activeTeam.logo className="size-4" />
+                <Users className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {activeTeam.name}
+                  {activeSchoolClass.name}
                 </span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                <span className="truncate text-xs">
+                  {activeSchoolClass.school?.name}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -59,31 +81,40 @@ export function TeamSwitcher({
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Teams
+              {t("school-classes")}
             </DropdownMenuLabel>
-            {teams.map((team, index) => (
+            {schoolClasses.map((schoolClass, index) => (
               <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
+                key={schoolClass.name}
+                onClick={() => setactiveSchoolClass(schoolClass)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
-                  <team.logo className="size-4 shrink-0" />
+                  <Users className="size-4 shrink-0" />
                 </div>
-                {team.name}
+                {schoolClass.name}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem
+              className="gap-2 p-2"
+              onClick={() => setOpenSchoolClassDialog(!openSchoolClassDialog)}
+            >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <Plus className="size-4" />
               </div>
-              <div className="font-medium text-muted-foreground">Add team</div>
+              <div className="font-medium text-muted-foreground">
+                {t("create-new-school-class")}
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
+      <CreateSchoolClassDialog
+        open={openSchoolClassDialog}
+        openChange={setOpenSchoolClassDialog}
+      />
     </SidebarMenu>
-  )
+  );
 }
