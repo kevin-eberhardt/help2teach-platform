@@ -19,7 +19,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { User } from "@/lib/supabase/types/additional.types";
-import { getCookieValue } from "@/lib/server-utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -91,18 +90,6 @@ const SidebarProvider = React.forwardRef<
       [setOpenProp, open]
     );
 
-    // We set the open state from the cookie.
-    React.useEffect(() => {
-      async function getSidebarValueOfCookie() {
-        const openCookie = await getCookieValue(SIDEBAR_COOKIE_NAME);
-        if (openCookie !== undefined) {
-          setOpen(Boolean(openCookie));
-        }
-      }
-
-      getSidebarValueOfCookie();
-    }, []);
-
     // Helper to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
       return isMobile
@@ -173,8 +160,8 @@ SidebarProvider.displayName = "SidebarProvider";
 const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
+    user?: User | null;
     side?: "left" | "right";
-    user: User | null;
     variant?: "sidebar" | "floating" | "inset";
     collapsible?: "offcanvas" | "icon" | "none";
   }
