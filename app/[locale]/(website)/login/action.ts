@@ -17,5 +17,5 @@ export default async function login(values: LoginFormValues) {
     }
     redirect(`/login?error=true&message=${error.message}`);
   }
-  redirect("/app");
+  redirect("/");
 }

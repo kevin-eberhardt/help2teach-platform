@@ -3,8 +3,6 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "../i18n/routing";
 import { Database } from "./types/database.types";
-import { handleRequest } from "../next/middleware";
-import { User } from "./types/additional.types";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -37,11 +35,7 @@ export async function updateSession(
   );
 
   // refreshing the auth token
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  intlResponse = await handleRequest(request, user as unknown as User);
+  await supabase.auth.getUser();
 
   return intlResponse;
 }

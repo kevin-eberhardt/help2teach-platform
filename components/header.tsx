@@ -1,7 +1,7 @@
 import Image from "next/image";
-import LocaleSwitcher from "../../locale-switcher";
+import LocaleSwitcher from "./locale-switcher";
 import Link from "next/link";
-import UserAvatar from "../../user-avatar";
+import UserAvatar from "./user-avatar";
 
 export default function Header() {
   return (

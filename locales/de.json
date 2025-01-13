@@ -105,6 +105,7 @@
     "logout": "Abmelden"
   },
   "sidebar": {
+    "overview": "Übersicht",
     "new-school-class": "Neue Klasse",
     "create-new-school-class": "Klasse erstellen",
     "school-class": "Klasse",

@@ -20,7 +20,6 @@ import Link from "next/link";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 export function getLoginFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -45,7 +44,6 @@ type LoginFormProps = {
 export default function LoginForm(props: LoginFormProps) {
   const t = useTranslations("login-form");
   const { error, message } = props;
-  const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
 
