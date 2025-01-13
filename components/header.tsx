@@ -2,8 +2,10 @@ import Image from "next/image";
 import LocaleSwitcher from "./locale-switcher";
 import Link from "next/link";
 import UserAvatar from "./user-avatar";
+import { getUser } from "@/lib/supabase/queries";
 
-export default function Header() {
+export default async function Header() {
+  const user = await getUser();
   return (
     <header className="flex gap-4 p-4 items-center justify-between shadow-md">
       <Link className="flex gap-2 items-center" href="/">
@@ -12,7 +14,7 @@ export default function Header() {
       </Link>
       <div className="flex gap-2 items-center">
         <LocaleSwitcher />
-        <UserAvatar />
+        <UserAvatar user={user} />
       </div>
     </header>
   );
