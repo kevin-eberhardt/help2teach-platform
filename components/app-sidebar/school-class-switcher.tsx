@@ -26,7 +26,7 @@ export function SchoolClassSwitcher({
   schoolClasses,
 }: {
   currentSchoolClass: SchoolClass;
-  schoolClasses: SchoolClass[];
+  schoolClasses: SchoolClass[] | null;
 }) {
   const { isMobile } = useSidebar();
   const activeSchoolClass = currentSchoolClass;
