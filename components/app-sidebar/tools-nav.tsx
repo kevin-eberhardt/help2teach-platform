@@ -55,6 +55,7 @@ export default function ToolsNav({
                 isActive={item.url.includes(segments[0])}
                 disabled={item.disabled}
                 aria-disabled={item.disabled}
+                tooltip={item.title}
               >
                 <Link href={item.url}>
                   <item.icon />

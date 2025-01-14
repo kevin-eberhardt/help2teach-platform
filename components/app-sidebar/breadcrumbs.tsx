@@ -57,7 +57,6 @@ export default function SidebarBreadcrumbs({
 }) {
   const segments = useSelectedLayoutSegments();
   const t = useTranslations("sidebar");
-  console.log(segments);
 
   const titles = segments.map((s) => getTitle(t, currentSchoolClass, s));
 

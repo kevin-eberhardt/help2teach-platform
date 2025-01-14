@@ -20,6 +20,7 @@ export default async function AppLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   const currentSchoolClass = await getSchoolClassById(class_id);
+
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar currentSchoolClass={currentSchoolClass} />

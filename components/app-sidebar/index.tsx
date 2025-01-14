@@ -4,9 +4,10 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { getUser } from "@/lib/supabase/queries";
+import { getSchoolClasses, getUser } from "@/lib/supabase/queries";
 import ToolsNav from "./tools-nav";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
+import { SchoolClassSwitcher } from "./school-class-switcher";
 
 export async function AppSidebar({
   currentSchoolClass,
@@ -14,10 +15,18 @@ export async function AppSidebar({
   currentSchoolClass: SchoolClass | null;
 }) {
   const user = await getUser();
+  const schoolClasses = await getSchoolClasses();
 
   return (
     <Sidebar user={user} collapsible="icon">
-      <SidebarHeader className="h-12" />
+      <SidebarHeader>
+        {currentSchoolClass && (
+          <SchoolClassSwitcher
+            currentSchoolClass={currentSchoolClass}
+            schoolClasses={schoolClasses}
+          />
+        )}
+      </SidebarHeader>
       <SidebarContent>
         <ToolsNav currentSchoolClass={currentSchoolClass} />
       </SidebarContent>
