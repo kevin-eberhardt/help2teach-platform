@@ -4,3 +4,9 @@ export type ToolNavItem = {
   icon: React.ComponentType;
   disabled?: boolean;
 };
+
+export type SidebarBreadcrumbItem = {
+  isLast?: boolean;
+  title?: string;
+  path: string;
+};
