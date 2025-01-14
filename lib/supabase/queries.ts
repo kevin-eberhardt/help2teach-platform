@@ -45,7 +45,16 @@ export async function getSchoolClassById(
     .single();
   return schoolClass;
 }
-
+export async function getSeatingPlansByClassId(
+  classId: string
+): Promise<SeatingPlan[] | null> {
+  const supabase = await createClient();
+  const { data: seatingPlans } = await supabase
+    .from("seating_plans")
+    .select("*")
+    .eq("class_id", classId);
+  return seatingPlans;
+}
 export async function getSeatingPlanById(
   id: string
 ): Promise<SeatingPlan | null> {

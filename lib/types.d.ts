@@ -8,5 +8,5 @@ export type ToolNavItem = {
 export type SidebarBreadcrumbItem = {
   isLast?: boolean;
   title?: string;
-  path: string;
+  path?: string;
 };

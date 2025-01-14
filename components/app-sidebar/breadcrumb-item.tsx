@@ -40,11 +40,13 @@ export default function BreadcrumbItem({
   );
   const pathname = usePathname();
 
-  const fullPath = pathname.slice(0, pathname.indexOf(path) + path.length);
+  const fullPath = path
+    ? pathname.slice(0, pathname.indexOf(path) + path.length)
+    : pathname;
 
   useEffect(() => {
     async function getTitle() {
-      if (title === "") {
+      if (title === "" && path) {
         if (validateUUID(path)) {
           if (pathname.includes("seating-plans")) {
             console.debug("Getting seating plan by id");
@@ -71,7 +73,11 @@ export default function BreadcrumbItem({
     return (
       <ShadCnBreadcrumbItem key={"school-class"}>
         <BreadcrumbLink asChild>
-          <Link href={fullPath}>{clearTitle}</Link>
+          {path ? (
+            <Link href={fullPath}>{clearTitle}</Link>
+          ) : (
+            <p>{clearTitle}</p>
+          )}
         </BreadcrumbLink>
       </ShadCnBreadcrumbItem>
     );

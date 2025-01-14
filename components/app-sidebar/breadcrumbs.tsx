@@ -19,7 +19,7 @@ export default function SidebarBreadcrumbs({
   return (
     <Breadcrumb className="px-4">
       <BreadcrumbList>
-        <BreadcrumbItem key={"home"} path="/app" title={"Help2Teach"} />
+        <BreadcrumbItem key={"home"} title={"Help2Teach"} />
         {currentSchoolClass && (
           <React.Fragment key={"school-class"}>
             <BreadcrumbSeparator />

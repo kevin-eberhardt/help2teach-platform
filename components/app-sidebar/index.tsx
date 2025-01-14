@@ -8,6 +8,7 @@ import { getSchoolClasses, getUser } from "@/lib/supabase/queries";
 import ToolsNav from "./tools-nav";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import { SchoolClassSwitcher } from "./school-class-switcher";
+import { UserNav } from "../nav-user";
 
 export async function AppSidebar({
   currentSchoolClass,
@@ -30,7 +31,9 @@ export async function AppSidebar({
       <SidebarContent>
         <ToolsNav currentSchoolClass={currentSchoolClass} />
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <UserNav user={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 }

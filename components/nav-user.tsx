@@ -26,9 +26,23 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { User } from "@/lib/supabase/types/additional.types";
+import { useTranslations } from "next-intl";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
-export function NavUser({ user }: { user: User | null }) {
+export function UserNav({ user }: { user: User | null }) {
   const { isMobile } = useSidebar();
+  const t = useTranslations("user-menu");
+  const router = useRouter();
+  const userInitials = user?.user_metadata.full_name
+    .split(" ")
+    .map((n) => n[0]);
+
+  async function logout() {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+    router.push("/");
+  }
 
   return (
     <SidebarMenu>
@@ -44,7 +58,9 @@ export function NavUser({ user }: { user: User | null }) {
                   src={user?.user_metadata.avatar_url}
                   alt={user?.user_metadata.full_name}
                 />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {userInitials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
@@ -68,7 +84,9 @@ export function NavUser({ user }: { user: User | null }) {
                     src={user?.user_metadata.avatar_url}
                     alt={user?.user_metadata.full_name}
                   />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {userInitials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
@@ -101,9 +119,9 @@ export function NavUser({ user }: { user: User | null }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
-              Log out
+              {t("logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
