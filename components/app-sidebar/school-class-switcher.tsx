@@ -20,6 +20,7 @@ import {
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import CreateSchoolClassDialog from "../ui/school-classes/create-dialog";
 
 export function SchoolClassSwitcher({
   currentSchoolClass,
@@ -33,6 +34,8 @@ export function SchoolClassSwitcher({
 
   const t = useTranslations("sidebar");
   const router = useRouter();
+
+  const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
 
   function handleClick(schoolClassId: number) {
     router.push(`/app/${schoolClassId}`);
@@ -67,22 +70,26 @@ export function SchoolClassSwitcher({
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               {t("school-classes")}
             </DropdownMenuLabel>
-            {schoolClasses
-              .filter((s) => s.id !== currentSchoolClass.id)
-              .map((schoolClass) => (
-                <DropdownMenuItem
-                  key={schoolClass.name}
-                  onClick={() => handleClick(schoolClass.id)}
-                  className="gap-2 p-2"
-                >
-                  <div className="flex size-6 items-center justify-center rounded-sm border">
-                    <Users className="size-4 shrink-0" />
-                  </div>
-                  {schoolClass.name}
-                </DropdownMenuItem>
-              ))}
+            {schoolClasses &&
+              schoolClasses
+                .filter((s) => s.id !== currentSchoolClass.id)
+                .map((schoolClass) => (
+                  <DropdownMenuItem
+                    key={schoolClass.name}
+                    onClick={() => handleClick(schoolClass.id)}
+                    className="gap-2 p-2"
+                  >
+                    <div className="flex size-6 items-center justify-center rounded-sm border">
+                      <Users className="size-4 shrink-0" />
+                    </div>
+                    {schoolClass.name}
+                  </DropdownMenuItem>
+                ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem
+              className="gap-2 p-2"
+              onClick={() => setCreateDialogOpen(true)}
+            >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <Plus className="size-4" />
               </div>
@@ -93,6 +100,10 @@ export function SchoolClassSwitcher({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
+      <CreateSchoolClassDialog
+        open={createDialogOpen}
+        openChange={setCreateDialogOpen}
+      />
     </SidebarMenu>
   );
 }

@@ -34,9 +34,7 @@ export async function handleRequest(request: NextRequest, user: User | null) {
   if (user && request.nextUrl.pathname.endsWith("/app")) {
     const schoolClasses = await getSchoolClasses();
     if ((schoolClasses && schoolClasses.length === 0) || !schoolClasses) {
-      return NextResponse.redirect(
-        new URL(request.nextUrl.pathname + `/new`, request.url)
-      );
+      return NextResponse.redirect(new URL(`/getting-started`, request.url));
     } else {
       return NextResponse.redirect(
         new URL(
@@ -47,15 +45,11 @@ export async function handleRequest(request: NextRequest, user: User | null) {
     }
   }
 
-  if (user && request.nextUrl.pathname.endsWith("/app/new")) {
+  if (user && request.nextUrl.pathname.endsWith("/getting-started")) {
     const schoolClasses = await getSchoolClasses();
     if (schoolClasses && schoolClasses.length > 0) {
       return NextResponse.redirect(
-        new URL(
-          request.nextUrl.pathname.replace("/new", "") +
-            `/${schoolClasses[0].id}`,
-          request.url
-        )
+        new URL(`/app/${schoolClasses[0].id}`, request.url)
       );
     }
   }
