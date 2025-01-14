@@ -32,3 +32,15 @@ export async function getSchoolClassesWithSchool(): Promise<
   );
   return schoolClasses;
 }
+
+export async function getSchoolClassById(
+  id: string
+): Promise<SchoolClass | null> {
+  const supabase = await createClient();
+  const { data: schoolClass } = await supabase
+    .from("classes")
+    .select("*")
+    .eq("id", id)
+    .single();
+  return schoolClass;
+}
