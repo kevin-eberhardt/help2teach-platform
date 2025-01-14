@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { validate } from "uuid";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,4 +17,8 @@ export function removeFromPathname(
     newPathname = pathname.replace(remove, "");
   }
   return newPathname;
+}
+
+export function validateUUID(uuid: string) {
+  return validate(uuid);
 }

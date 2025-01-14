@@ -12,12 +12,30 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import React from "react";
+import { getSeatingPlanById } from "@/lib/supabase/queries";
+import { validateUUID } from "@/lib/utils";
+
+function getSeatingPlanName(id: string) {
+  return getSeatingPlanById(id).then((seatingPlan) => {
+    return seatingPlan?.name;
+  });
+}
 
 function getTitle(
   t: (key: string) => string,
   currentSchoolClass: SchoolClass | null,
-  path: string
+  path: string,
+  segments: string[]
 ): { title: string; url: string } {
+  if (validateUUID(path)) {
+    if (segments.includes("seating-plans")) {
+      return {
+        title: "Sitzplan #123",
+        url: `/app/${currentSchoolClass?.id}/seating-plans/${path}`,
+      };
+    }
+  }
+
   if (path === "seating-plans") {
     return {
       title: t("seating-plans"),
@@ -58,7 +76,9 @@ export default function SidebarBreadcrumbs({
   const segments = useSelectedLayoutSegments();
   const t = useTranslations("sidebar");
 
-  const titles = segments.map((s) => getTitle(t, currentSchoolClass, s));
+  const titles = segments.map((s) =>
+    getTitle(t, currentSchoolClass, s, segments)
+  );
 
   return (
     <Breadcrumb className="px-4">

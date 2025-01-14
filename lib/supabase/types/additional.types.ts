@@ -14,3 +14,5 @@ export type User = Database["auth"]["Tables"]["users"]["Row"] & {
     avatar_url?: string;
   };
 };
+
+export type SeatingPlan = Tables<"seating_plans">;

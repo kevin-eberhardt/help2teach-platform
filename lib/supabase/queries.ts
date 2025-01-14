@@ -3,6 +3,7 @@ import { createClient } from "./server";
 import {
   SchoolClass,
   SchoolClassWithSchool,
+  SeatingPlan,
   User,
 } from "./types/additional.types";
 
@@ -43,4 +44,16 @@ export async function getSchoolClassById(
     .eq("id", id)
     .single();
   return schoolClass;
+}
+
+export async function getSeatingPlanById(
+  id: string
+): Promise<SeatingPlan | null> {
+  const supabase = await createClient();
+  const { data: seatingPlan } = await supabase
+    .from("seating_plans")
+    .select("*")
+    .eq("id", id)
+    .single();
+  return seatingPlan;
 }
