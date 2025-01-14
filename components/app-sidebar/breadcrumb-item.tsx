@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { validateUUID } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { getSeatingPlanById } from "@/lib/supabase/queries";
+import { Skeleton } from "../ui/skeleton";
 
 function translateTitle(t: (key: string) => string, path: string) {
   if (path === "seating-plans") {
@@ -61,7 +62,7 @@ export default function BreadcrumbItem({
   if (!clearTitle) {
     return (
       <ShadCnBreadcrumbItem key={"skeleton"}>
-        <div className="w-20 h-6 bg-gray-100 rounded-md animate-pulse"></div>
+        <Skeleton className="w-20 h-6" />
       </ShadCnBreadcrumbItem>
     );
   }
