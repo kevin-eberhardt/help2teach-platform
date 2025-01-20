@@ -133,5 +133,11 @@
         "class-created": "The class has been successfully created."
       }
     }
+  },
+  "students": {
+    "page": {
+      "heading": "Students",
+      "description": "Here you can manage the students of your class."
+    }
   }
 }

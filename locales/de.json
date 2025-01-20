@@ -133,5 +133,11 @@
         "class-created": "Die Klasse wurde erfolgreich erstellt."
       }
     }
+  },
+  "students": {
+    "page": {
+      "heading": "Schüler*innen",
+      "description": "Hier findest du eine Übersicht über alle Schüler*innen in deiner Klasse. Du kannst Schüler*innen hinzufügen, bearbeiten oder löschen."
+    }
   }
 }

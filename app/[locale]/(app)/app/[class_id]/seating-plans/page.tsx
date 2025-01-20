@@ -8,7 +8,6 @@ export default async function SeatingPlansPage({
 }) {
   const { class_id } = await params;
   const seatingPlans = await getSeatingPlansByClassId(class_id);
-  console.log(seatingPlans);
   return (
     <div>
       <h1>Seating Plans</h1>
