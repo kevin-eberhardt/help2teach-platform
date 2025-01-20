@@ -4,12 +4,13 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "@/lib/i18n/routing";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
-import { ToolNavItem } from "@/lib/types";
+import { NavItem } from "@/lib/types";
 import { Combine, Workflow } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -17,7 +18,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 function getToolNavItems(
   t?: (key: string) => string,
   currentSchoolClassId?: number
-): ToolNavItem[] {
+): NavItem[] {
   return [
     {
       title: t ? t("seating-plans") : "Seating Plans",
@@ -29,6 +30,7 @@ function getToolNavItems(
       url: `/app/${currentSchoolClassId}/sociograms`,
       icon: Workflow,
       disabled: true,
+      badge: <span>coming soon</span>,
     },
   ];
 }
@@ -62,6 +64,11 @@ export default function ToolsNav({
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
+              {item.badge && (
+                <SidebarMenuBadge aria-disabled={item.disabled}>
+                  {item.badge}
+                </SidebarMenuBadge>
+              )}
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
