@@ -138,6 +138,18 @@
     "page": {
       "heading": "Students",
       "description": "Here you can manage the students of your class."
+    },
+    "edit-table": {
+      "student-placeholder": "Student",
+      "gender-select": "{gender, select, male {male} female {female} diverse {diverse} other {unknown}}",
+      "search-placeholder": "Search for students",
+      "search-results": "{count, plural, =0 {0 Students} =1 {# Student} other {# Students}}",
+      "column-header-name": "Name",
+      "input-name-description": "The name of the student",
+      "input-name-error": "Please enter a student name",
+      "column-header-gender": "Gender",
+      "input-gender-description": "The gender of the student",
+      "no-results": "No students found"
     }
   }
 }

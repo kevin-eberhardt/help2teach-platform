@@ -4,6 +4,7 @@ import {
   SchoolClass,
   SchoolClassWithSchool,
   SeatingPlan,
+  Student,
   User,
 } from "./types/additional.types";
 
@@ -65,4 +66,15 @@ export async function getSeatingPlanById(
     .eq("id", id)
     .single();
   return seatingPlan;
+}
+
+export async function getStudentsByClassId(
+  classId: string
+): Promise<Student[] | null> {
+  const supabase = await createClient();
+  const { data: students } = await supabase
+    .from("students")
+    .select("*")
+    .eq("class_id", classId);
+  return students;
 }

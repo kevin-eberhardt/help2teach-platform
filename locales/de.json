@@ -138,6 +138,18 @@
     "page": {
       "heading": "Schüler*innen",
       "description": "Hier findest du eine Übersicht über alle Schüler*innen in deiner Klasse. Du kannst Schüler*innen hinzufügen, bearbeiten oder löschen."
+    },
+    "edit-table": {
+      "student-placeholder": "Schüler*in",
+      "gender-select": "{gender, select, male {männlich} female {weiblich} diverse {divers} other {Unbekannt}}",
+      "search-placeholder": "Suche nach Schüler*innen",
+      "search-results": "{count, plural, =0 {0 Schüler*innen} =1 {# Schüler*in} other {# Schüler*innen}}",
+      "column-header-name": "Name",
+      "input-name-description": "Der Name des Schülers/der Schülerin",
+      "input-name-error": "Bitte gib den Namen des Schülers/der Schülerin ein",
+      "column-header-gender": "Geschlecht",
+      "input-gender-description": "Das Geschlecht des Schülers / der Schülerin",
+      "no-results": "Keine Schüler*innen gefunden"
     }
   }
 }
