@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "@/lib/i18n/routing";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
-import { NavItem } from "@/lib/types";
+import { NavItem } from "@/lib/types/layout";
 import { Combine, Workflow } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSelectedLayoutSegments } from "next/navigation";

@@ -1,0 +1,22 @@
+import { SeatingPlanElementType } from "@/lib/types/seating-plan";
+import { useDraggable } from "@dnd-kit/core/dist";
+import { v4 as uuidv4 } from "uuid";
+
+export default function ToolbarItem({
+  type,
+  children,
+}: {
+  type: SeatingPlanElementType;
+  children?: React.ReactNode;
+}) {
+  const { attributes, listeners, setNodeRef } = useDraggable({
+    id: uuidv4(),
+    data: { type },
+  });
+
+  return (
+    <div ref={setNodeRef} {...listeners} {...attributes}>
+      {children}
+    </div>
+  );
+}

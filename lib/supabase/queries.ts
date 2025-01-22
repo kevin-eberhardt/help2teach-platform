@@ -75,6 +75,7 @@ export async function getStudentsByClassId(
   const { data: students } = await supabase
     .from("students")
     .select("*")
-    .eq("class_id", classId);
+    .eq("class_id", classId)
+    .order("name");
   return students;
 }

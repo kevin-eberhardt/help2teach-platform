@@ -4,7 +4,7 @@ import {
   BreadcrumbPage,
   BreadcrumbItem as ShadCnBreadcrumbItem,
 } from "../ui/breadcrumb";
-import { SidebarBreadcrumbItem } from "@/lib/types";
+import { SidebarBreadcrumbItem } from "@/lib/types/layout";
 import { useTranslations } from "next-intl";
 import { validateUUID } from "@/lib/utils";
 import React, { useEffect, useState } from "react";

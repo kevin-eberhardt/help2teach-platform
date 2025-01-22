@@ -16,7 +16,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronRight, Users } from "lucide-react";
-import { SettingsNavItem } from "@/lib/types";
+import { SettingsNavItem } from "@/lib/types/layout";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { Link } from "@/lib/i18n/routing";
