@@ -1,7 +1,8 @@
 import { useDraggable } from "@dnd-kit/core/dist";
 import { ZoomTransform } from "d3-zoom";
-import Table from "./desk";
+import Desk from "./desk";
 import { TwoSeatsDeskElement } from "@/lib/types/seating-plan";
+import Seat from "./seat";
 
 export default function TwoSeatsDesk({
   element,
@@ -15,7 +16,7 @@ export default function TwoSeatsDesk({
   });
 
   return (
-    <Table
+    <Desk
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
@@ -37,8 +38,8 @@ export default function TwoSeatsDesk({
         e.preventDefault();
       }}
     >
-      <div className="h-12 w-20 bg-accent rounded-md" />
-      <div className="h-12 w-20 bg-accent rounded-md" />
-    </Table>
+      <Seat id={element.id + "-left"} />
+      <Seat id={element.id + "-right"} />
+    </Desk>
   );
 }

@@ -3,24 +3,39 @@ import {
   SeatingPlanElementType,
   TwoSeatsDeskElement,
 } from "@/lib/types/seating-plan";
-import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core/dist";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  useDroppable,
+} from "@dnd-kit/core/dist";
 import { select } from "d3-selection";
 import { zoom, ZoomTransform } from "d3-zoom";
-import { useCallback, useLayoutEffect, useMemo, useRef } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import TwoSeatsDesk from "./elements/two-seats-desk";
+import { Student } from "@/lib/supabase/types/additional.types";
+import StudentList from "./student-list";
+import StudentListItem from "./student-list/item";
 
 export default function SeatingPlanCanvas({
   elements,
   setElements,
   transform,
   setTransform,
+  students,
 }: {
   elements: SeatingPlanElement[];
   setElements(elements: SeatingPlanElement[]): void;
   transform: ZoomTransform;
   setTransform(transform: ZoomTransform): void;
+  students: Student[];
 }) {
-  const updateDraggedelementPosition = ({ delta, active }: DragEndEvent) => {
+  const updateDraggedelementPosition = ({
+    delta,
+    active,
+    over,
+  }: DragEndEvent) => {
+    console.log(active, over);
     if (!delta.x && !delta.y) return;
 
     setElements(
@@ -38,6 +53,7 @@ export default function SeatingPlanCanvas({
       })
     );
   };
+  const [draggingStudent, setDraggingStudent] = useState<Student | null>(null);
 
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -71,20 +87,34 @@ export default function SeatingPlanCanvas({
     // mousewheel, gesture and drag events automatically for pan / zoom
     select<HTMLDivElement, unknown>(canvasRef.current).call(zoomBehavior);
   }, [zoomBehavior, canvasRef, updateTransform]);
+
   return (
     <div ref={updateAndForwardRef} className="overflow-hidden">
-      <div
-        className="canvas z-0 no-scrollbar"
-        style={{
-          // apply the transform from d3
-          transformOrigin: "top left",
-          transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.k}px)`,
-          position: "relative",
-          height: window.innerHeight - 170,
-          width: window.innerWidth - 100,
+      <DndContext
+        onDragStart={({ active }) => {
+          const student = students.find((student) => student.id === active.id);
+          if (student) {
+            setDraggingStudent(student);
+          }
         }}
+        onDragEnd={updateDraggedelementPosition}
       >
-        <DndContext onDragEnd={updateDraggedelementPosition}>
+        <StudentList students={students} />
+        <DragOverlay>
+          {draggingStudent && (
+            <StudentListItem student={draggingStudent} transform={transform} />
+          )}
+        </DragOverlay>
+        <div
+          className="canvas z-0 no-scrollbar"
+          style={{
+            // apply the transform from d3
+            transformOrigin: "top left",
+            transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.k}px)`,
+            height: window.innerHeight - 170,
+            width: window.innerWidth - 100,
+          }}
+        >
           {elements.map((element) => {
             if (element.type === SeatingPlanElementType.TwoSeatsDesk) {
               return (
@@ -96,8 +126,8 @@ export default function SeatingPlanCanvas({
               );
             }
           })}
-        </DndContext>
-      </div>
+        </div>
+      </DndContext>
     </div>
   );
 }

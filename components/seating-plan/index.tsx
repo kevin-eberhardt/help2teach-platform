@@ -7,19 +7,14 @@ import { useState } from "react";
 import { ZoomTransform, zoomIdentity } from "d3-zoom";
 import { Coordinates, DragEndEvent, Translate } from "@dnd-kit/core/dist/types";
 import SeatingPlanCanvas from "./canvas";
-import {
-  ClientRect,
-  DndContext,
-  DragOverlay,
-  Over,
-  UniqueIdentifier,
-} from "@dnd-kit/core/dist";
+import { ClientRect, DndContext, DragOverlay, Over } from "@dnd-kit/core/dist";
 import {
   SeatingPlanElement,
   SeatingPlanElementType,
 } from "@/lib/types/seating-plan";
-import Table from "./elements/desk";
+import Desk from "./elements/desk";
 import Toolbar from "./toolbar";
+import StudentList from "./student-list";
 
 const calculateCanvasPosition = (
   initialRect: ClientRect,
@@ -48,6 +43,7 @@ export default function SeatingPlan({
       coordinates: { x: 0, y: 0 },
       text: "Hello",
       type: SeatingPlanElementType.TwoSeatsDesk,
+      students: [students[0], students[1]],
     },
   ]);
   // store the current transform from d3
@@ -94,6 +90,7 @@ export default function SeatingPlan({
         setElements={setElements}
         transform={transform}
         setTransform={setTransform}
+        students={students}
       />
       <DragOverlay>
         <div
@@ -103,14 +100,14 @@ export default function SeatingPlan({
           }}
         >
           {draggedElementType === SeatingPlanElementType.TwoSeatsDesk ? (
-            <Table className="w-48">
+            <Desk className="w-48">
               <div className="h-12 w-20 bg-accent rounded-md" />
               <div className="h-12 w-20 bg-accent rounded-md" />
-            </Table>
+            </Desk>
           ) : draggedElementType === SeatingPlanElementType.OneSeatDesk ? (
-            <Table className="w-24">
+            <Desk className="w-24">
               <div className="h-12 w-20 bg-accent rounded-md" />
-            </Table>
+            </Desk>
           ) : (
             <div>ID</div>
           )}

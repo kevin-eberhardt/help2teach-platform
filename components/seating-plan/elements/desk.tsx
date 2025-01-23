@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-const Table = React.forwardRef<
+const Desk = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
@@ -19,6 +19,6 @@ const Table = React.forwardRef<
   );
 });
 
-Table.displayName = "Table";
+Desk.displayName = "Desk";
 
-export default Table;
+export default Desk;
