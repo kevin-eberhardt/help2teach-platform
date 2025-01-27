@@ -1,17 +1,19 @@
-import { useDroppable } from "@dnd-kit/core/dist";
-import { useEffect } from "react";
+import { Seat as SeatProps } from "@/lib/types/seating-plan";
+import { useDroppable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-export default function Seat({ id }: { id: string }) {
-  const { setNodeRef, isOver } = useDroppable({
-    id: id,
-  });
-  useEffect(() => {
-    console.log(isOver);
-  }, [isOver]);
+export default function Seat({ id, student }: SeatProps) {
+  const { setNodeRef, isOver } = useDroppable({ id });
+
   return (
     <div
-      className={`h-12 w-20 rounded-md ${isOver ? "bg-primary" : "bg-accent"}`}
       ref={setNodeRef}
-    />
+      className={`h-12 w-20 rounded-md ${
+        isOver ? "bg-primary" : "bg-accent"
+      } flex items-center justify-center`}
+    >
+      {student && <p>{student.name}</p>}
+    </div>
   );
 }

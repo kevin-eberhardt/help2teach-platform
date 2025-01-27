@@ -35,6 +35,7 @@ export default function SeatingPlanCanvas({
     active,
     over,
   }: DragEndEvent) => {
+    // drag and drop of tables etc.
     console.log(active, over);
     if (!delta.x && !delta.y) return;
 

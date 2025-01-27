@@ -5,9 +5,5 @@ export default function GlobalLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
-  );
+  return children;
 }

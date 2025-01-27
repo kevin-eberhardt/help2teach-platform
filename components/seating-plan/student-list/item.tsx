@@ -1,4 +1,5 @@
 import { Student } from "@/lib/supabase/types/additional.types";
+import { SeatingPlanElementType } from "@/lib/types/seating-plan";
 import { useDraggable } from "@dnd-kit/core/dist";
 import { ZoomTransform } from "d3-zoom";
 
@@ -11,6 +12,10 @@ export default function StudentListItem({
 }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: student.id,
+    data: {
+      ...student,
+      type: SeatingPlanElementType.Student,
+    },
   });
   return (
     <div

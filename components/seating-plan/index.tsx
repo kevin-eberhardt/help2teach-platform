@@ -11,6 +11,8 @@ import { ClientRect, DndContext, DragOverlay, Over } from "@dnd-kit/core/dist";
 import {
   SeatingPlanElement,
   SeatingPlanElementType,
+  SeatingPlanGenericElement,
+  TwoSeatsDeskElement,
 } from "@/lib/types/seating-plan";
 import Desk from "./elements/desk";
 import Toolbar from "./toolbar";
@@ -39,22 +41,30 @@ export default function SeatingPlan({
 }) {
   const [elements, setElements] = useState<SeatingPlanElement[]>([
     {
-      id: "Hello",
-      coordinates: { x: 0, y: 0 },
-      text: "Hello",
-      type: SeatingPlanElementType.TwoSeatsDesk,
+      id: "Test",
+      coordinates: {
+        x: 100,
+        y: 150,
+      },
       students: [students[0], students[1]],
+      type: SeatingPlanElementType.TwoSeatsDesk,
+    },
+    {
+      id: "Test2",
+      coordinates: {
+        x: 200,
+        y: 150,
+      },
+      students: [students[2], students[3]],
+      type: SeatingPlanElementType.TwoSeatsDesk,
     },
   ]);
   // store the current transform from d3
   const [transform, setTransform] = useState(zoomIdentity);
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementType | null>(null);
-  const addDraggedTrayCardToCanvas = ({
-    over,
-    active,
-    delta,
-  }: DragEndEvent) => {
+  const addToolbarItem = ({ over, active, delta }: DragEndEvent) => {
+    // handle toolbar
     if (over?.id !== "canvas") return;
     if (!active.rect.current.initial) return;
     if (!draggedElementType) return;
@@ -73,16 +83,14 @@ export default function SeatingPlan({
         type: draggedElementType,
       },
     ]);
-    setDraggedElementType(null);
   };
 
   return (
     <DndContext
       onDragStart={({ active }) => {
-        console.log(active);
         setDraggedElementType(active.data.current?.type);
       }}
-      onDragEnd={addDraggedTrayCardToCanvas}
+      onDragEnd={addToolbarItem}
     >
       <Toolbar />
       <SeatingPlanCanvas

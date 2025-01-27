@@ -2,9 +2,14 @@ import { Coordinates } from "@dnd-kit/core/dist/types";
 import { Student } from "../supabase/types/additional.types";
 
 export enum SeatingPlanElementType {
+  Student,
   Custom,
   OneSeatDesk,
   TwoSeatsDesk,
+}
+export type Seat = {
+  id: string;
+  student?: Student|null;
 }
 export type SeatingPlanGenericElement = {
   id: string;
@@ -16,7 +21,7 @@ export type CustomElement = SeatingPlanGenericElement & {
 };
 
 export type TwoSeatsDeskElement = SeatingPlanGenericElement & {
-  students: Student[];
+  students: Array<Student>;
 };
 
 export type OneSeatDeskElement = SeatingPlanGenericElement & {

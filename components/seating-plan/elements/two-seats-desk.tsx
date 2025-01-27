@@ -15,6 +15,15 @@ export default function TwoSeatsDesk({
     id: element.id,
   });
 
+  const leftSeatedStudent =
+    element.students && element.students.length > 0
+      ? element.students[0]
+      : null;
+  const rightSeatedStudent =
+    element.students && element.students.length > 1
+      ? element.students[1]
+      : null;
+
   return (
     <Desk
       style={{
@@ -38,8 +47,8 @@ export default function TwoSeatsDesk({
         e.preventDefault();
       }}
     >
-      <Seat id={element.id + "-left"} />
-      <Seat id={element.id + "-right"} />
+      <Seat id={element.id + "-left"} student={leftSeatedStudent} />
+      <Seat id={element.id + "-right"} student={rightSeatedStudent} />
     </Desk>
   );
 }

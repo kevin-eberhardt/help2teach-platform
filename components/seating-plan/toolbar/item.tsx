@@ -10,7 +10,7 @@ export default function ToolbarItem({
   children?: React.ReactNode;
 }) {
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id: uuidv4(),
+    id: `canvas-${uuidv4()}`,
     data: { type },
   });
 
