@@ -1,5 +1,5 @@
 import { SeatingPlanElementTypes } from "@/lib/types/seating-plan";
-import { useDraggable } from "@dnd-kit/core/dist";
+import { useDraggable } from "@dnd-kit/core";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ToolbarItem({

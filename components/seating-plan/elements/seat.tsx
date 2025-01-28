@@ -36,7 +36,7 @@ export default function Seat({
       }}
       className="flex justify-center items-center gap-4"
     >
-      <div className="bg-accent h-12 w-24 flex items-center justify-center rounded-md">
+      <div className="bg-primary text-primary-foreground h-12 w-24 flex items-center justify-center rounded-md">
         {element.data.name}
       </div>
     </div>

@@ -40,7 +40,6 @@ export default function SeatingPlan({
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
   const [elements, setElements] = useState<SeatingPlanElementType[]>([
-    students[0],
     students[1],
     {
       coordinates: { x: 100, y: 0 },
@@ -57,18 +56,19 @@ export default function SeatingPlan({
       data: {
         text: "Table 2",
       },
-      type: SeatingPlanElementTypes.OneSeatDesk,
-      students: [students[4]],
+      type: SeatingPlanElementTypes.TwoSeatsDesk,
+      students: [students[4], students[0]],
     },
   ]);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
-    console.log(over, active, delta);
+    console.log(over, active);
     if (over?.id !== "canvas") return;
     if (!active.rect.current.initial) return;
     if (draggedElementType === null) return;
 
     setElements([
+      ...elements,
       {
         id: active.id.toString(),
         coordinates: calculateCanvasPosition(
@@ -85,11 +85,11 @@ export default function SeatingPlan({
   }
   return (
     <DndContext
-      onDragEnd={addToolbarItem}
       onDragStart={({ active }) => {
         console.log(active);
         setDraggedElementType(active.data.current?.type);
       }}
+      onDragEnd={addToolbarItem}
     >
       <Toolbar />
 
@@ -107,12 +107,10 @@ export default function SeatingPlan({
             transform: `scale(${transform.k})`,
           }}
         >
-          {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk && (
-            <SeatingPlanElement className="w-48">
-              <div className="h-12 w-20 bg-accent rounded-md" />
-              <div className="h-12 w-20 bg-accent rounded-md" />
-            </SeatingPlanElement>
-          )}
+          <SeatingPlanElement className="w-48">
+            <div className="h-12 w-20 bg-accent rounded-md" />
+            <div className="h-12 w-20 bg-accent rounded-md" />
+          </SeatingPlanElement>
         </div>
       </DragOverlay>
     </DndContext>
