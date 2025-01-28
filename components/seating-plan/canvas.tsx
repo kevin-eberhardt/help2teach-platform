@@ -1,8 +1,7 @@
 import { select } from "d3-selection";
 import { zoom, ZoomTransform } from "d3-zoom";
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import {
-  closestCenter,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -10,26 +9,24 @@ import {
   DragEndEvent,
   DndContext,
   useDroppable,
-  useDraggable,
-  DragOverlay,
-  DragStartEvent,
 } from "@dnd-kit/core";
-import {
-  horizontalListSortingStrategy,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { changeSeatedStudentPositions } from "./utils";
+import {
+  SeatingPlanElementType,
+  SeatingPlanElementTypes,
+  StudentSeatingPlanElementType,
+} from "@/lib/types/seating-plan";
+import Student from "@/components/seating-plan/elements/student";
+import TwoSeatsDesk from "./elements/two-seats-desk";
 export default function SeatingPlanCanvas({
   elements,
   setElements,
   transform,
   setTransform,
 }: {
-  elements: any[];
-  setElements(elements: any[]): void;
+  elements: SeatingPlanElementType[];
+  setElements(elements: SeatingPlanElementType[]): void;
   transform: ZoomTransform;
   setTransform(transform: ZoomTransform): void;
 }) {
@@ -49,6 +46,7 @@ export default function SeatingPlanCanvas({
     ) {
       // container Id 'Sortable' is the default value if a student is not placed anywhere
       if (active.data.current.sortable.containerId !== "Sortable") {
+        console.log(active, over);
         // Change positions of already placed students
         const newElements = changeSeatedStudentPositions(
           elements,
@@ -75,15 +73,6 @@ export default function SeatingPlanCanvas({
       );
     }
   };
-
-  function handleDragStart(e: DragStartEvent) {
-    const { active } = e;
-    if (active) {
-      if (active.data.current?.type === "student") {
-        setDraggedElement(active.data);
-      }
-    }
-  }
 
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -139,9 +128,9 @@ export default function SeatingPlanCanvas({
           }}
         >
           {elements.map((element) => {
-            if (element.type === "table") {
+            if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
               return (
-                <Table
+                <TwoSeatsDesk
                   key={element.id}
                   canvasTransform={transform}
                   element={element}
@@ -149,11 +138,11 @@ export default function SeatingPlanCanvas({
               );
             }
 
-            if (element.type === "student") {
+            if (element.type === SeatingPlanElementTypes.Student) {
               return (
                 <Student
                   key={element.id}
-                  element={element}
+                  element={element as StudentSeatingPlanElementType}
                   canvasTransform={transform}
                 />
               );
@@ -161,147 +150,6 @@ export default function SeatingPlanCanvas({
           })}
         </div>
       </DndContext>
-    </div>
-  );
-}
-
-function Table({
-  element,
-  canvasTransform,
-}: {
-  element: any;
-  canvasTransform: ZoomTransform;
-}) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: element.id,
-    data: element,
-  });
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: `${element.coordinates.y * canvasTransform.k}px`,
-        left: `${element.coordinates.x * canvasTransform.k}px`,
-        transformOrigin: "top left",
-        ...(transform
-          ? {
-              transform: `translate3d(${transform.x}px, ${transform.y}px, 0px) scale(${canvasTransform.k})`,
-            }
-          : {
-              transform: `scale(${canvasTransform.k})`,
-            }),
-      }}
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className="border border-gray-200 rounded-md p-4"
-      onPointerDown={(e) => {
-        listeners?.onPointerDown?.(e);
-        e.preventDefault();
-      }}
-    >
-      Table
-      <SortableContext
-        id={element.id}
-        items={element.students}
-        strategy={horizontalListSortingStrategy}
-      >
-        <div className="flex justify-center items-center gap-4">
-          {element.students.map((item) => (
-            <SortableItem
-              key={item.id}
-              id={item.id}
-              element={item}
-              canvasTransform={canvasTransform}
-            />
-          ))}
-        </div>
-      </SortableContext>
-    </div>
-  );
-}
-
-function SortableItem(props) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: props.id, data: props });
-  const { element, canvasTransform } = props;
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    // opacity: isDragging ? 0 : 1,
-  };
-
-  return (
-    <div
-      style={{
-        ...style,
-        ...(transform
-          ? {
-              transform: `translate3d(${transform.x}px, ${transform.y}px, 0px) scale(${canvasTransform.k})`,
-            }
-          : {
-              transform: `scale(${canvasTransform.k})`,
-            }),
-      }}
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      onPointerDown={(e) => {
-        listeners?.onPointerDown?.(e);
-        e.preventDefault();
-      }}
-      className="bg-accent rounded-md h-12 w-24 flex items-center justify-center"
-    >
-      {props.id}
-    </div>
-  );
-}
-
-function Student({
-  element,
-  canvasTransform,
-}: {
-  element: any;
-  canvasTransform: ZoomTransform;
-}) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: element.id,
-    data: element,
-  });
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: `${element.coordinates.y * canvasTransform.k}px`,
-        left: `${element.coordinates.x * canvasTransform.k}px`,
-        transformOrigin: "top left",
-        ...(transform
-          ? {
-              transform: `translate3d(${transform.x}px, ${transform.y}px, 0px) scale(${canvasTransform.k})`,
-            }
-          : {
-              transform: `scale(${canvasTransform.k})`,
-            }),
-      }}
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className="border border-gray-200 rounded-md p-4 bg-white h-12 w-24 truncate"
-      onPointerDown={(e) => {
-        listeners?.onPointerDown?.(e);
-        e.preventDefault();
-      }}
-    >
-      {element.id}
     </div>
   );
 }

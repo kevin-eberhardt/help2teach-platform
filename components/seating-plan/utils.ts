@@ -43,6 +43,7 @@ export function changeSeatedStudentPositions(elements: any[], active: any, over:
           elements,
           over.data.current?.sortable.containerId
         );
+        
   
         // Finde die Indexe in den jeweiligen students-Arrays
         const activeIndex = elements
