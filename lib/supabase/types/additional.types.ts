@@ -15,4 +15,4 @@ export type User = Database["auth"]["Tables"]["users"]["Row"] & {
   };
 };
 
-export type SeatingPlan = Tables<"seating_plans">;
+export type SeatingPlanProps = Tables<"seating_plans">;
