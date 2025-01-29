@@ -6,7 +6,7 @@ import {
 import { DndContext, DragEndEvent, DragOverlay } from "@dnd-kit/core";
 
 import { useState } from "react";
-import { calculateCanvasPosition } from "./utils";
+import { calculateCanvasPosition, generateEmptySeatsForTable } from "./utils";
 import { zoomIdentity } from "d3-zoom";
 import SeatingPlanCanvas from "./canvas";
 import {
@@ -40,6 +40,7 @@ export default function SeatingPlan({
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
   const [elements, setElements] = useState<SeatingPlanElementType[]>([
+    students[0],
     students[1],
     {
       coordinates: { x: 100, y: 0 },
@@ -57,7 +58,7 @@ export default function SeatingPlan({
         text: "Table 2",
       },
       type: SeatingPlanElementTypes.TwoSeatsDesk,
-      students: [students[4], students[0]],
+      students: [students[4], generateEmptySeatsForTable("table-2", 1)[0]],
     },
   ]);
 
@@ -78,7 +79,7 @@ export default function SeatingPlan({
           transform
         ),
         type: draggedElementType,
-        students: [],
+        students: generateEmptySeatsForTable(active.id.toString(), 2),
       },
     ]);
     setDraggedElementType(null);

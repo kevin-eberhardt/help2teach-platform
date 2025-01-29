@@ -1,3 +1,4 @@
+import { SeatingPlanElementTypes, StudentSeatingPlanElementType } from "@/lib/types/seating-plan";
 import { ClientRect, Over, Translate, UniqueIdentifier } from "@dnd-kit/core";
 import { Coordinates } from "@dnd-kit/utilities";
 import { ZoomTransform } from "d3-zoom";
@@ -109,4 +110,24 @@ export function changeSeatedStudentPositions(elements: any[], active: any, over:
           return element;
         });
         return newElements;
+}
+
+export function generateEmptySeatsForTable(id: string, amountSeats: number = 2): StudentSeatingPlanElementType[] {
+  const emptySeats = [];
+  for (let i = 0; i < amountSeats; i++) {
+    emptySeats.push({
+      id: `${id}-empty-${i}`,
+      type: SeatingPlanElementTypes.Student,
+      coordinates: { x: 0, y: 0 },
+      data: {
+        id: i,
+        name: "",
+        class_id: null,
+        gender: null
+      }});
+    }
+
+      return emptySeats;
+
+  
 }

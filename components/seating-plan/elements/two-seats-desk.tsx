@@ -38,7 +38,7 @@ export default function TwoSeatsDesk({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="border border-gray-200 rounded-md p-4"
+      className="border border-gray-200 rounded-md p-4 bg-white"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
@@ -51,40 +51,18 @@ export default function TwoSeatsDesk({
         strategy={horizontalListSortingStrategy}
       >
         <div className="flex justify-center items-center gap-4">
-          {element.students.length === 2 ? (
-            element.students.map((item: StudentSeatingPlanElementType) => (
+          {element.students.map((item: StudentSeatingPlanElementType) => {
+            const isEmpty = item.id.toString().includes("empty");
+            return (
               <Seat
                 key={item.id}
                 id={item.id}
                 element={item}
                 canvasTransform={canvasTransform}
+                isEmpty={isEmpty}
               />
-            ))
-          ) : element.students.length === 1 ? (
-            <>
-              <Seat
-                key={element.students[0].id}
-                id={element.students[0]}
-                element={element.students[0]}
-                canvasTransform={canvasTransform}
-              />
-              <EmptySeat
-                id={`${element.id}-right`}
-                canvasTransform={canvasTransform}
-              />
-            </>
-          ) : (
-            <>
-              <EmptySeat
-                id={`${element.id}-left`}
-                canvasTransform={canvasTransform}
-              />
-              <EmptySeat
-                id={`${element.id}-right`}
-                canvasTransform={canvasTransform}
-              />
-            </>
-          )}
+            );
+          })}
         </div>
       </SortableContext>
     </div>
