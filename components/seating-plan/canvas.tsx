@@ -11,11 +11,13 @@ import {
   useDroppable,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { changeSeatedStudentPositions } from "./utils";
+import { changeSeatedStudentPositions, checkIfElementIsTable } from "./utils";
 import {
+  OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
   StudentSeatingPlanElementType,
+  TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
 import Student from "@/components/seating-plan/elements/student";
 import TwoSeatsDesk from "./elements/two-seats-desk";
@@ -54,23 +56,88 @@ export default function SeatingPlanCanvas({
           over
         );
         setElements(newElements);
-      } else {
       }
     } else {
-      setElements(
-        elements.map((element) => {
-          if (element.id === active.id) {
-            return {
-              ...element,
-              coordinates: {
-                x: element.coordinates.x + delta.x / transform.k,
-                y: element.coordinates.y + delta.y / transform.k,
-              },
-            };
+      if (
+        active &&
+        over &&
+        !over.id.toString().includes(active.id.toString()) &&
+        over.data.current &&
+        over.data.current.sortable &&
+        !checkIfElementIsTable(active.data.current)
+      ) {
+        const activeStudent = active.data
+          .current as unknown as StudentSeatingPlanElementType;
+        const overTableId = over.data.current.sortable.containerId;
+        const overTableIndex = over.data.current.sortable.index;
+        let overTableElement = elements.find((e) => e.id === overTableId);
+        if (!overTableElement) return;
+
+        const overTableType = overTableElement?.type;
+        let newElements = elements;
+
+        if (overTableType === SeatingPlanElementTypes.TwoSeatsDesk) {
+          const overTableElementAsDesk =
+            overTableElement as TwoSeatsDeskSeatingPlanElementType;
+          // check if overTableIndex is empty or not
+          const overTableStudent =
+            overTableElementAsDesk.students[overTableIndex];
+          if (overTableStudent.id.toString().includes("empty")) {
+            newElements = elements
+              .map((element) => {
+                if (element.id === overTableId) {
+                  const deskElement =
+                    element as TwoSeatsDeskSeatingPlanElementType;
+                  return {
+                    ...deskElement,
+                    students: deskElement.students.map((s, i) =>
+                      i === overTableIndex ? activeStudent : s
+                    ),
+                  };
+                }
+                return element;
+              })
+              .filter((element) => element.id !== active.id);
+          } else {
+            // swap students
+            newElements = elements.map((element) => {
+              if (element.id === overTableId) {
+                const deskElement =
+                  element as TwoSeatsDeskSeatingPlanElementType;
+                return {
+                  ...deskElement,
+                  students: deskElement.students.map((s, i) =>
+                    i === overTableIndex ? activeStudent : s
+                  ),
+                };
+              }
+              if (element.id === active.id) {
+                return {
+                  ...overTableStudent,
+                  coordinates: element.coordinates,
+                };
+              }
+              return element;
+            });
           }
-          return element;
-        })
-      );
+        }
+        setElements(newElements);
+      } else {
+        setElements(
+          elements.map((element) => {
+            if (element.id === active.id) {
+              return {
+                ...element,
+                coordinates: {
+                  x: element.coordinates.x + delta.x / transform.k,
+                  y: element.coordinates.y + delta.y / transform.k,
+                },
+              };
+            }
+            return element;
+          })
+        );
+      }
     }
   };
 

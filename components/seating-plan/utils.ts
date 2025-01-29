@@ -126,8 +126,9 @@ export function generateEmptySeatsForTable(id: string, amountSeats: number = 2):
         gender: null
       }});
     }
-
       return emptySeats;
+}
 
-  
+export function checkIfElementIsTable(element: any) {
+  return element.type === SeatingPlanElementTypes.OneSeatDesk || element.type === SeatingPlanElementTypes.TwoSeatsDesk
 }
