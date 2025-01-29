@@ -2,7 +2,7 @@ import {
   SeatingPlanElementTypes,
   StudentSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
-import { UniqueIdentifier, useDroppable } from "@dnd-kit/core";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ZoomTransform } from "d3-zoom";
@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 export default function Seat({
   id,
   element,
-  canvasTransform,
   isEmpty = false,
 }: {
   id: UniqueIdentifier;
@@ -30,12 +29,19 @@ export default function Seat({
     over,
     setDroppableNodeRef,
     isDragging,
-  } = useSortable({ id: id, data: element });
+  } = useSortable({
+    id: id,
+    data: element,
+  });
 
   const [validIsOver, setValidIsOver] = useState(false);
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Transform.toString(
+      transform && {
+        ...transform,
+      }
+    ),
     transition,
     opacity: isDragging ? 0.4 : 1,
   };

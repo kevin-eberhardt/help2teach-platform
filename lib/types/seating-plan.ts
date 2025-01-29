@@ -1,27 +1,30 @@
-import { UniqueIdentifier } from "@dnd-kit/core"
+import { UniqueIdentifier } from "@dnd-kit/core";
 import { Coordinates } from "@dnd-kit/utilities";
 import { Student } from "../supabase/types/additional.types";
 
 export enum SeatingPlanElementTypes {
-    Student,
-    TwoSeatsDesk,
-    OneSeatDesk
+  Student,
+  TwoSeatsDesk,
+  OneSeatDesk,
 }
 export type SeatingPlanCoreElementType = {
-    id: UniqueIdentifier;
-    coordinates: Coordinates;
-    data?: any;
-    type: SeatingPlanElementTypes;
-}
+  id: UniqueIdentifier;
+  coordinates: Coordinates;
+  data?: any;
+  type: SeatingPlanElementTypes;
+};
 
 export type StudentSeatingPlanElementType = SeatingPlanCoreElementType & {
-    data: Student;
-}
+  data: Student;
+};
 export type TwoSeatsDeskSeatingPlanElementType = SeatingPlanCoreElementType & {
-    students: StudentSeatingPlanElementType[];
-}
+  students: StudentSeatingPlanElementType[];
+};
 export type OneSeatDeskSeatingPlanElementType = SeatingPlanCoreElementType & {
-    student?: StudentSeatingPlanElementType;
-}
+  student: StudentSeatingPlanElementType;
+};
 
-export type SeatingPlanElementType = | StudentSeatingPlanElementType | TwoSeatsDeskSeatingPlanElementType | OneSeatDeskSeatingPlanElementType;
+export type SeatingPlanElementType =
+  | StudentSeatingPlanElementType
+  | TwoSeatsDeskSeatingPlanElementType
+  | OneSeatDeskSeatingPlanElementType;

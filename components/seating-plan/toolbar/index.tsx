@@ -5,10 +5,15 @@ import { RectangleHorizontal } from "lucide-react";
 
 export default function Toolbar() {
   return (
-    <div className="absolute bottom-16 left-1/2 h-auto bg-white border border-accent rounded-md p-4 z-10">
+    <div className="absolute bottom-16 left-1/2 h-auto bg-white border border-accent rounded-md p-4 z-10 flex gap-4">
       <ToolbarItem type={SeatingPlanElementTypes.TwoSeatsDesk}>
         <Button variant="outline">
           <RectangleHorizontal className="size-8" />
+          <RectangleHorizontal className="size-8" />
+        </Button>
+      </ToolbarItem>
+      <ToolbarItem type={SeatingPlanElementTypes.OneSeatDesk}>
+        <Button variant="outline">
           <RectangleHorizontal className="size-8" />
         </Button>
       </ToolbarItem>

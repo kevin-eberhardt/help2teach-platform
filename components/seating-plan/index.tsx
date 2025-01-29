@@ -10,9 +10,11 @@ import { calculateCanvasPosition, generateEmptySeatsForTable } from "./utils";
 import { zoomIdentity } from "d3-zoom";
 import SeatingPlanCanvas from "./canvas";
 import {
+  OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
   StudentSeatingPlanElementType,
+  TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
 import Toolbar from "./toolbar";
 import SeatingPlanElement from "./elements/element";
@@ -30,7 +32,6 @@ function makeStudentSeatingPlanElements(
 
 export default function SeatingPlan({
   students: initStudents,
-  seatingPlan,
 }: {
   students: StudentProps[];
   seatingPlan: SeatingPlanProps[];
@@ -68,20 +69,29 @@ export default function SeatingPlan({
     if (!active.rect.current.initial) return;
     if (draggedElementType === null) return;
 
-    setElements([
-      ...elements,
-      {
-        id: active.id.toString(),
-        coordinates: calculateCanvasPosition(
-          active.rect.current.initial,
-          over,
-          delta,
-          transform
-        ),
-        type: draggedElementType,
-        students: generateEmptySeatsForTable(active.id.toString(), 2),
-      },
-    ]);
+    const newElement: SeatingPlanElementType = {
+      id: active.id.toString(),
+      coordinates: calculateCanvasPosition(
+        active.rect.current.initial,
+        over,
+        delta,
+        transform
+      ),
+      type: draggedElementType,
+      data: { text: `Table ${active.id}` },
+    } as SeatingPlanElementType;
+
+    if (draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk) {
+      (newElement as TwoSeatsDeskSeatingPlanElementType).students =
+        generateEmptySeatsForTable(active.id.toString(), 2);
+    }
+
+    if (draggedElementType === SeatingPlanElementTypes.OneSeatDesk) {
+      (newElement as OneSeatDeskSeatingPlanElementType).student =
+        generateEmptySeatsForTable(active.id.toString(), 1)[0];
+    }
+
+    setElements([...elements, newElement]);
     setDraggedElementType(null);
   }
   return (

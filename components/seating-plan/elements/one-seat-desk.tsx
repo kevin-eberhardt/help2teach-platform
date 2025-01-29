@@ -1,6 +1,6 @@
 import {
+  OneSeatDeskSeatingPlanElementType,
   StudentSeatingPlanElementType,
-  TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
 import { useDraggable } from "@dnd-kit/core";
 import {
@@ -10,11 +10,11 @@ import {
 import { ZoomTransform } from "d3-zoom";
 import Seat from "@/components/seating-plan/elements/seat";
 
-export default function TwoSeatsDesk({
+export default function OneSeatDesk({
   element,
   canvasTransform,
 }: {
-  element: TwoSeatsDeskSeatingPlanElementType;
+  element: OneSeatDeskSeatingPlanElementType;
   canvasTransform: ZoomTransform;
 }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -46,26 +46,15 @@ export default function TwoSeatsDesk({
         e.preventDefault();
       }}
     >
-      <SortableContext
-        id={element.id.toString()}
-        items={element.students}
-        strategy={horizontalListSortingStrategy}
-      >
-        <div className="flex justify-center items-center gap-4">
-          {element.students.map((item: StudentSeatingPlanElementType) => {
-            const isEmpty = item.id.toString().includes("empty");
-            return (
-              <Seat
-                key={item.id}
-                id={item.id}
-                element={item}
-                canvasTransform={canvasTransform}
-                isEmpty={isEmpty}
-              />
-            );
-          })}
-        </div>
-      </SortableContext>
+      <div className="flex justify-center items-center gap-4">
+        <Seat
+          key={element.student.id}
+          id={element.student.id}
+          element={element.student}
+          canvasTransform={canvasTransform}
+          isEmpty={element.student.id.toString().includes("empty")}
+        />
+      </div>
     </div>
   );
 }

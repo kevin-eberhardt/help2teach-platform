@@ -1,13 +1,6 @@
 import { select } from "d3-selection";
 import { zoom, ZoomTransform } from "d3-zoom";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   KeyboardSensor,
   PointerSensor,
@@ -18,7 +11,6 @@ import {
   useDroppable,
   DragOverlay,
   DragStartEvent,
-  DragOverEvent,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
@@ -38,6 +30,7 @@ import Student from "@/components/seating-plan/elements/student";
 import TwoSeatsDesk from "./elements/two-seats-desk";
 import Seat from "./elements/seat";
 import useMousePosition from "@/hooks/use-mouse";
+import OneSeatDesk from "./elements/one-seat-desk";
 export default function SeatingPlanCanvas({
   elements,
   setElements,
@@ -65,6 +58,7 @@ export default function SeatingPlanCanvas({
       const activeTable = elements.find(
         (e) => e.id === active.data.current?.sortable.containerId
       );
+      if (!activeTable) return;
       const newElements = elements.map((element) => {
         if (element.id === activeTable?.id) {
           if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
@@ -101,7 +95,6 @@ export default function SeatingPlanCanvas({
         id: activeItem.id,
         type: SeatingPlanElementTypes.Student,
       };
-      console.log(activeTable, newActiveItem);
       setElements([...newElements, newActiveItem]);
     } else if (
       active &&
@@ -127,13 +120,13 @@ export default function SeatingPlanCanvas({
         !over.id.toString().includes(active.id.toString()) &&
         over.data.current &&
         over.data.current.sortable &&
-        !checkIfElementIsTable(active.data.current)
+        !checkIfElementIsTable(active.data.current as SeatingPlanElementType)
       ) {
         const activeStudent = active.data
           .current as unknown as StudentSeatingPlanElementType;
         const overTableId = over.data.current.sortable.containerId;
         const overTableIndex = over.data.current.sortable.index;
-        let overTableElement = elements.find((e) => e.id === overTableId);
+        const overTableElement = elements.find((e) => e.id === overTableId);
         if (!overTableElement) return;
 
         const overTableType = overTableElement?.type;
@@ -205,8 +198,6 @@ export default function SeatingPlanCanvas({
     setDraggingStudent(null);
   };
 
-  const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0 });
-
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
@@ -260,11 +251,6 @@ export default function SeatingPlanCanvas({
   }
 
   const mousePosition = useMousePosition();
-  useEffect(() => {
-    if (mousePosition) {
-      setCursorPosition(mousePosition);
-    }
-  }, [mousePosition]);
 
   return (
     <div ref={updateAndForwardRef} className="overflow-hidden">
@@ -310,7 +296,17 @@ export default function SeatingPlanCanvas({
                 <TwoSeatsDesk
                   key={element.id}
                   canvasTransform={transform}
-                  element={element}
+                  element={element as TwoSeatsDeskSeatingPlanElementType}
+                />
+              );
+            }
+
+            if (element.type === SeatingPlanElementTypes.OneSeatDesk) {
+              return (
+                <OneSeatDesk
+                  key={element.id}
+                  element={element as OneSeatDeskSeatingPlanElementType}
+                  canvasTransform={transform}
                 />
               );
             }
