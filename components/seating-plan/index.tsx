@@ -127,10 +127,16 @@ export default function SeatingPlan({
             transform: `scale(${transform.k})`,
           }}
         >
-          <SeatingPlanElement className="w-48">
-            <div className="h-12 w-20 bg-accent rounded-md" />
-            <div className="h-12 w-20 bg-accent rounded-md" />
-          </SeatingPlanElement>
+          {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
+            <SeatingPlanElement className="w-48">
+              <div className="h-12 w-20 bg-accent rounded-md" />
+              <div className="h-12 w-20 bg-accent rounded-md" />
+            </SeatingPlanElement>
+          ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
+            <SeatingPlanElement className="w-24">
+              <div className="h-12 w-20 bg-accent rounded-md" />
+            </SeatingPlanElement>
+          ) : null}
         </div>
       </DragOverlay>
     </DndContext>
