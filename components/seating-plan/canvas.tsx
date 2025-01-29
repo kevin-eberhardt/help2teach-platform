@@ -18,6 +18,7 @@ import {
   changeSeatedStudentPositions,
   checkIfElementIsTable,
   generateEmptySeatsForTable,
+  moveStudentFromCanvasToTable,
 } from "./utils";
 import {
   OneSeatDeskSeatingPlanElementType,
@@ -54,6 +55,7 @@ export default function SeatingPlanCanvas({
       !over &&
       active.data.current?.type === SeatingPlanElementTypes.Student
     ) {
+      // Moving student from table to canvas
       const activeItem = active.data.current as StudentSeatingPlanElementType;
       const activeTable = elements.find(
         (e) => e.id === active.data.current?.sortable.containerId
@@ -103,6 +105,7 @@ export default function SeatingPlanCanvas({
       over.data.current?.sortable &&
       active.id !== over.id
     ) {
+      // Moving student from table to table
       // container Id 'Sortable' is the default value if a student is not placed anywhere
       if (active.data.current.sortable.containerId !== "Sortable") {
         // Change positions of already placed students
@@ -122,6 +125,7 @@ export default function SeatingPlanCanvas({
         over.data.current.sortable &&
         !checkIfElementIsTable(active.data.current as SeatingPlanElementType)
       ) {
+        // Moving student from canvas to table
         const activeStudent = active.data
           .current as unknown as StudentSeatingPlanElementType;
         const overTableId = over.data.current.sortable.containerId;
@@ -132,53 +136,20 @@ export default function SeatingPlanCanvas({
         const overTableType = overTableElement?.type;
         let newElements = elements;
 
-        if (overTableType === SeatingPlanElementTypes.TwoSeatsDesk) {
-          const overTableElementAsDesk =
-            overTableElement as TwoSeatsDeskSeatingPlanElementType;
-          // check if overTableIndex is empty or not
-          const overTableStudent =
-            overTableElementAsDesk.students[overTableIndex];
-          if (overTableStudent.id.toString().includes("empty")) {
-            newElements = elements
-              .map((element) => {
-                if (element.id === overTableId) {
-                  const deskElement =
-                    element as TwoSeatsDeskSeatingPlanElementType;
-                  return {
-                    ...deskElement,
-                    students: deskElement.students.map((s, i) =>
-                      i === overTableIndex ? activeStudent : s
-                    ),
-                  };
-                }
-                return element;
-              })
-              .filter((element) => element.id !== active.id);
-          } else {
-            // swap students
-            newElements = elements.map((element) => {
-              if (element.id === overTableId) {
-                const deskElement =
-                  element as TwoSeatsDeskSeatingPlanElementType;
-                return {
-                  ...deskElement,
-                  students: deskElement.students.map((s, i) =>
-                    i === overTableIndex ? activeStudent : s
-                  ),
-                };
-              }
-              if (element.id === active.id) {
-                return {
-                  ...overTableStudent,
-                  coordinates: element.coordinates,
-                };
-              }
-              return element;
-            });
-          }
+        if (
+          overTableType === SeatingPlanElementTypes.TwoSeatsDesk ||
+          overTableType === SeatingPlanElementTypes.OneSeatDesk
+        ) {
+          newElements = moveStudentFromCanvasToTable(
+            elements,
+            activeStudent,
+            overTableElement,
+            overTableIndex
+          );
         }
         setElements(newElements);
       } else {
+        // Moving the element inside the canvas
         setElements(
           elements.map((element) => {
             if (element.id === active.id) {

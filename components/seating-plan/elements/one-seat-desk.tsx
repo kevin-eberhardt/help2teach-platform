@@ -1,7 +1,4 @@
-import {
-  OneSeatDeskSeatingPlanElementType,
-  StudentSeatingPlanElementType,
-} from "@/lib/types/seating-plan";
+import { OneSeatDeskSeatingPlanElementType } from "@/lib/types/seating-plan";
 import { useDraggable } from "@dnd-kit/core";
 import {
   horizontalListSortingStrategy,
@@ -46,15 +43,21 @@ export default function OneSeatDesk({
         e.preventDefault();
       }}
     >
-      <div className="flex justify-center items-center gap-4">
-        <Seat
-          key={element.student.id}
-          id={element.student.id}
-          element={element.student}
-          canvasTransform={canvasTransform}
-          isEmpty={element.student.id.toString().includes("empty")}
-        />
-      </div>
+      <SortableContext
+        id={element.id.toString()}
+        items={[element.student]}
+        strategy={horizontalListSortingStrategy}
+      >
+        <div className="flex justify-center items-center gap-4">
+          <Seat
+            key={element.student.id}
+            id={element.student.id}
+            element={element.student}
+            canvasTransform={canvasTransform}
+            isEmpty={element.student.id.toString().includes("empty")}
+          />
+        </div>
+      </SortableContext>
     </div>
   );
 }

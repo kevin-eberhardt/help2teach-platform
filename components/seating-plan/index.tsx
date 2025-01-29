@@ -58,8 +58,17 @@ export default function SeatingPlan({
       data: {
         text: "Table 2",
       },
-      type: SeatingPlanElementTypes.TwoSeatsDesk,
-      students: [students[4], generateEmptySeatsForTable("table-2", 1)[0]],
+      type: SeatingPlanElementTypes.OneSeatDesk,
+      student: students[4],
+    },
+    {
+      coordinates: { x: 500, y: 0 },
+      id: "table-3",
+      data: {
+        text: "Table 3",
+      },
+      type: SeatingPlanElementTypes.OneSeatDesk,
+      student: generateEmptySeatsForTable("table-3", 1)[0],
     },
   ]);
 
