@@ -22,11 +22,11 @@ import SeatingPlanElement from "./elements/element";
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
 ): StudentSeatingPlanElementType[] {
-  return students.map((student) => ({
+  return students.map((student, index) => ({
     id: student.id,
     type: SeatingPlanElementTypes.Student,
     data: student,
-    coordinates: { x: 0, y: 0 }, // Add default coordinates
+    coordinates: { x: 100, y: 150 + index * 50 },
   }));
 }
 
@@ -40,37 +40,7 @@ export default function SeatingPlan({
   const students = makeStudentSeatingPlanElements(initStudents);
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
-  const [elements, setElements] = useState<SeatingPlanElementType[]>([
-    students[0],
-    students[1],
-    {
-      coordinates: { x: 100, y: 0 },
-      id: "table-1",
-      data: {
-        text: "Table 1",
-      },
-      type: SeatingPlanElementTypes.TwoSeatsDesk,
-      students: [students[2], students[3]],
-    },
-    {
-      coordinates: { x: 400, y: 0 },
-      id: "table-2",
-      data: {
-        text: "Table 2",
-      },
-      type: SeatingPlanElementTypes.OneSeatDesk,
-      student: students[4],
-    },
-    {
-      coordinates: { x: 500, y: 0 },
-      id: "table-3",
-      data: {
-        text: "Table 3",
-      },
-      type: SeatingPlanElementTypes.OneSeatDesk,
-      student: generateEmptySeatsForTable("table-3", 1)[0],
-    },
-  ]);
+  const [elements, setElements] = useState<SeatingPlanElementType[]>(students);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
     console.log(over, active);

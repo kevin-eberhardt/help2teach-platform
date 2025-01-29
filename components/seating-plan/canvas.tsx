@@ -57,6 +57,8 @@ export default function SeatingPlanCanvas({
     ) {
       // Moving student from table to canvas
       const activeItem = active.data.current as StudentSeatingPlanElementType;
+      if (activeItem.id.toString().includes("empty")) return;
+
       const activeTable = elements.find(
         (e) => e.id === active.data.current?.sortable.containerId
       );
