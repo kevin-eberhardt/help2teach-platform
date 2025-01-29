@@ -6,7 +6,6 @@ import {
 } from "@dnd-kit/sortable";
 import { ZoomTransform } from "d3-zoom";
 import Seat from "@/components/seating-plan/elements/seat";
-import EmptySeat from "./empty-seat";
 
 export default function TwoSeatsDesk({
   element,
@@ -44,7 +43,6 @@ export default function TwoSeatsDesk({
         e.preventDefault();
       }}
     >
-      Table
       <SortableContext
         id={element.id}
         items={element.students}

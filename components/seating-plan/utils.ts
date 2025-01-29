@@ -5,7 +5,7 @@ import { ZoomTransform } from "d3-zoom";
 
 export function calculateCanvasPosition(
     initialRect: ClientRect,
-    over: Over,
+    over: Over|null,
     delta: Translate,
     transform: ZoomTransform
   ): Coordinates {
@@ -24,7 +24,7 @@ export function calculateCanvasPosition(
       // search for the table id in the students array
       elements.forEach((element) => {
         if (element.students && element.students.length > 0) {
-          element.students.forEach((student) => {
+          element.students.forEach((student: StudentSeatingPlanElementType) => {
             if (student.id === id) {
               tableId = element.id;
             }
@@ -116,7 +116,7 @@ export function generateEmptySeatsForTable(id: string, amountSeats: number = 2):
   const emptySeats = [];
   for (let i = 0; i < amountSeats; i++) {
     emptySeats.push({
-      id: `${id}-empty-${i}`,
+      id: `${id}-empty-${Math.floor(Math.random() * 100)}`,
       type: SeatingPlanElementTypes.Student,
       coordinates: { x: 0, y: 0 },
       data: {

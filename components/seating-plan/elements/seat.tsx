@@ -28,18 +28,16 @@ export default function Seat({
     isOver,
     active,
     over,
+    setDroppableNodeRef,
+    isDragging,
   } = useSortable({ id: id, data: element });
 
   const [validIsOver, setValidIsOver] = useState(false);
 
-  const { setNodeRef: droppableRef } = useDroppable({
-    id: `${id}-droppable`,
-  });
-
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    // opacity: isDragging ? 0 : 1,s
+    opacity: isDragging ? 0.4 : 1,
   };
 
   useEffect(() => {
@@ -87,11 +85,13 @@ export default function Seat({
           className={`${
             validIsOver ? "bg-primary text-primary-foreground" : "bg-accent"
           } h-12 w-24 flex items-center justify-center rounded-md`}
-          ref={droppableRef}
+          ref={setDroppableNodeRef}
         ></div>
       ) : (
         <div
-          className={`bg-primary text-primary-foreground h-12 w-24 flex items-center justify-center rounded-md`}
+          className={`${
+            validIsOver ? "bg-primary/40" : "bg-primary text-primary-foreground"
+          } h-12 w-24 flex items-center justify-center rounded-md`}
         >
           {element.data.name}
         </div>
