@@ -21,6 +21,7 @@ import SeatingPlanElement from "./elements/element";
 import { useHistory } from "@/hooks/use-history";
 import Controls from "./controls";
 import LastSavedState from "./last-saved-state";
+import { saveElements } from "./actions";
 
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
@@ -91,6 +92,12 @@ export default function SeatingPlan({
   }
   useEffect(() => {
     store();
+
+    const delayDebounceFn = setTimeout(() => {
+      saveElements(elements, seatingPlan.id);
+      console.log("Saved");
+    }, 5000);
+    return () => clearTimeout(delayDebounceFn);
   }, [elements]);
 
   return (
