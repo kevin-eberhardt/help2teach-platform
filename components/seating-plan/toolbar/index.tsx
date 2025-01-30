@@ -7,12 +7,16 @@ import { useTranslations } from "next-intl";
 export default function Toolbar() {
   const t = useTranslations("seating-plan");
   return (
-    <div className="absolute bottom-10 left-[calc(50%-6.5rem)] h-auto bg-white border border-accent rounded-md p-4 z-10 flex gap-4 shadow-md w-52">
+    <div className="absolute bottom-10 left-[calc(50%-6.5rem)] h-auto bg-white border border-accent rounded-md p-4 z-10 flex gap-4 shadow-md w-auto min-w-52">
       <ToolbarItem
         type={SeatingPlanElementTypes.TwoSeatsDesk}
         tooltipContent={t("toolbar.two-seats-desk-tooltip")}
       >
-        <Button variant="outline" className="hover:bg-white">
+        <Button
+          variant="outline"
+          className="hover:bg-white shadow-md"
+          size="lg"
+        >
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
         </Button>
@@ -21,7 +25,11 @@ export default function Toolbar() {
         type={SeatingPlanElementTypes.OneSeatDesk}
         tooltipContent={t("toolbar.one-seat-desk-tooltip")}
       >
-        <Button variant="outline" className="hover:bg-white">
+        <Button
+          variant="outline"
+          className="hover:bg-white shadow-md"
+          size="lg"
+        >
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
         </Button>
       </ToolbarItem>
