@@ -1,6 +1,13 @@
 import { select } from "d3-selection";
 import { zoom, ZoomTransform } from "d3-zoom";
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   KeyboardSensor,
   PointerSensor,
@@ -220,7 +227,7 @@ export default function SeatingPlanCanvas({
     // attach d3 zoom to the canvas div element, which will handle
     // mousewheel, gesture and drag events automatically for pan / zoom
     select<HTMLDivElement, unknown>(canvasRef.current).call(zoomBehavior);
-  }, [zoomBehavior, canvasRef, updateTransform]);
+  }, [transform, zoomBehavior, canvasRef, updateTransform]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -275,7 +282,7 @@ export default function SeatingPlanCanvas({
           </DragOverlay>
         )}
         <div
-          className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-3rem)]"
+          className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-4rem)]"
           style={{
             // apply the transform from d3
             transformOrigin: "top left",

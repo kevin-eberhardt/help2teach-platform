@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 export default function Toolbar() {
   const t = useTranslations("seating-plan");
   return (
-    <div className="absolute bottom-10 left-1/2 h-auto bg-white border border-accent rounded-md p-4 z-10 flex gap-4 shadow-md">
+    <div className="absolute bottom-10 left-[calc(50%-6.5rem)] h-auto bg-white border border-accent rounded-md p-4 z-10 flex gap-4 shadow-md w-52">
       <ToolbarItem
         type={SeatingPlanElementTypes.TwoSeatsDesk}
         tooltipContent={t("toolbar.two-seats-desk-tooltip")}

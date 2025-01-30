@@ -94,50 +94,50 @@ export default function SeatingPlan({
   }, [elements]);
 
   return (
-    <div className="relative">
-      <DndContext
-        onDragStart={({ active }) => {
-          setDraggedElementType(active.data.current?.type);
-        }}
-        onDragEnd={addToolbarItem}
-        id="canvas"
-      >
-        <LastEditState lastEdit={seatingPlan.edited_at} />
-        <Toolbar />
-        <Controls
-          undo={undo}
-          redo={redo}
-          isUndoDisabled={undoStack.length < 1}
-          isRedoDisabled={redoStack.length < 1}
-        />
+    <DndContext
+      onDragStart={({ active }) => {
+        setDraggedElementType(active.data.current?.type);
+      }}
+      onDragEnd={addToolbarItem}
+      id="canvas"
+    >
+      <LastEditState lastEdit={seatingPlan.edited_at} />
+      <Toolbar />
+      <Controls
+        zoom={transform}
+        setZoom={setTransform}
+        undo={undo}
+        redo={redo}
+        isUndoDisabled={undoStack.length < 1}
+        isRedoDisabled={redoStack.length < 1}
+      />
 
-        <SeatingPlanCanvas
-          elements={elements}
-          setElements={setElements}
-          transform={transform}
-          setTransform={setTransform}
-        />
+      <SeatingPlanCanvas
+        elements={elements}
+        setElements={setElements}
+        transform={transform}
+        setTransform={setTransform}
+      />
 
-        <DragOverlay>
-          <div
-            style={{
-              transformOrigin: "top left",
-              transform: `scale(${transform.k})`,
-            }}
-          >
-            {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
-              <SeatingPlanElement className="w-48">
-                <div className="h-12 w-20 bg-accent rounded-md" />
-                <div className="h-12 w-20 bg-accent rounded-md" />
-              </SeatingPlanElement>
-            ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
-              <SeatingPlanElement className="w-24">
-                <div className="h-12 w-20 bg-accent rounded-md" />
-              </SeatingPlanElement>
-            ) : null}
-          </div>
-        </DragOverlay>
-      </DndContext>
-    </div>
+      <DragOverlay>
+        <div
+          style={{
+            transformOrigin: "top left",
+            transform: `scale(${transform.k})`,
+          }}
+        >
+          {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
+            <SeatingPlanElement className="w-48">
+              <div className="h-12 w-20 bg-accent rounded-md" />
+              <div className="h-12 w-20 bg-accent rounded-md" />
+            </SeatingPlanElement>
+          ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
+            <SeatingPlanElement className="w-24">
+              <div className="h-12 w-20 bg-accent rounded-md" />
+            </SeatingPlanElement>
+          ) : null}
+        </div>
+      </DragOverlay>
+    </DndContext>
   );
 }
