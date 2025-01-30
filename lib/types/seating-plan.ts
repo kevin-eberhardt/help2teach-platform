@@ -6,12 +6,17 @@ export enum SeatingPlanElementTypes {
   Student,
   TwoSeatsDesk,
   OneSeatDesk,
+  StudentList
 }
 export type SeatingPlanCoreElementType = {
   id: UniqueIdentifier;
   coordinates: Coordinates;
   data?: any;
   type: SeatingPlanElementTypes;
+};
+
+export type StudentListSeatingPlanElementType = SeatingPlanCoreElementType & {
+  students: StudentSeatingPlanElementType[];
 };
 
 export type StudentSeatingPlanElementType = SeatingPlanCoreElementType & {

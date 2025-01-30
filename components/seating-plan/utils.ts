@@ -2,6 +2,7 @@ import {
   OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
+  StudentListSeatingPlanElementType,
   StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
@@ -58,20 +59,20 @@ export function changeSeatedStudentPositions(
   active: Active,
   over: Over
 ) {
-  const activeTableId = findTable(
+  const activeElementId = findTable(
     elements,
     active.data.current?.sortable.containerId
   );
-  const overTableId = findTable(
+  const overElementId = findTable(
     elements,
     over.data.current?.sortable.containerId
   );
 
   // Finde die Indexe in den jeweiligen students-Arrays
-  let activeTable = elements.find((t) => t.id === activeTableId);
-  let overTable = elements.find((t) => t.id === overTableId);
+  let activeElement = elements.find((t) => t.id === activeElementId);
+  let overElement = elements.find((t) => t.id === overElementId);
 
-  if (!activeTable || !overTable) {
+  if (!activeElement || !overElement) {
     return elements;
   }
   let activeIndex = -1;
@@ -80,35 +81,48 @@ export function changeSeatedStudentPositions(
   let activeItem = null;
   let overItem = null;
 
-  if (activeTable.type === SeatingPlanElementTypes.OneSeatDesk) {
-    activeTable = activeTable as OneSeatDeskSeatingPlanElementType;
+  if (activeElement.type === SeatingPlanElementTypes.OneSeatDesk) {
+    activeElement = activeElement as OneSeatDeskSeatingPlanElementType;
     activeIndex = 0;
-    activeItem = activeTable.student;
-  }
-  if (activeTable.type === SeatingPlanElementTypes.TwoSeatsDesk) {
-    activeTable = activeTable as TwoSeatsDeskSeatingPlanElementType;
-    activeIndex = activeTable.students.findIndex((s) => s.id === active.id);
-    activeItem = activeTable.students[activeIndex];
+    activeItem = activeElement.student;
   }
 
-  if (overTable.type === SeatingPlanElementTypes.OneSeatDesk) {
-    overTable = overTable as OneSeatDeskSeatingPlanElementType;
+  if (activeElement.type === SeatingPlanElementTypes.StudentList) {
+    activeElement = activeElement as StudentListSeatingPlanElementType;
+    activeIndex = activeElement.students.findIndex((s) => s.id === active.id);
+    activeItem = activeElement.students[activeIndex];
+  }
+
+  if (activeElement.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+    activeElement = activeElement as TwoSeatsDeskSeatingPlanElementType;
+    activeIndex = activeElement.students.findIndex((s) => s.id === active.id);
+    activeItem = activeElement.students[activeIndex];
+  }
+
+  if (overElement.type === SeatingPlanElementTypes.OneSeatDesk) {
+    overElement = overElement as OneSeatDeskSeatingPlanElementType;
     overIndex = 0;
-    overItem = overTable.student;
+    overItem = overElement.student;
   }
 
-  if (overTable.type === SeatingPlanElementTypes.TwoSeatsDesk) {
-    overTable = overTable as TwoSeatsDeskSeatingPlanElementType;
-    overIndex = overTable.students.findIndex((s) => s.id === over.id);
-    overItem = overTable.students[overIndex];
+  if (overElement.type === SeatingPlanElementTypes.StudentList) {
+    overElement = overElement as StudentListSeatingPlanElementType;
+    overIndex = overElement.students.findIndex((s) => s.id === over.id);
+    overItem = overElement.students[overIndex];
+  }
+
+  if (overElement.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+    overElement = overElement as TwoSeatsDeskSeatingPlanElementType;
+    overIndex = overElement.students.findIndex((s) => s.id === over.id);
+    overItem = overElement.students[overIndex];
   }
 
   const newElements = elements.map((element) => {
     // 2a) Wenn es dieselbe Tabelle ist („reorder“):
     if (
-      activeTableId === overTableId &&
-      element.id === activeTableId &&
-      activeTable.type === SeatingPlanElementTypes.TwoSeatsDesk &&
+      activeElementId === overElementId &&
+      element.id === activeElementId &&
+      activeElement.type === SeatingPlanElementTypes.TwoSeatsDesk &&
       activeItem
     ) {
       element = element as TwoSeatsDeskSeatingPlanElementType;
@@ -127,19 +141,19 @@ export function changeSeatedStudentPositions(
     }
     // 2b) Wenn es unterschiedliche Tabellen sind („swap“):
     else if (
-      element.id === activeTableId &&
-      activeTableId !== overTableId &&
+      element.id === activeElementId &&
+      activeElementId !== overElementId &&
       overItem
     ) {
       // TABELLE MIT DEM ACTIVEITEM: entferne activeItem, füge aber overItem an gleicher Stelle ein
-      if (activeTable.type === SeatingPlanElementTypes.OneSeatDesk) {
+      if (activeElement.type === SeatingPlanElementTypes.OneSeatDesk) {
         element = element as OneSeatDeskSeatingPlanElementType;
         return {
           ...element,
           student: overItem,
         };
       }
-      if (activeTable.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+      if (activeElement.type === SeatingPlanElementTypes.TwoSeatsDesk) {
         element = element as TwoSeatsDeskSeatingPlanElementType;
         const newStudents = [...element.students];
         newStudents.splice(activeIndex, 1);
@@ -150,13 +164,24 @@ export function changeSeatedStudentPositions(
           students: newStudents,
         };
       }
+
+      if (activeElement.type === SeatingPlanElementTypes.StudentList) {
+        element = element as StudentListSeatingPlanElementType;
+        const newStudents = [...element.students];
+        newStudents.splice(activeIndex, 1);
+
+        return {
+          ...element,
+          students: newStudents,
+        };
+      }
     } else if (
-      element.id === overTableId &&
-      activeTableId !== overTableId &&
+      element.id === overElementId &&
+      activeElementId !== overElementId &&
       activeItem
     ) {
       // TABELLE MIT DEM OVERITEM: entferne overItem, füge aber activeItem an gleicher Stelle ein
-      if (overTable.type === SeatingPlanElementTypes.OneSeatDesk) {
+      if (overElement.type === SeatingPlanElementTypes.OneSeatDesk) {
         element = element as OneSeatDeskSeatingPlanElementType;
         return {
           ...element,
@@ -164,7 +189,7 @@ export function changeSeatedStudentPositions(
         };
       }
 
-      if (overTable.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+      if (overElement.type === SeatingPlanElementTypes.TwoSeatsDesk || overElement.type === SeatingPlanElementTypes.StudentList) {
         element = element as TwoSeatsDeskSeatingPlanElementType;
         const newStudents = [...element.students];
         newStudents.splice(overIndex, 1);
@@ -204,27 +229,27 @@ export function generateEmptySeatsForTable(
   return emptySeats;
 }
 
-export function checkIfElementIsTable(element: SeatingPlanElementType) {
+export function checkIfElementIsDraggableContainer(element: SeatingPlanElementType) {
   return (
     element.type === SeatingPlanElementTypes.OneSeatDesk ||
-    element.type === SeatingPlanElementTypes.TwoSeatsDesk
+    element.type === SeatingPlanElementTypes.TwoSeatsDesk 
   );
 }
 
 export function moveStudentFromCanvasToTable(
   elements: SeatingPlanElementType[],
   student: StudentSeatingPlanElementType,
-  overTable: SeatingPlanElementType,
-  overTableIndex: number | null
+  overElement: SeatingPlanElementType,
+  overElementIndex: number | null
 ): SeatingPlanElementType[] {
   let newElements = elements;
-  let table = overTable;
+  let table = overElement;
 
   if (table.type === SeatingPlanElementTypes.OneSeatDesk) {
     table = table as OneSeatDeskSeatingPlanElementType;
-    const overTableStudent = table.student;
+    const overElementStudent = table.student;
 
-    if (overTableStudent.id.toString().includes("empty")) {
+    if (overElementStudent.id.toString().includes("empty")) {
       newElements = elements
         .map((element) => {
           if (element.id === table.id) {
@@ -248,7 +273,7 @@ export function moveStudentFromCanvasToTable(
         }
         if (element.id === student.id) {
           return {
-            ...overTableStudent,
+            ...overElementStudent,
             coordinates: element.coordinates,
           };
         }
@@ -259,12 +284,12 @@ export function moveStudentFromCanvasToTable(
 
   if (
     table.type === SeatingPlanElementTypes.TwoSeatsDesk &&
-    overTableIndex != null
+    overElementIndex != null
   ) {
     table = table as TwoSeatsDeskSeatingPlanElementType;
-    const overTableStudent = table.students[overTableIndex];
+    const overElementStudent = table.students[overElementIndex];
 
-    if (overTableStudent.id.toString().includes("empty")) {
+    if (overElementStudent.id.toString().includes("empty")) {
       newElements = elements
         .map((element) => {
           if (element.id === table.id) {
@@ -272,7 +297,7 @@ export function moveStudentFromCanvasToTable(
             return {
               ...deskElement,
               students: deskElement.students.map((s, i) =>
-                i === overTableIndex ? student : s
+                i === overElementIndex ? student : s
               ),
             };
           }
@@ -286,13 +311,13 @@ export function moveStudentFromCanvasToTable(
           return {
             ...deskElement,
             students: deskElement.students.map((s, i) =>
-              i === overTableIndex ? student : s
+              i === overElementIndex ? student : s
             ),
           };
         }
         if (element.id === student.id) {
           return {
-            ...overTableStudent,
+            ...overElementStudent,
             coordinates: element.coordinates,
           };
         }

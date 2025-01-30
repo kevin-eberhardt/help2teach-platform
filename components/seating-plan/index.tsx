@@ -13,6 +13,7 @@ import {
   OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
+  StudentListSeatingPlanElementType,
   StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
@@ -21,13 +22,18 @@ import SeatingPlanElement from "./elements/element";
 
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
-): StudentSeatingPlanElementType[] {
-  return students.map((student, index) => ({
-    id: student.id,
-    type: SeatingPlanElementTypes.Student,
-    data: student,
-    coordinates: { x: 100, y: 150 + index * 50 },
-  }));
+): StudentListSeatingPlanElementType {
+  return {
+    id: "student-list",
+    type: SeatingPlanElementTypes.StudentList,
+    coordinates: { x: 0, y: 100 },
+    students: students.map((student, index) => ({
+      id: student.id,
+      type: SeatingPlanElementTypes.Student,
+      data: student,
+      coordinates: { x: 100, y: 100 + index * 75 },
+    })),
+  };
 }
 
 export default function SeatingPlan({
@@ -37,13 +43,14 @@ export default function SeatingPlan({
   seatingPlan: SeatingPlanProps[];
 }) {
   const [transform, setTransform] = useState(zoomIdentity);
-  const students = makeStudentSeatingPlanElements(initStudents);
+  const studentList = makeStudentSeatingPlanElements(initStudents);
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
-  const [elements, setElements] = useState<SeatingPlanElementType[]>(students);
+  const [elements, setElements] = useState<SeatingPlanElementType[]>([
+    studentList,
+  ]);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
-    console.log(over, active);
     if (over?.id !== "canvas") return;
     if (!active.rect.current.initial) return;
     if (draggedElementType === null) return;
@@ -76,7 +83,6 @@ export default function SeatingPlan({
   return (
     <DndContext
       onDragStart={({ active }) => {
-        console.log(active);
         setDraggedElementType(active.data.current?.type);
       }}
       onDragEnd={addToolbarItem}

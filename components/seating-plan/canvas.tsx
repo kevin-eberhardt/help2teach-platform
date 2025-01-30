@@ -16,7 +16,7 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   calculateCanvasPosition,
   changeSeatedStudentPositions,
-  checkIfElementIsTable,
+  checkIfElementIsDraggableContainer,
   generateEmptySeatsForTable,
   moveStudentFromCanvasToTable,
 } from "./utils";
@@ -24,6 +24,7 @@ import {
   OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
+  StudentListSeatingPlanElementType,
   StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
@@ -32,6 +33,7 @@ import TwoSeatsDesk from "./elements/two-seats-desk";
 import Seat from "./elements/seat";
 import useMousePosition from "@/hooks/use-mouse";
 import OneSeatDesk from "./elements/one-seat-desk";
+import StudentList from "./elements/student-list";
 export default function SeatingPlanCanvas({
   elements,
   setElements,
@@ -43,19 +45,24 @@ export default function SeatingPlanCanvas({
   transform: ZoomTransform;
   setTransform(transform: ZoomTransform): void;
 }) {
+  function updateElementsAfterDragEnd(newElements: SeatingPlanElementType[]) {
+    setDraggingStudent(null);
+    setElements(newElements);
+  }
   const updateDraggedelementPosition = ({
     delta,
     active,
     over,
   }: DragEndEvent) => {
     if (!delta.x && !delta.y) return;
+    console.log(active);
     if (
       active &&
       active.data.current?.sortable &&
       !over &&
       active.data.current?.type === SeatingPlanElementTypes.Student
     ) {
-      // Moving student from table to canvas
+      // Moving student from element to canvas
       const activeItem = active.data.current as StudentSeatingPlanElementType;
       if (activeItem.id.toString().includes("empty")) return;
 
@@ -65,6 +72,17 @@ export default function SeatingPlanCanvas({
       if (!activeTable) return;
       const newElements = elements.map((element) => {
         if (element.id === activeTable?.id) {
+          if (element.type === SeatingPlanElementTypes.StudentList) {
+            const studentListElement =
+              element as StudentListSeatingPlanElementType;
+            return {
+              ...studentListElement,
+              students: studentListElement.students.filter(
+                (s) => s.id !== activeItem.id
+              ),
+            };
+          }
+
           if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
             const deskElement = element as TwoSeatsDeskSeatingPlanElementType;
             return {
@@ -99,7 +117,7 @@ export default function SeatingPlanCanvas({
         id: activeItem.id,
         type: SeatingPlanElementTypes.Student,
       };
-      setElements([...newElements, newActiveItem]);
+      updateElementsAfterDragEnd([...newElements, newActiveItem]);
     } else if (
       active &&
       active.data.current?.sortable &&
@@ -116,16 +134,17 @@ export default function SeatingPlanCanvas({
           active,
           over
         );
-        setElements(newElements);
+        updateElementsAfterDragEnd(newElements);
       }
     } else {
       if (
         active &&
         over &&
-        !over.id.toString().includes(active.id.toString()) &&
         over.data.current &&
         over.data.current.sortable &&
-        !checkIfElementIsTable(active.data.current as SeatingPlanElementType)
+        !checkIfElementIsDraggableContainer(
+          active.data.current as SeatingPlanElementType
+        )
       ) {
         // Moving student from canvas to table
         const activeStudent = active.data
@@ -149,10 +168,10 @@ export default function SeatingPlanCanvas({
             overTableIndex
           );
         }
-        setElements(newElements);
+        updateElementsAfterDragEnd(newElements);
       } else {
         // Moving the element inside the canvas
-        setElements(
+        updateElementsAfterDragEnd(
           elements.map((element) => {
             if (element.id === active.id) {
               return {
@@ -168,7 +187,6 @@ export default function SeatingPlanCanvas({
         );
       }
     }
-    setDraggingStudent(null);
   };
 
   const { setNodeRef } = useDroppable({
@@ -226,7 +244,10 @@ export default function SeatingPlanCanvas({
   const mousePosition = useMousePosition();
 
   return (
-    <div ref={updateAndForwardRef} className="overflow-hidden">
+    <div
+      ref={updateAndForwardRef}
+      className="overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"
+    >
       <DndContext
         sensors={sensors}
         onDragEnd={updateDraggedelementPosition}
@@ -254,16 +275,27 @@ export default function SeatingPlanCanvas({
           </DragOverlay>
         )}
         <div
-          className="canvas z-0 no-scrollbar"
+          className="canvas z-0 no-scrollbar overflow-hidden h-[calc(100svh-5.5rem)]"
           style={{
             // apply the transform from d3
             transformOrigin: "top left",
             transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.k}px)`,
-            height: window.innerHeight - 170,
-            width: window.innerWidth - 100,
           }}
         >
           {elements.map((element) => {
+            if (
+              element.type === SeatingPlanElementTypes.StudentList &&
+              (element as StudentListSeatingPlanElementType).students.length > 0
+            ) {
+              return (
+                <StudentList
+                  key={element.id}
+                  element={element as StudentListSeatingPlanElementType}
+                  canvasTransform={transform}
+                />
+              );
+            }
+
             if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
               return (
                 <TwoSeatsDesk

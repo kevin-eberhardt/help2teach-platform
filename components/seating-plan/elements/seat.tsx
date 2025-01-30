@@ -53,7 +53,6 @@ export default function Seat({
 
     if (isOver && active && over) {
       if (
-        over.id.toString().includes(active.id.toString()) ||
         active.data.current?.type === SeatingPlanElementTypes.TwoSeatsDesk ||
         active.data.current?.type === SeatingPlanElementTypes.OneSeatDesk
       ) {
