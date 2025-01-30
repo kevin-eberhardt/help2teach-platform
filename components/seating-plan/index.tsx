@@ -5,7 +5,7 @@ import {
 } from "@/lib/supabase/types/additional.types";
 import { DndContext, DragEndEvent, DragOverlay } from "@dnd-kit/core";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calculateCanvasPosition, generateEmptySeatsForTable } from "./utils";
 import { zoomIdentity } from "d3-zoom";
 import SeatingPlanCanvas from "./canvas";
@@ -18,6 +18,9 @@ import {
 } from "@/lib/types/seating-plan";
 import Toolbar from "./toolbar";
 import SeatingPlanElement from "./elements/element";
+import LastEditState from "./last-edit-state";
+import { useHistory } from "@/hooks/use-history";
+import Controls from "./controls";
 
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
@@ -36,18 +39,25 @@ function makeStudentSeatingPlanElements(
 }
 
 export default function SeatingPlan({
+  seatingPlan,
   students: initStudents,
 }: {
   students: StudentProps[];
-  seatingPlan: SeatingPlanProps[];
+  seatingPlan: SeatingPlanProps;
 }) {
   const [transform, setTransform] = useState(zoomIdentity);
   const studentList = makeStudentSeatingPlanElements(initStudents);
+  const {
+    history: elements,
+    setHistory: setElements,
+    undo,
+    redo,
+    store,
+    undoStack,
+    redoStack,
+  } = useHistory<SeatingPlanElementType[]>([studentList]);
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
-  const [elements, setElements] = useState<SeatingPlanElementType[]>([
-    studentList,
-  ]);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
     if (over?.id !== "canvas") return;
@@ -79,41 +89,55 @@ export default function SeatingPlan({
     setElements([...elements, newElement]);
     setDraggedElementType(null);
   }
+  useEffect(() => {
+    store();
+  }, [elements]);
+
   return (
-    <DndContext
-      onDragStart={({ active }) => {
-        setDraggedElementType(active.data.current?.type);
-      }}
-      onDragEnd={addToolbarItem}
-    >
-      <Toolbar />
+    <div className="relative">
+      <DndContext
+        onDragStart={({ active }) => {
+          setDraggedElementType(active.data.current?.type);
+        }}
+        onDragEnd={addToolbarItem}
+        id="canvas"
+      >
+        <LastEditState lastEdit={seatingPlan.edited_at} />
+        <Toolbar />
+        <Controls
+          undo={undo}
+          redo={redo}
+          isUndoDisabled={undoStack.length < 1}
+          isRedoDisabled={redoStack.length < 1}
+        />
 
-      <SeatingPlanCanvas
-        elements={elements}
-        setElements={setElements}
-        transform={transform}
-        setTransform={setTransform}
-      />
+        <SeatingPlanCanvas
+          elements={elements}
+          setElements={setElements}
+          transform={transform}
+          setTransform={setTransform}
+        />
 
-      <DragOverlay>
-        <div
-          style={{
-            transformOrigin: "top left",
-            transform: `scale(${transform.k})`,
-          }}
-        >
-          {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
-            <SeatingPlanElement className="w-48">
-              <div className="h-12 w-20 bg-accent rounded-md" />
-              <div className="h-12 w-20 bg-accent rounded-md" />
-            </SeatingPlanElement>
-          ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
-            <SeatingPlanElement className="w-24">
-              <div className="h-12 w-20 bg-accent rounded-md" />
-            </SeatingPlanElement>
-          ) : null}
-        </div>
-      </DragOverlay>
-    </DndContext>
+        <DragOverlay>
+          <div
+            style={{
+              transformOrigin: "top left",
+              transform: `scale(${transform.k})`,
+            }}
+          >
+            {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
+              <SeatingPlanElement className="w-48">
+                <div className="h-12 w-20 bg-accent rounded-md" />
+                <div className="h-12 w-20 bg-accent rounded-md" />
+              </SeatingPlanElement>
+            ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
+              <SeatingPlanElement className="w-24">
+                <div className="h-12 w-20 bg-accent rounded-md" />
+              </SeatingPlanElement>
+            ) : null}
+          </div>
+        </DragOverlay>
+      </DndContext>
+    </div>
   );
 }

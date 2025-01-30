@@ -156,6 +156,13 @@
     "toolbar": {
       "two-seats-desk-tooltip": "2er-Tisch",
       "one-seat-desk-tooltip": "Einzeltisch"
+    },
+    "last-edited": "Zuletzt bearbeitet:",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "settings" : {
+      "undefined-name": "Unbenannter Sitzplan",
+      "name-input-error": "Bitte gib einen Namen für den Sitzplan ein"
     }
   }
 }

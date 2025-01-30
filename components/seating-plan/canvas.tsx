@@ -275,7 +275,7 @@ export default function SeatingPlanCanvas({
           </DragOverlay>
         )}
         <div
-          className="canvas z-0 no-scrollbar overflow-hidden h-[calc(100svh-5.5rem)]"
+          className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-3rem)]"
           style={{
             // apply the transform from d3
             transformOrigin: "top left",

@@ -1,4 +1,5 @@
 import SeatingPlan from "@/components/seating-plan";
+import SeatingPlanSettingsBar from "@/components/seating-plan/settings-bar";
 import {
   getSeatingPlanById,
   getStudentsByClassId,
@@ -22,7 +23,7 @@ export default async function SeatingPlanPage({
   }
   return (
     <div>
-      <h1 className="text-4xl">{seatingPlan.name}</h1>
+      <SeatingPlanSettingsBar seatingPlan={seatingPlan} />
       <SeatingPlan students={students} seatingPlan={seatingPlan} />
     </div>
   );
