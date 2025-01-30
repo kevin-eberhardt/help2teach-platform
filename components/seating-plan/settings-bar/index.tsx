@@ -16,7 +16,6 @@ export default async function SeatingPlanSettingsBar({
           seatingPlan.name ? seatingPlan.name : t("settings.undefined-name")
         }
       />
-      <div>Settings</div>
     </div>
   );
 }

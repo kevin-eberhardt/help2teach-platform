@@ -18,9 +18,9 @@ import {
 } from "@/lib/types/seating-plan";
 import Toolbar from "./toolbar";
 import SeatingPlanElement from "./elements/element";
-import LastEditState from "./last-edit-state";
 import { useHistory } from "@/hooks/use-history";
 import Controls from "./controls";
+import LastSavedState from "./last-saved-state";
 
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
@@ -101,7 +101,7 @@ export default function SeatingPlan({
       onDragEnd={addToolbarItem}
       id="canvas"
     >
-      <LastEditState lastEdit={seatingPlan.edited_at} />
+      <LastSavedState lastEdit={seatingPlan.edited_at} />
       <Toolbar />
       <Controls
         zoom={transform}

@@ -14,7 +14,7 @@ export default function Toolbar() {
       >
         <Button
           variant="outline"
-          className="hover:bg-white shadow-md"
+          className="hover:bg-white shadow-md h-14 [&_svg]:size-14"
           size="lg"
         >
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
@@ -27,7 +27,7 @@ export default function Toolbar() {
       >
         <Button
           variant="outline"
-          className="hover:bg-white shadow-md"
+          className="hover:bg-white shadow-md h-14 [&_svg]:size-14"
           size="lg"
         >
           <RectangleHorizontal className="size-10 fill-accent text-accent" />

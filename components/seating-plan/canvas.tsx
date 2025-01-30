@@ -62,7 +62,6 @@ export default function SeatingPlanCanvas({
     over,
   }: DragEndEvent) => {
     if (!delta.x && !delta.y) return;
-    console.log(active);
     if (
       active &&
       active.data.current?.sortable &&
@@ -217,6 +216,15 @@ export default function SeatingPlanCanvas({
     },
     [setTransform]
   );
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    // Re-apply the parent's transform to sync whenever it updates
+    select<HTMLDivElement, unknown>(canvasRef.current).call(
+      zoomBehavior.transform,
+      transform
+    );
+  }, [transform, zoomBehavior]);
 
   useLayoutEffect(() => {
     if (!canvasRef.current) return;

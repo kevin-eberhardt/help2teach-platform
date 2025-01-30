@@ -31,12 +31,12 @@ export default function Controls({
   return (
     <div className="absolute bottom-10 left-4 flex gap-4 z-10">
       <TooltipProvider>
-        <Tooltip>
+        {/* <Tooltip>
           <TooltipTrigger asChild>
             <ZoomButton zoom={zoom} setZoom={setZoom} />
           </TooltipTrigger>
           <TooltipContent>{t("undo")}</TooltipContent>
-        </Tooltip>
+        </Tooltip> */}
         <div className="space-x-2">
           <Tooltip>
             <TooltipTrigger asChild>

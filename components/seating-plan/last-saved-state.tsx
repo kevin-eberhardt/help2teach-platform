@@ -2,7 +2,7 @@
 import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
 import { useFormatter, useTranslations } from "next-intl";
 
-export default function LastEditState({
+export default function LastSavedState({
   lastEdit,
 }: {
   lastEdit: SeatingPlanProps["edited_at"];
@@ -23,7 +23,7 @@ export default function LastEditState({
 
   return (
     <div className="absolute bottom-4 right-4 text-xs text-gray-400 w-auto z-10">
-      {t("last-edited")} {lastEditDate}
+      {t("last-saved")} {lastEditDate}
     </div>
   );
 }
