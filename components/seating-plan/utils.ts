@@ -6,6 +6,7 @@ import {
   StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
+import { generateUUID } from "@/lib/utils";
 import {
   Active,
   ClientRect,
@@ -215,7 +216,7 @@ export function generateEmptySeatsForTable(
   const emptySeats = [];
   for (let i = 0; i < amountSeats; i++) {
     emptySeats.push({
-      id: `${id}-empty-${Math.floor(Math.random() * 100)}`,
+      id: `${id}-empty-${generateUUID()}`,
       type: SeatingPlanElementTypes.Student,
       coordinates: { x: 0, y: 0 },
       data: {

@@ -151,5 +151,11 @@
       "input-gender-description": "The gender of the student",
       "no-results": "No students found"
     }
+  },
+  "seating-plan": {
+    "toolbar": {
+      "two-seats-desk-tooltip": "2-seater table",
+      "one-seat-desk-tooltip": "Single table"
+    }
   }
 }

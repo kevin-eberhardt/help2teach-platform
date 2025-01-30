@@ -1,11 +1,19 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { SeatingPlanElementTypes } from "@/lib/types/seating-plan";
 import { useDraggable } from "@dnd-kit/core";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ToolbarItem({
+  tooltipContent,
   type,
   children,
 }: {
+  tooltipContent?: React.ReactNode;
   type: SeatingPlanElementTypes;
   children?: React.ReactNode;
 }) {
@@ -16,7 +24,16 @@ export default function ToolbarItem({
 
   return (
     <div ref={setNodeRef} {...listeners} {...attributes}>
-      {children}
+      {tooltipContent ? (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{children}</TooltipTrigger>
+            <TooltipContent>{tooltipContent}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        children
+      )}
     </div>
   );
 }

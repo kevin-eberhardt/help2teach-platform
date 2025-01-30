@@ -151,5 +151,11 @@
       "input-gender-description": "Das Geschlecht des Schülers / der Schülerin",
       "no-results": "Keine Schüler*innen gefunden"
     }
+  },
+  "seating-plan": {
+    "toolbar": {
+      "two-seats-desk-tooltip": "2er-Tisch",
+      "one-seat-desk-tooltip": "Einzeltisch"
+    }
   }
 }

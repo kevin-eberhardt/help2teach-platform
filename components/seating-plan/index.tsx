@@ -14,7 +14,6 @@ import {
   SeatingPlanElementType,
   SeatingPlanElementTypes,
   StudentListSeatingPlanElementType,
-  StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
 import Toolbar from "./toolbar";
