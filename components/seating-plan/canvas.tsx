@@ -268,7 +268,9 @@ export default function SeatingPlanCanvas({
 
     if (e.touches.length === 2) {
       // Pinch-to-zoom start
-      const distance = getDistance(e.touches[0], e.touches[1]);
+      const touch1 = e.touches[0] as Touch;
+      const touch2 = e.touches[1] as Touch;
+      const distance = getDistance(touch1, touch2);
       setInitialPinchDistance(distance);
       setInitialScale(transform.k);
     } else if (e.touches.length === 1) {
