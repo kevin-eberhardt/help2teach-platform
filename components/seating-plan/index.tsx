@@ -47,7 +47,9 @@ export default function SeatingPlan({
   seatingPlan: SeatingPlanProps;
 }) {
   const [transform, setTransform] = useState(zoomIdentity);
-  const studentList = makeStudentSeatingPlanElements(initStudents);
+  const elementList = seatingPlan.nodes
+    ? (seatingPlan.nodes as SeatingPlanElementType[])
+    : [makeStudentSeatingPlanElements(initStudents)];
   const {
     history: elements,
     setHistory: setElements,
@@ -56,7 +58,7 @@ export default function SeatingPlan({
     store,
     undoStack,
     redoStack,
-  } = useHistory<SeatingPlanElementType[]>([studentList]);
+  } = useHistory<SeatingPlanElementType[]>(elementList);
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
 
