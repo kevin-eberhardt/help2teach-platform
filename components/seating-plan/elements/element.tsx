@@ -19,21 +19,22 @@ const SeatingPlanElement = React.forwardRef<
     const { selectedElement, setSelectedElement } = useSeatingPlan();
 
     const [isActive, setIsActive] = useState(isActiveProp);
+    const [isSelected, setIsSelected] = useState(false);
 
     useEffect(() => {
       setIsActive(isActiveProp);
     }, [isActiveProp]);
 
     useEffect(() => {
-      setIsActive(selectedElement?.id === element?.id);
+      setIsSelected(selectedElement?.id === element?.id);
     }, [selectedElement]);
 
     return (
       <div
         ref={ref}
         className={cn(
-          "p-4 bg-white border rounded-md shadow-sm flex gap-4 min-h-16",
-          isActive ? "border-primary" : "border-accent",
+          "relative p-4 bg-white border rounded-md shadow-sm flex gap-4 min-h-16",
+          isActive || isSelected ? "border-primary" : "border-accent",
           className
         )}
         {...props}
@@ -41,6 +42,11 @@ const SeatingPlanElement = React.forwardRef<
           setSelectedElement(element);
         }}
       >
+        {isSelected && (
+          <div className="absolute -top-4 left-1/2 bg-white rounded-md border border-primary ">
+            Test
+          </div>
+        )}
         {children}
       </div>
     );

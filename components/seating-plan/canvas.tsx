@@ -18,6 +18,7 @@ import {
   useDroppable,
   DragOverlay,
   DragStartEvent,
+  TouchSensor,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
@@ -248,6 +249,7 @@ export default function SeatingPlanCanvas({
         distance: 5,
       },
     }),
+    useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })

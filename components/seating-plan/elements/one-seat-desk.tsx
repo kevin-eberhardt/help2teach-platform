@@ -41,27 +41,28 @@ export default function OneSeatDesk({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="overflow-clip"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
       }}
     >
-      <SortableContext
-        id={element.id.toString()}
-        items={[element.student]}
-        strategy={horizontalListSortingStrategy}
-      >
-        <div className="flex justify-center items-center gap-4">
-          <Seat
-            key={element.student.id}
-            id={element.student.id}
-            element={element.student}
-            canvasTransform={canvasTransform}
-            isEmpty={element.student.id.toString().includes("empty")}
-          />
-        </div>
-      </SortableContext>
+      <div className="overflow-clip">
+        <SortableContext
+          id={element.id.toString()}
+          items={[element.student]}
+          strategy={horizontalListSortingStrategy}
+        >
+          <div className="flex justify-center items-center gap-4">
+            <Seat
+              key={element.student.id}
+              id={element.student.id}
+              element={element.student}
+              canvasTransform={canvasTransform}
+              isEmpty={element.student.id.toString().includes("empty")}
+            />
+          </div>
+        </SortableContext>
+      </div>
     </SeatingPlanElement>
   );
 }

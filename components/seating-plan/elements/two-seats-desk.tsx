@@ -44,32 +44,33 @@ export default function TwoSeatsDesk({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="overflow-clip"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
       }}
     >
-      <SortableContext
-        id={element.id.toString()}
-        items={element.students}
-        strategy={horizontalListSortingStrategy}
-      >
-        <div className="flex justify-center items-center gap-4">
-          {element.students.map((item: StudentSeatingPlanElementType) => {
-            const isEmpty = item.id.toString().includes("empty");
-            return (
-              <Seat
-                key={item.id}
-                id={item.id}
-                element={item}
-                canvasTransform={canvasTransform}
-                isEmpty={isEmpty}
-              />
-            );
-          })}
-        </div>
-      </SortableContext>
+      <div className="overflow-clip">
+        <SortableContext
+          id={element.id.toString()}
+          items={element.students}
+          strategy={horizontalListSortingStrategy}
+        >
+          <div className="flex justify-center items-center gap-4">
+            {element.students.map((item: StudentSeatingPlanElementType) => {
+              const isEmpty = item.id.toString().includes("empty");
+              return (
+                <Seat
+                  key={item.id}
+                  id={item.id}
+                  element={item}
+                  canvasTransform={canvasTransform}
+                  isEmpty={isEmpty}
+                />
+              );
+            })}
+          </div>
+        </SortableContext>
+      </div>
     </SeatingPlanElement>
   );
 }
