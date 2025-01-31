@@ -286,20 +286,26 @@ export default function SeatingPlanCanvas({
     // Prevent default touch behavior
     e.preventDefault();
     e.stopPropagation();
-
     if (e.touches.length === 2 && initialPinchDistance !== null) {
-      // Pinch-to-zoom
-      const currentDistance = getDistance(e.touches[0], e.touches[1]);
+      const touch1 = e.touches[0] as Touch;
+      const touch2 = e.touches[1] as Touch;
+      const currentDistance = getDistance(touch1, touch2);
       const scale = (currentDistance / initialPinchDistance) * initialScale;
-
-      // Begrenzen Sie den Zoom-Bereich (optional)
       const clampedScale = Math.min(Math.max(scale, 0.1), 4);
 
-      // Berechnen Sie den Mittelpunkt der beiden Berührungspunkte
+      // Berechnen Sie den Mittelpunkt im Bildschirmkoordinaten
       const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
       const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
 
-      setTransform(new ZoomTransform(clampedScale, transform.x, transform.y));
+      // Berechnen Sie den Mittelpunkt in den ursprünglichen Koordinaten
+      const pointX = (midX - transform.x) / transform.k;
+      const pointY = (midY - transform.y) / transform.k;
+
+      // Berechnen Sie die neue Position
+      const newX = midX - pointX * clampedScale;
+      const newY = midY - pointY * clampedScale;
+
+      setTransform(new ZoomTransform(clampedScale, newX, newY));
     } else if (e.touches.length === 1 && touchStartPosition) {
       // Pan
       const dx = e.touches[0].clientX - touchStartPosition.x;

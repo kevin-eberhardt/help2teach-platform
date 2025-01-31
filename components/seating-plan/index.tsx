@@ -7,6 +7,8 @@ import {
   DndContext,
   DragEndEvent,
   DragOverlay,
+  KeyboardSensor,
+  MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -71,7 +73,9 @@ export default function SeatingPlan({
     useState<SeatingPlanElementTypes | null>(null);
 
   const touchSensor = useSensor(TouchSensor);
-  const sensors = useSensors(touchSensor);
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+  const sensors = useSensors(touchSensor, mouseSensor, keyboardSensor);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
     if (over?.id !== "canvas") return;
