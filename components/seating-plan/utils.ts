@@ -23,13 +23,30 @@ export function calculateCanvasPosition(
   delta: Translate,
   transform: ZoomTransform
 ): Coordinates {
+  if (!over?.rect) return { x: 0, y: 0 };
+
+  // Berechne die Position im Viewport
+  const viewportX = initialRect.left + delta.x;
+  const viewportY = initialRect.top + delta.y;
+
+  // Berechne die relative Position zum Canvas-Container
+  const relativeX = viewportX - over.rect.left;
+  const relativeY = viewportY - over.rect.top;
+
+  // Konvertiere zu Canvas-Koordinaten unter Berücksichtigung von:
+  // 1. Zoom-Faktor (transform.k)
+  // 2. Canvas-Verschiebung (transform.x, transform.y)
+  // 3. Canvas-Größe (200%) und -50% Offset
+  const canvasX =
+    (relativeX - transform.x) / transform.k +
+    over.rect.width / (2 * transform.k);
+  const canvasY =
+    (relativeY - transform.y) / transform.k +
+    over.rect.height / (2 * transform.k);
+
   return {
-    x:
-      (initialRect.left + delta.x - (over?.rect?.left ?? 0) - transform.x) /
-      transform.k,
-    y:
-      (initialRect.top + delta.y - (over?.rect?.top ?? 0) - transform.y) /
-      transform.k,
+    x: canvasX,
+    y: canvasY,
   };
 }
 
@@ -190,7 +207,10 @@ export function changeSeatedStudentPositions(
         };
       }
 
-      if (overElement.type === SeatingPlanElementTypes.TwoSeatsDesk || overElement.type === SeatingPlanElementTypes.StudentList) {
+      if (
+        overElement.type === SeatingPlanElementTypes.TwoSeatsDesk ||
+        overElement.type === SeatingPlanElementTypes.StudentList
+      ) {
         element = element as TwoSeatsDeskSeatingPlanElementType;
         const newStudents = [...element.students];
         newStudents.splice(overIndex, 1);
@@ -230,10 +250,12 @@ export function generateEmptySeatsForTable(
   return emptySeats;
 }
 
-export function checkIfElementIsDraggableContainer(element: SeatingPlanElementType) {
+export function checkIfElementIsDraggableContainer(
+  element: SeatingPlanElementType
+) {
   return (
     element.type === SeatingPlanElementTypes.OneSeatDesk ||
-    element.type === SeatingPlanElementTypes.TwoSeatsDesk 
+    element.type === SeatingPlanElementTypes.TwoSeatsDesk
   );
 }
 
