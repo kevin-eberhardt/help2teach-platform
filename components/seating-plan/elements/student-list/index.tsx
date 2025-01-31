@@ -27,6 +27,7 @@ export default function StudentList({
 
   return (
     <SeatingPlanElement
+      element={element}
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,

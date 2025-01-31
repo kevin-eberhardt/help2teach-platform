@@ -41,6 +41,7 @@ import Seat from "./elements/seat";
 import useMousePosition from "@/hooks/use-mouse";
 import OneSeatDesk from "./elements/one-seat-desk";
 import StudentList from "./elements/student-list";
+import { useSeatingPlan } from "@/hooks/use-seating-plan";
 export default function SeatingPlanCanvas({
   elements,
   setElements,
@@ -195,6 +196,8 @@ export default function SeatingPlanCanvas({
     }
   };
 
+  const { setSelectedElement } = useSeatingPlan();
+
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
@@ -229,6 +232,8 @@ export default function SeatingPlanCanvas({
   useLayoutEffect(() => {
     if (!canvasRef.current) return;
 
+    setSelectedElement(undefined);
+
     // get transform change notifications from d3 zoom
     zoomBehavior.on("zoom", updateTransform);
 
@@ -238,7 +243,11 @@ export default function SeatingPlanCanvas({
   }, [transform, zoomBehavior, canvasRef, updateTransform]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -258,10 +267,18 @@ export default function SeatingPlanCanvas({
 
   const mousePosition = useMousePosition();
 
+  function handleCanvasClick(e: React.MouseEvent<HTMLDivElement>) {
+    const clickElement = e.target as HTMLElement;
+    if (clickElement.id === "canvas") {
+      setSelectedElement(undefined);
+    }
+  }
+
   return (
     <div
       ref={updateAndForwardRef}
       className="overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"
+      onClick={handleCanvasClick}
     >
       <DndContext
         sensors={sensors}
@@ -290,6 +307,7 @@ export default function SeatingPlanCanvas({
           </DragOverlay>
         )}
         <div
+          id="canvas"
           className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-4rem)]"
           style={{
             // apply the transform from d3

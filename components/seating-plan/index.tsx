@@ -22,6 +22,7 @@ import { useHistory } from "@/hooks/use-history";
 import Controls from "./controls";
 import LastSavedState from "./last-saved-state";
 import { saveElements } from "./actions";
+import { SeatingPlanProvider } from "@/hooks/use-seating-plan";
 
 function makeStudentSeatingPlanElements(
   students: StudentProps[]
@@ -110,43 +111,45 @@ export default function SeatingPlan({
       onDragEnd={addToolbarItem}
       id="canvas"
     >
-      <LastSavedState lastEdit={seatingPlan.edited_at} />
-      <Toolbar />
-      <Controls
-        zoom={transform}
-        setZoom={setTransform}
-        undo={undo}
-        redo={redo}
-        isUndoDisabled={undoStack.length < 1}
-        isRedoDisabled={redoStack.length < 1}
-      />
+      <SeatingPlanProvider>
+        <LastSavedState lastEdit={seatingPlan.edited_at} />
+        <Toolbar />
+        <Controls
+          zoom={transform}
+          setZoom={setTransform}
+          undo={undo}
+          redo={redo}
+          isUndoDisabled={undoStack.length < 1}
+          isRedoDisabled={redoStack.length < 1}
+        />
 
-      <SeatingPlanCanvas
-        elements={elements}
-        setElements={setElements}
-        transform={transform}
-        setTransform={setTransform}
-      />
+        <SeatingPlanCanvas
+          elements={elements}
+          setElements={setElements}
+          transform={transform}
+          setTransform={setTransform}
+        />
 
-      <DragOverlay>
-        <div
-          style={{
-            transformOrigin: "top left",
-            transform: `scale(${transform.k})`,
-          }}
-        >
-          {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
-            <SeatingPlanElement className="w-48">
-              <div className="h-12 w-20 bg-accent rounded-md" />
-              <div className="h-12 w-20 bg-accent rounded-md" />
-            </SeatingPlanElement>
-          ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
-            <SeatingPlanElement className="w-24">
-              <div className="h-12 w-20 bg-accent rounded-md" />
-            </SeatingPlanElement>
-          ) : null}
-        </div>
-      </DragOverlay>
+        <DragOverlay>
+          <div
+            style={{
+              transformOrigin: "top left",
+              transform: `scale(${transform.k})`,
+            }}
+          >
+            {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
+              <SeatingPlanElement className="w-48">
+                <div className="h-12 w-20 bg-accent rounded-md" />
+                <div className="h-12 w-20 bg-accent rounded-md" />
+              </SeatingPlanElement>
+            ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
+              <SeatingPlanElement className="w-24">
+                <div className="h-12 w-20 bg-accent rounded-md" />
+              </SeatingPlanElement>
+            ) : null}
+          </div>
+        </DragOverlay>
+      </SeatingPlanProvider>
     </DndContext>
   );
 }

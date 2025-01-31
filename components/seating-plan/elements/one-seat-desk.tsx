@@ -24,6 +24,7 @@ export default function OneSeatDesk({
   return (
     <SeatingPlanElement
       isActive={isDragging}
+      element={element}
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
