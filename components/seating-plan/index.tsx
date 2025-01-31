@@ -3,7 +3,14 @@ import {
   SeatingPlanProps,
   Student as StudentProps,
 } from "@/lib/supabase/types/additional.types";
-import { DndContext, DragEndEvent, DragOverlay } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 import { useEffect, useState } from "react";
 import { calculateCanvasPosition, generateEmptySeatsForTable } from "./utils";
@@ -63,6 +70,9 @@ export default function SeatingPlan({
   const [draggedElementType, setDraggedElementType] =
     useState<SeatingPlanElementTypes | null>(null);
 
+  const touchSensor = useSensor(TouchSensor);
+  const sensors = useSensors(touchSensor);
+
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
     if (over?.id !== "canvas") return;
     if (!active.rect.current.initial) return;
@@ -105,6 +115,7 @@ export default function SeatingPlan({
 
   return (
     <DndContext
+      sensors={sensors}
       onDragStart={({ active }) => {
         setDraggedElementType(active.data.current?.type);
       }}

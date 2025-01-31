@@ -58,6 +58,17 @@ export default function SeatingPlanCanvas({
     setDraggingStudent(null);
     setElements(newElements);
   }
+  const [isDragging, setIsDragging] = useState(false);
+  const [touchStartPosition, setTouchStartPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+
+  const [initialPinchDistance, setInitialPinchDistance] = useState<
+    number | null
+  >(null);
+  const [initialScale, setInitialScale] = useState<number>(1);
+
   const updateDraggedelementPosition = ({
     delta,
     active,
@@ -235,13 +246,79 @@ export default function SeatingPlanCanvas({
 
     setSelectedElement(undefined);
 
+    zoomBehavior.touchable(false);
+
     // get transform change notifications from d3 zoom
     zoomBehavior.on("zoom", updateTransform);
 
     // attach d3 zoom to the canvas div element, which will handle
     // mousewheel, gesture and drag events automatically for pan / zoom
     select<HTMLDivElement, unknown>(canvasRef.current).call(zoomBehavior);
-  }, [transform, zoomBehavior, canvasRef, updateTransform]);
+  }, [transform, zoomBehavior, canvasRef, updateTransform, isDragging]);
+
+  const getDistance = (touch1: Touch, touch2: Touch) => {
+    return Math.hypot(
+      touch2.clientX - touch1.clientX,
+      touch2.clientY - touch1.clientY
+    );
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (isDragging) return;
+
+    if (e.touches.length === 2) {
+      // Pinch-to-zoom start
+      const distance = getDistance(e.touches[0], e.touches[1]);
+      setInitialPinchDistance(distance);
+      setInitialScale(transform.k);
+    } else if (e.touches.length === 1) {
+      // Pan start
+      setTouchStartPosition({
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isDragging) return;
+
+    // Prevent default touch behavior
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.touches.length === 2 && initialPinchDistance !== null) {
+      // Pinch-to-zoom
+      const currentDistance = getDistance(e.touches[0], e.touches[1]);
+      const scale = (currentDistance / initialPinchDistance) * initialScale;
+
+      // Begrenzen Sie den Zoom-Bereich (optional)
+      const clampedScale = Math.min(Math.max(scale, 0.1), 4);
+
+      // Berechnen Sie den Mittelpunkt der beiden Berührungspunkte
+      const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+      setTransform(new ZoomTransform(clampedScale, transform.x, transform.y));
+    } else if (e.touches.length === 1 && touchStartPosition) {
+      // Pan
+      const dx = e.touches[0].clientX - touchStartPosition.x;
+      const dy = e.touches[0].clientY - touchStartPosition.y;
+
+      setTransform(
+        new ZoomTransform(transform.k, transform.x + dx, transform.y + dy)
+      );
+      setTouchStartPosition({
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setTouchStartPosition(null);
+    setInitialPinchDistance(null);
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -281,11 +358,23 @@ export default function SeatingPlanCanvas({
       ref={updateAndForwardRef}
       className="overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"
       onClick={handleCanvasClick}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{
+        touchAction: isDragging ? "none" : "manipulation",
+      }}
     >
       <DndContext
         sensors={sensors}
-        onDragEnd={updateDraggedelementPosition}
-        onDragStart={handleDragStart}
+        onDragEnd={(event) => {
+          setIsDragging(false);
+          updateDraggedelementPosition(event);
+        }}
+        onDragStart={(event) => {
+          setIsDragging(true);
+          handleDragStart(event);
+        }}
       >
         {draggingStudent && (
           <DragOverlay>
@@ -313,6 +402,7 @@ export default function SeatingPlanCanvas({
           className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-4rem)]"
           style={{
             // apply the transform from d3
+            touchAction: "none",
             transformOrigin: "top left",
             transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.k}px)`,
           }}
