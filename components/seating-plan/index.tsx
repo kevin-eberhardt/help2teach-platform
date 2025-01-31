@@ -137,14 +137,12 @@ export default function SeatingPlan({
           isUndoDisabled={undoStack.length < 1}
           isRedoDisabled={redoStack.length < 1}
         />
-
         <SeatingPlanCanvas
           elements={elements}
           setElements={setElements}
           transform={transform}
           setTransform={setTransform}
         />
-
         <DragOverlay>
           <div
             style={{

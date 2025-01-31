@@ -369,6 +369,10 @@ export default function SeatingPlanCanvas({
       onTouchEnd={handleTouchEnd}
       style={{
         touchAction: isDragging ? "none" : "manipulation",
+        width: "100%",
+        height: "calc(100svh - 4rem)",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <DndContext
@@ -405,12 +409,17 @@ export default function SeatingPlanCanvas({
         )}
         <div
           id="canvas"
-          className="canvas -z-10 no-scrollbar overflow-hidden h-[calc(100svh-4rem)]"
+          className="absolute"
           style={{
-            // apply the transform from d3
+            width: `${200 * transform.k}%`,
+            height: `${200 * transform.k}%`,
+            minWidth: "200%",
+            minHeight: "200%",
+            left: "-50%",
+            top: "-50%",
             touchAction: "none",
-            transformOrigin: "top left",
-            transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.k}px)`,
+            transformOrigin: "center center",
+            transform: `translate(${transform.x}px, ${transform.y}px)`,
           }}
         >
           {elements.map((element) => {
