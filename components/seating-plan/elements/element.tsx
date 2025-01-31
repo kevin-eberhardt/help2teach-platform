@@ -1,15 +1,20 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
+interface SeatingPlanElementProps extends React.HTMLAttributes<HTMLDivElement> {
+  isActive?: boolean;
+}
+
 const SeatingPlanElement = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
+  SeatingPlanElementProps
+>(({ className, children, isActive = false, ...props }, ref) => {
   return (
     <div
       ref={ref}
       className={cn(
-        "bg-white border border-gray-100 rounded-md p-2 shadow-sm flex gap-4 min-h-16",
+        "p-4 bg-white border rounded-md p-2 shadow-sm flex gap-4 min-h-16",
+        isActive ? "border-primary" : "border-accent",
         className
       )}
       {...props}

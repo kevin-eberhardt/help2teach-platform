@@ -9,6 +9,7 @@ import {
 } from "@dnd-kit/sortable";
 import { ZoomTransform } from "d3-zoom";
 import Seat from "@/components/seating-plan/elements/seat";
+import SeatingPlanElement from "./element";
 
 export default function TwoSeatsDesk({
   element,
@@ -17,13 +18,15 @@ export default function TwoSeatsDesk({
   element: TwoSeatsDeskSeatingPlanElementType;
   canvasTransform: ZoomTransform;
 }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: element.id,
-    data: element,
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: element.id,
+      data: element,
+    });
 
   return (
-    <div
+    <SeatingPlanElement
+      isActive={isDragging}
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
@@ -40,7 +43,7 @@ export default function TwoSeatsDesk({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="border border-gray-200 rounded-md p-4 bg-white overflow-clip"
+      className="overflow-clip"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
@@ -66,6 +69,6 @@ export default function TwoSeatsDesk({
           })}
         </div>
       </SortableContext>
-    </div>
+    </SeatingPlanElement>
   );
 }

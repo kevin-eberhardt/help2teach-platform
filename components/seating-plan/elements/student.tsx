@@ -10,13 +10,15 @@ export default function Student({
   element: StudentSeatingPlanElementType;
   canvasTransform: ZoomTransform;
 }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: element.id,
-    data: element,
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: element.id,
+      data: element,
+    });
 
   return (
     <SeatingPlanElement
+      isActive={isDragging}
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
@@ -33,7 +35,7 @@ export default function Student({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="border border-gray-200 rounded-md p-4 bg-white h-12 w-24 truncate"
+      className="h-12 w-24 truncate flex items-center justify-center"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
