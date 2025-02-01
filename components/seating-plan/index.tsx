@@ -51,6 +51,55 @@ export function makeStudentSeatingPlanElements(
   };
 }
 
+function getElementsWithUnassignedStudents(
+  existingElements: SeatingPlanElementType[],
+  allStudents: StudentProps[]
+): SeatingPlanElementType[] {
+  // Finde die existierende Studentenliste
+  const studentList = existingElements.find(
+    (element) => element.type === SeatingPlanElementTypes.StudentList
+  ) as StudentListSeatingPlanElementType | undefined;
+
+  // Sammle alle zugewiesenen Schüler-IDs
+  const assignedStudentIds = new Set<string>();
+  existingElements.forEach((element) => {
+    if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+      (element as TwoSeatsDeskSeatingPlanElementType).students.forEach(
+        (seat) => seat.id && assignedStudentIds.add(seat.id.toString())
+      );
+    } else if (element.type === SeatingPlanElementTypes.OneSeatDesk) {
+      const seat = (element as OneSeatDeskSeatingPlanElementType).student;
+      seat.id && assignedStudentIds.add(seat.id.toString());
+    }
+  });
+
+  // Filtere nicht zugewiesene Schüler
+  const unassignedStudents = allStudents.filter(
+    (student) => !assignedStudentIds.has(student.id.toString())
+  );
+
+  // Wenn keine Studentenliste existiert und es nicht zugewiesene Schüler gibt,
+  // erstelle eine neue Liste
+  if (!studentList && unassignedStudents.length > 0) {
+    return [
+      ...existingElements,
+      makeStudentSeatingPlanElements(unassignedStudents),
+    ];
+  }
+
+  // Wenn eine Studentenliste existiert, aktualisiere sie mit den nicht zugewiesenen Schülern
+  if (studentList) {
+    const updatedElements = existingElements.filter(
+      (element) => element.type !== SeatingPlanElementTypes.StudentList
+    );
+    return unassignedStudents.length > 0
+      ? [...updatedElements, makeStudentSeatingPlanElements(unassignedStudents)]
+      : updatedElements;
+  }
+
+  return existingElements;
+}
+
 export default function SeatingPlan({
   seatingPlan,
   students: initStudents,
@@ -67,7 +116,6 @@ export default function SeatingPlan({
         .scale(0.8);
     }
 
-    console.log(seatingPlan.nodes);
     // Berechne die Grenzen aller Elemente unter Berücksichtigung der Elementgrößen
     const bounds = nodes.reduce(
       (acc, element) => {
@@ -105,7 +153,10 @@ export default function SeatingPlan({
     return zoomIdentity.translate(centerX, centerY).scale(scale);
   });
   const elementList = seatingPlan.nodes
-    ? (seatingPlan.nodes as SeatingPlanElementType[])
+    ? getElementsWithUnassignedStudents(
+        seatingPlan.nodes as SeatingPlanElementType[],
+        initStudents
+      )
     : [makeStudentSeatingPlanElements(initStudents)];
   const {
     history: elements,

@@ -1,5 +1,4 @@
 import {
-  SeatingPlanElementTypes,
   StudentListSeatingPlanElementType,
   StudentSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
@@ -9,7 +8,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { ZoomTransform } from "d3-zoom";
-import Seat from "@/components/seating-plan/elements/seat";
 import SeatingPlanElement from "../element";
 import StudentListItem from "./item";
 
@@ -44,30 +42,32 @@ export default function StudentList({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="bg-accent top-1/2 left-1/4"
       onPointerDown={(e) => {
         listeners?.onPointerDown?.(e);
         e.preventDefault();
       }}
+      className="bg-accent"
     >
-      <SortableContext
-        id={element.id.toString()}
-        items={element.students}
-        strategy={verticalListSortingStrategy}
-      >
-        <div className="flex flex-col justify-center items-center gap-4">
-          {element.students.map((item: StudentSeatingPlanElementType) => {
-            return (
-              <StudentListItem
-                key={item.id}
-                id={item.id}
-                element={item}
-                canvasTransform={canvasTransform}
-              />
-            );
-          })}
-        </div>
-      </SortableContext>
+      <div className="overflow-clip">
+        <SortableContext
+          id={element.id.toString()}
+          items={element.students}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="flex flex-col justify-center items-center gap-4">
+            {element.students.map((item: StudentSeatingPlanElementType) => {
+              return (
+                <StudentListItem
+                  key={item.id}
+                  id={item.id}
+                  element={item}
+                  canvasTransform={canvasTransform}
+                />
+              );
+            })}
+          </div>
+        </SortableContext>
+      </div>
     </SeatingPlanElement>
   );
 }

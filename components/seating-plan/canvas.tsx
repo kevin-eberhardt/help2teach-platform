@@ -299,18 +299,21 @@ export default function SeatingPlanCanvas({
       const scale = (currentDistance / initialPinchDistance) * initialScale;
       const clampedScale = Math.min(Math.max(scale, 0.1), 4);
 
-      // Berechnen Sie den Mittelpunkt im Bildschirmkoordinaten
-      const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-      const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      // Berechne den Mittelpunkt der beiden Finger
+      const midX = (touch1.clientX + touch2.clientX) / 2;
+      const midY = (touch1.clientY + touch2.clientY) / 2;
 
-      // Berechnen Sie den Mittelpunkt in den ursprünglichen Koordinaten
-      const pointX = (midX - transform.x) / transform.k;
-      const pointY = (midY - transform.y) / transform.k;
+      // Transformiere den Mittelpunkt in die Canvas-Koordinaten
+      const point = {
+        x: (midX - transform.x) / transform.k,
+        y: (midY - transform.y) / transform.k,
+      };
 
-      // Berechnen Sie die neue Position
-      const newX = midX - pointX * clampedScale;
-      const newY = midY - pointY * clampedScale;
+      // Berechne die neue Position mit korrektem Offset
+      const newX = midX - point.x * clampedScale;
+      const newY = midY - point.y * clampedScale;
 
+      // Wende die neue Transformation an
       setTransform(new ZoomTransform(clampedScale, newX, newY));
     } else if (e.touches.length === 1 && touchStartPosition) {
       // Pan
