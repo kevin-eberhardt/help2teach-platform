@@ -1,6 +1,7 @@
 import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
 import NameEditInput from "./edit-name-input";
 import { getTranslations } from "next-intl/server";
+import ExportImage from "./export-image";
 
 export default async function SeatingPlanSettingsBar({
   seatingPlan,
@@ -16,6 +17,7 @@ export default async function SeatingPlanSettingsBar({
           seatingPlan.name ? seatingPlan.name : t("settings.undefined-name")
         }
       />
+      <ExportImage />
     </div>
   );
 }
