@@ -43,6 +43,7 @@ import useMousePosition from "@/hooks/use-mouse";
 import OneSeatDesk from "./elements/one-seat-desk";
 import StudentList from "./elements/student-list";
 import { useSeatingPlan } from "@/hooks/use-seating-plan";
+import { makeStudentSeatingPlanElements } from ".";
 export default function SeatingPlanCanvas({
   elements,
   setElements,
@@ -163,7 +164,8 @@ export default function SeatingPlanCanvas({
         over.data.current.sortable &&
         !checkIfElementIsDraggableContainer(
           active.data.current as SeatingPlanElementType
-        )
+        ) &&
+        active.id !== "student-list"
       ) {
         // Moving student from canvas to table
         const activeStudent = active.data
@@ -208,7 +210,7 @@ export default function SeatingPlanCanvas({
     }
   };
 
-  const { setSelectedElement } = useSeatingPlan();
+  const { selectedElement, setSelectedElement } = useSeatingPlan();
 
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -265,6 +267,7 @@ export default function SeatingPlanCanvas({
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (isDragging) return;
+    if (selectedElement) return;
 
     if (e.touches.length === 2) {
       // Pinch-to-zoom start
@@ -284,6 +287,7 @@ export default function SeatingPlanCanvas({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (isDragging) return;
+    if (selectedElement) return;
 
     // Prevent default touch behavior
     e.preventDefault();
@@ -370,7 +374,7 @@ export default function SeatingPlanCanvas({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{
-        touchAction: isDragging ? "none" : "manipulation",
+        touchAction: isDragging || selectedElement ? "none" : "manipulation",
         width: "100%",
         height: "calc(100svh - 4rem)",
         position: "relative",

@@ -33,13 +33,15 @@ import LastSavedState from "./last-saved-state";
 import { saveElements } from "./actions";
 import { SeatingPlanProvider } from "@/hooks/use-seating-plan";
 
-function makeStudentSeatingPlanElements(
+export function makeStudentSeatingPlanElements(
   students: StudentProps[]
 ): StudentListSeatingPlanElementType {
   return {
     id: "student-list",
     type: SeatingPlanElementTypes.StudentList,
     coordinates: { x: 0, y: 100 },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     students: students.map((student, index) => ({
       id: student.id,
       type: SeatingPlanElementTypes.Student,
@@ -56,7 +58,41 @@ export default function SeatingPlan({
   students: StudentProps[];
   seatingPlan: SeatingPlanProps;
 }) {
-  const [transform, setTransform] = useState(zoomIdentity);
+  const [transform, setTransform] = useState(() => {
+    // Berechne die Grenzen aller Elemente
+    const bounds = seatingPlan.nodes.reduce(
+      (acc, element) => {
+        acc.minX = Math.min(acc.minX, element.coordinates.x);
+        acc.maxX = Math.max(acc.maxX, element.coordinates.x);
+        acc.minY = Math.min(acc.minY, element.coordinates.y);
+        acc.maxY = Math.max(acc.maxY, element.coordinates.y);
+        return acc;
+      },
+      { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity }
+    );
+
+    // Füge Padding hinzu
+    const padding = 100;
+    const contentWidth = bounds.maxX - bounds.minX + padding * 2;
+    const contentHeight = bounds.maxY - bounds.minY + padding * 2;
+
+    // Berechne den Zoom-Faktor
+    const scaleX = window.innerWidth / contentWidth;
+    const scaleY = window.innerHeight / contentHeight;
+    const scale = Math.min(scaleX, scaleY, 1); // Begrenzen auf maximal 1
+
+    // Berechne die Zentrierung
+    const centerX =
+      (window.innerWidth - contentWidth * scale) / 2 -
+      bounds.minX * scale +
+      padding * scale;
+    const centerY =
+      (window.innerHeight - contentHeight * scale) / 2 -
+      bounds.minY * scale +
+      padding * scale;
+
+    return zoomIdentity.translate(centerX, centerY).scale(scale);
+  });
   const elementList = seatingPlan.nodes
     ? (seatingPlan.nodes as SeatingPlanElementType[])
     : [makeStudentSeatingPlanElements(initStudents)];

@@ -32,6 +32,7 @@ export default function Seat({
   } = useSortable({
     id: id,
     data: element,
+    disabled: element.id.toString().includes("empty"),
   });
 
   const [validIsOver, setValidIsOver] = useState(false);
@@ -54,7 +55,8 @@ export default function Seat({
     if (isOver && active && over) {
       if (
         active.data.current?.type === SeatingPlanElementTypes.TwoSeatsDesk ||
-        active.data.current?.type === SeatingPlanElementTypes.OneSeatDesk
+        active.data.current?.type === SeatingPlanElementTypes.OneSeatDesk ||
+        active.data.current?.type === SeatingPlanElementTypes.StudentList
       ) {
         setValidIsOver(false);
       } else if (over.data.current && active.data.current) {
