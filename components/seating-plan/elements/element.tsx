@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { SeatingPlanElementType } from "@/lib/types/seating-plan";
+import {
+  SeatingPlanElementType,
+  SeatingPlanElementTypes,
+} from "@/lib/types/seating-plan";
 import { useSeatingPlan } from "@/hooks/use-seating-plan";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface SeatingPlanElementProps extends React.HTMLAttributes<HTMLDivElement> {
   isActive?: boolean;
@@ -25,7 +30,8 @@ const SeatingPlanElement = React.forwardRef<
     },
     ref
   ) => {
-    const { selectedElement, setSelectedElement } = useSeatingPlan();
+    const { selectedElement, setSelectedElement, setElementToDelete } =
+      useSeatingPlan();
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [rotation, setRotation] = useState(element?.rotation || 0);
@@ -46,6 +52,22 @@ const SeatingPlanElement = React.forwardRef<
         setRotation(element.rotation);
       }
     }, [element?.rotation]);
+
+    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (
+          isSelected &&
+          (e.key === "Delete" || e.key === "Backspace") &&
+          element?.type !== SeatingPlanElementTypes.StudentList
+        ) {
+          e.preventDefault();
+          setElementToDelete(element);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isSelected, element, setElementToDelete]);
 
     const handleRotationPointerDown = (e: React.PointerEvent) => {
       e.stopPropagation();
@@ -118,10 +140,20 @@ const SeatingPlanElement = React.forwardRef<
         }}
       >
         {isSelected && (
-          <div
-            className="absolute -top-4 left-1/2 bg-white rounded-md border border-primary size-2"
-            onPointerDown={handleRotationPointerDown}
-          ></div>
+          <>
+            <div
+              className="absolute -top-4 left-1/2 bg-white rounded-md border border-primary size-2"
+              onPointerDown={handleRotationPointerDown}
+            />
+            <Button
+              className="absolute -top-4 right-0 p-0 h-4 w-4"
+              size="icon"
+              variant="ghost"
+              onClick={() => setElementToDelete(element)}
+            >
+              <X className="size-4 text-primary" />
+            </Button>
+          </>
         )}
         {children}
       </div>

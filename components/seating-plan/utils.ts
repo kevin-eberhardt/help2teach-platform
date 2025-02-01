@@ -16,6 +16,7 @@ import {
 } from "@dnd-kit/core";
 import { Coordinates } from "@dnd-kit/utilities";
 import { ZoomTransform } from "d3-zoom";
+import SeatingPlan, { makeStudentSeatingPlanElements } from ".";
 
 export function calculateCanvasPosition(
   initialRect: ClientRect,
@@ -347,6 +348,53 @@ export function moveStudentFromCanvasToTable(
         return element;
       });
     }
+  }
+
+  return newElements;
+}
+
+export function deleteElement(
+  elements: SeatingPlanElementType[],
+  element: SeatingPlanElementType
+) {
+  let studentList = elements.find(
+    (e) => e.type === SeatingPlanElementTypes.StudentList
+  );
+  let students: StudentSeatingPlanElementType[] = [];
+
+  if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
+    const deskElement = element as TwoSeatsDeskSeatingPlanElementType;
+    if (
+      deskElement.students.filter((s) => !s.id.toString().includes("empty"))
+        .length !== 0
+    ) {
+      students = deskElement.students;
+    }
+  }
+
+  if (element.type === SeatingPlanElementTypes.OneSeatDesk) {
+    const deskElement = element as OneSeatDeskSeatingPlanElementType;
+    if (!deskElement.student.id.toString().includes("empty")) {
+      students = [deskElement.student];
+    }
+  }
+
+  if (students.length > 0) {
+    if (studentList) {
+      studentList = studentList as StudentListSeatingPlanElementType;
+      studentList.students = studentList.students.concat(students);
+    } else {
+      studentList = makeStudentSeatingPlanElements(students);
+    }
+  }
+  let newElements = elements.filter((e) => e.id !== element.id);
+  if (studentList && students.length > 0) {
+    newElements = newElements.map((e) => {
+      if (e.id === studentList.id) {
+        return studentList;
+      }
+      return e;
+    });
   }
 
   return newElements;

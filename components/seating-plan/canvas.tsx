@@ -25,6 +25,7 @@ import {
   calculateCanvasPosition,
   changeSeatedStudentPositions,
   checkIfElementIsDraggableContainer,
+  deleteElement,
   generateEmptySeatsForTable,
   moveStudentFromCanvasToTable,
 } from "./utils";
@@ -210,7 +211,12 @@ export default function SeatingPlanCanvas({
     }
   };
 
-  const { selectedElement, setSelectedElement } = useSeatingPlan();
+  const {
+    selectedElement,
+    setSelectedElement,
+    elementToDelete,
+    setElementToDelete,
+  } = useSeatingPlan();
 
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -329,6 +335,14 @@ export default function SeatingPlanCanvas({
       });
     }
   };
+  useEffect(() => {
+    if (elementToDelete) {
+      const newElements = deleteElement(elements, elementToDelete);
+      setElements(newElements);
+      setElementToDelete(undefined);
+      setSelectedElement(undefined);
+    }
+  }, [elementToDelete]);
 
   const handleTouchEnd = () => {
     setTouchStartPosition(null);

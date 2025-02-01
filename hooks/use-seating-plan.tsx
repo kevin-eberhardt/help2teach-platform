@@ -6,6 +6,10 @@ interface SeatingPlanContextType {
   setSelectedElement: React.Dispatch<
     React.SetStateAction<SeatingPlanElementType | undefined>
   >;
+  elementToDelete: SeatingPlanElementType | undefined;
+  setElementToDelete: React.Dispatch<
+    React.SetStateAction<SeatingPlanElementType | undefined>
+  >;
 }
 
 export const SeatingPlanContext = createContext<SeatingPlanContextType | null>(
@@ -19,9 +23,16 @@ interface SeatingPlanProviderProps {
 function SeatingPlanProvider({ children }: SeatingPlanProviderProps) {
   const [selectedElement, setSelectedElement] =
     useState<SeatingPlanElementType>();
+  const [elementToDelete, setElementToDelete] =
+    useState<SeatingPlanElementType>();
   return (
     <SeatingPlanContext.Provider
-      value={{ selectedElement, setSelectedElement }}
+      value={{
+        selectedElement,
+        setSelectedElement,
+        elementToDelete,
+        setElementToDelete,
+      }}
     >
       {children}
     </SeatingPlanContext.Provider>

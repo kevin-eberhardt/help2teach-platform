@@ -23,6 +23,7 @@ import {
   SeatingPlanElementType,
   SeatingPlanElementTypes,
   StudentListSeatingPlanElementType,
+  StudentSeatingPlanElementType,
   TwoSeatsDeskSeatingPlanElementType,
 } from "@/lib/types/seating-plan";
 import Toolbar from "./toolbar";
@@ -34,7 +35,7 @@ import { saveElements } from "./actions";
 import { SeatingPlanProvider } from "@/hooks/use-seating-plan";
 
 export function makeStudentSeatingPlanElements(
-  students: StudentProps[]
+  students: StudentProps[] | StudentSeatingPlanElementType[]
 ): StudentListSeatingPlanElementType {
   return {
     id: "student-list",
