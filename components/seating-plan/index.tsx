@@ -59,27 +59,38 @@ export default function SeatingPlan({
   seatingPlan: SeatingPlanProps;
 }) {
   const [transform, setTransform] = useState(() => {
-    // Berechne die Grenzen aller Elemente
-    const bounds = seatingPlan.nodes.reduce(
+    const nodes = seatingPlan.nodes as SeatingPlanElementType[];
+    // Überprüfe ob Elemente vorhanden sind
+    if (!nodes || nodes.length === 0) {
+      return zoomIdentity
+        .translate(window.innerWidth / 2, window.innerHeight / 2)
+        .scale(0.8);
+    }
+
+    console.log(seatingPlan.nodes);
+    // Berechne die Grenzen aller Elemente unter Berücksichtigung der Elementgrößen
+    const bounds = nodes.reduce(
       (acc, element) => {
-        acc.minX = Math.min(acc.minX, element.coordinates.x);
-        acc.maxX = Math.max(acc.maxX, element.coordinates.x);
-        acc.minY = Math.min(acc.minY, element.coordinates.y);
-        acc.maxY = Math.max(acc.maxY, element.coordinates.y);
+        // Annahme: Jedes Element hat eine Breite und Höhe von mindestens 50px
+        const elementSize = 50;
+        acc.minX = Math.min(acc.minX, element.coordinates.x - elementSize / 2);
+        acc.maxX = Math.max(acc.maxX, element.coordinates.x + elementSize / 2);
+        acc.minY = Math.min(acc.minY, element.coordinates.y - elementSize / 2);
+        acc.maxY = Math.max(acc.maxY, element.coordinates.y + elementSize / 2);
         return acc;
       },
       { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity }
     );
 
-    // Füge Padding hinzu
-    const padding = 100;
+    // Füge mehr Padding hinzu für bessere Sichtbarkeit
+    const padding = 150;
     const contentWidth = bounds.maxX - bounds.minX + padding * 2;
     const contentHeight = bounds.maxY - bounds.minY + padding * 2;
 
-    // Berechne den Zoom-Faktor
-    const scaleX = window.innerWidth / contentWidth;
-    const scaleY = window.innerHeight / contentHeight;
-    const scale = Math.min(scaleX, scaleY, 1); // Begrenzen auf maximal 1
+    // Berechne den Zoom-Faktor mit etwas Abstand zum Rand
+    const scaleX = (window.innerWidth * 0.9) / contentWidth;
+    const scaleY = (window.innerHeight * 0.9) / contentHeight;
+    const scale = Math.min(scaleX, scaleY, 1);
 
     // Berechne die Zentrierung
     const centerX =
@@ -153,6 +164,23 @@ export default function SeatingPlan({
     return () => clearTimeout(delayDebounceFn);
   }, [elements]);
 
+  const [containerDimensions, setContainerDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setContainerDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <DndContext
       sensors={sensors}
@@ -179,6 +207,7 @@ export default function SeatingPlan({
           transform={transform}
           setTransform={setTransform}
         />
+
         <DragOverlay>
           <div
             style={{

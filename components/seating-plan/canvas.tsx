@@ -43,7 +43,7 @@ import useMousePosition from "@/hooks/use-mouse";
 import OneSeatDesk from "./elements/one-seat-desk";
 import StudentList from "./elements/student-list";
 import { useSeatingPlan } from "@/hooks/use-seating-plan";
-import { makeStudentSeatingPlanElements } from ".";
+
 export default function SeatingPlanCanvas({
   elements,
   setElements,
