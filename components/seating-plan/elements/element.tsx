@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 interface SeatingPlanElementProps extends React.HTMLAttributes<HTMLDivElement> {
   isActive?: boolean;
   element?: SeatingPlanElementType;
+  isResizable?: boolean;
   onRotationChange?: (rotation: number) => void;
 }
 
@@ -23,6 +24,7 @@ const SeatingPlanElement = React.forwardRef<
       className,
       children,
       isActive: isActiveProp = false,
+      isResizable = false,
       element,
       onRotationChange,
       style,
@@ -38,6 +40,9 @@ const SeatingPlanElement = React.forwardRef<
     const [isActive, setIsActive] = useState(isActiveProp);
     const [isSelected, setIsSelected] = useState(false);
     const [isRotating, setIsRotating] = useState(false);
+    const [isResizing, setIsResizing] = useState(false);
+    const [width, setWidth] = useState(element?.width || style?.width || 0);
+    const [height, setHeight] = useState(element?.height || style?.height || 0);
 
     useEffect(() => {
       setIsActive(isActiveProp);
@@ -110,6 +115,40 @@ const SeatingPlanElement = React.forwardRef<
       window.addEventListener("pointerup", onPointerUp);
     };
 
+    const handleResizePointerDown = (e: React.PointerEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setIsResizing(true);
+
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const startWidth = element?.width || 0;
+      const startHeight = element?.height || 0;
+
+      const onPointerMove = (moveEvent: PointerEvent) => {
+        moveEvent.preventDefault();
+        moveEvent.stopPropagation();
+
+        const deltaX = moveEvent.clientX - startX;
+        const deltaY = moveEvent.clientY - startY;
+
+        const newWidth = startWidth + deltaX;
+        const newHeight = startHeight + deltaY;
+
+        setWidth(newWidth);
+        setHeight(newHeight);
+      };
+
+      const onPointerUp = () => {
+        window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("pointerup", onPointerUp);
+        setIsResizing(false);
+      };
+
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+    };
+
     return (
       <div
         ref={(node) => {
@@ -122,7 +161,7 @@ const SeatingPlanElement = React.forwardRef<
           }
         }}
         className={cn(
-          "relative p-4 bg-white border rounded-md shadow-sm flex gap-4 min-h-16",
+          "relative p-4 bg-white border rounded-md shadow-sm flex justify-center gap-4 min-h-16",
           isActive || isSelected ? "border-primary" : "border-accent",
           className
         )}
@@ -137,10 +176,33 @@ const SeatingPlanElement = React.forwardRef<
           }rotate(${rotation}deg)`,
           transformOrigin: "center center",
           pointerEvents: isRotating ? "none" : "auto",
+          width: width,
+          height: height,
         }}
       >
         {isSelected && (
           <>
+            {isResizable && (
+              <>
+                <div
+                  className="absolute top-0 right-0 p-0 size-1 bg-primary cursor-ne-resize"
+                  onPointerDown={handleResizePointerDown}
+                />
+                <div
+                  className="absolute top-0 left-0 p-0 size-1 bg-primary cursor-nw-resize"
+                  onPointerDown={handleResizePointerDown}
+                />
+                <div
+                  className="absolute bottom-0 right-0 p-0 size-1 bg-primary cursor-se-resize"
+                  onPointerDown={handleResizePointerDown}
+                />
+                <div
+                  className="absolute bottom-0 left-0 p-0 size-1 bg-primary cursor-sw-resize"
+                  onPointerDown={handleResizePointerDown}
+                />
+              </>
+            )}
+
             <div
               className="absolute -top-4 left-1/2 bg-white rounded-md border border-primary size-2"
               onPointerDown={handleRotationPointerDown}

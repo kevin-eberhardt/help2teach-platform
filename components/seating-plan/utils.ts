@@ -17,6 +17,7 @@ import {
 import { Coordinates } from "@dnd-kit/utilities";
 import { ZoomTransform } from "d3-zoom";
 import SeatingPlan, { makeStudentSeatingPlanElements } from ".";
+import { STUDENT } from "./constants";
 
 export function calculateCanvasPosition(
   initialRect: ClientRect,
@@ -240,6 +241,8 @@ export function generateEmptySeatsForTable(
       id: `${id}-empty-${generateUUID()}`,
       type: SeatingPlanElementTypes.Student,
       coordinates: { x: 0, y: 0 },
+      width: STUDENT.width,
+      height: STUDENT.height,
       data: {
         id: i,
         name: "",
@@ -248,7 +251,7 @@ export function generateEmptySeatsForTable(
       },
     });
   }
-  return emptySeats;
+  return emptySeats as StudentSeatingPlanElementType[];
 }
 
 export function checkIfElementIsDraggableContainer(

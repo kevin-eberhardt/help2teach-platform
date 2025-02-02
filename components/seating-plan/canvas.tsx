@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import {
-  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -19,8 +18,8 @@ import {
   DragOverlay,
   DragStartEvent,
   TouchSensor,
+  UniqueIdentifier,
 } from "@dnd-kit/core";
-import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   calculateCanvasPosition,
   changeSeatedStudentPositions,
@@ -30,6 +29,7 @@ import {
   moveStudentFromCanvasToTable,
 } from "./utils";
 import {
+  CustomTextSeatingPlanElementType,
   OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
@@ -44,6 +44,7 @@ import useMousePosition from "@/hooks/use-mouse";
 import OneSeatDesk from "./elements/one-seat-desk";
 import StudentList from "./elements/student-list";
 import { useSeatingPlan } from "@/hooks/use-seating-plan";
+import CustomText from "./elements/custom/text";
 
 export default function SeatingPlanCanvas({
   elements,
@@ -135,6 +136,8 @@ export default function SeatingPlanCanvas({
             )
           : { x: 0, y: 0 },
         data: activeItem.data,
+        width: activeItem.width,
+        height: activeItem.height,
         id: activeItem.id,
         type: SeatingPlanElementTypes.Student,
       };
@@ -355,10 +358,7 @@ export default function SeatingPlanCanvas({
         distance: 5,
       },
     }),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    useSensor(TouchSensor)
   );
   const [draggingStudent, setDraggingStudent] =
     useState<StudentSeatingPlanElementType | null>(null);
@@ -382,6 +382,22 @@ export default function SeatingPlanCanvas({
     }
   }
 
+  function updateText(elementId: UniqueIdentifier, text: string) {
+    setElements(
+      elements.map((element: SeatingPlanElementType) => {
+        if (element.id === elementId) {
+          return {
+            ...element,
+            data: {
+              ...element.data,
+              text: text,
+            },
+          } as CustomTextSeatingPlanElementType;
+        }
+        return element;
+      })
+    );
+  }
   return (
     <div
       ref={updateAndForwardRef}
@@ -485,6 +501,17 @@ export default function SeatingPlanCanvas({
                   key={element.id}
                   element={element as StudentSeatingPlanElementType}
                   canvasTransform={transform}
+                />
+              );
+            }
+
+            if (element.type === SeatingPlanElementTypes.CustomText) {
+              return (
+                <CustomText
+                  key={element.id}
+                  element={element as CustomTextSeatingPlanElementType}
+                  canvasTransform={transform}
+                  updateText={(text) => updateText(element.id, text)}
                 />
               );
             }

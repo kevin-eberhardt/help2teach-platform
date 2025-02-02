@@ -19,6 +19,7 @@ import { calculateCanvasPosition, generateEmptySeatsForTable } from "./utils";
 import { zoomIdentity } from "d3-zoom";
 import SeatingPlanCanvas from "./canvas";
 import {
+  CustomTextSeatingPlanElementType,
   OneSeatDeskSeatingPlanElementType,
   SeatingPlanElementType,
   SeatingPlanElementTypes,
@@ -33,6 +34,8 @@ import Controls from "./controls";
 import LastSavedState from "./last-saved-state";
 import { saveElements } from "./actions";
 import { SeatingPlanProvider } from "@/hooks/use-seating-plan";
+import { TextCursorInput } from "lucide-react";
+import { ONE_SEAT_DESK, STUDENT, TWO_SEAT_DESK } from "./constants";
 
 export function makeStudentSeatingPlanElements(
   students: StudentProps[] | StudentSeatingPlanElementType[]
@@ -48,7 +51,11 @@ export function makeStudentSeatingPlanElements(
       type: SeatingPlanElementTypes.Student,
       data: student,
       coordinates: { x: 100, y: 100 + index * 75 },
+      width: STUDENT.width,
+      height: STUDENT.height,
     })),
+    width: ONE_SEAT_DESK.width,
+    height: students.length * STUDENT.height,
   };
 }
 
@@ -120,12 +127,20 @@ export default function SeatingPlan({
     // Berechne die Grenzen aller Elemente unter Berücksichtigung der Elementgrößen
     const bounds = nodes.reduce(
       (acc, element) => {
-        // Annahme: Jedes Element hat eine Breite und Höhe von mindestens 50px
-        const elementSize = 50;
-        acc.minX = Math.min(acc.minX, element.coordinates.x - elementSize / 2);
-        acc.maxX = Math.max(acc.maxX, element.coordinates.x + elementSize / 2);
-        acc.minY = Math.min(acc.minY, element.coordinates.y - elementSize / 2);
-        acc.maxY = Math.max(acc.maxY, element.coordinates.y + elementSize / 2);
+        // Verwende die tatsächliche Breite und Höhe des Elements
+        const elementWidth = element.width || 50;
+        const elementHeight = element.height || 50;
+
+        acc.minX = Math.min(acc.minX, element.coordinates.x - elementWidth / 2);
+        acc.maxX = Math.max(acc.maxX, element.coordinates.x + elementWidth / 2);
+        acc.minY = Math.min(
+          acc.minY,
+          element.coordinates.y - elementHeight / 2
+        );
+        acc.maxY = Math.max(
+          acc.maxY,
+          element.coordinates.y + elementHeight / 2
+        );
         return acc;
       },
       { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity }
@@ -181,8 +196,8 @@ export default function SeatingPlan({
     if (!active.rect.current.initial) return;
     if (draggedElementType === null) return;
 
-    const newElement: SeatingPlanElementType = {
-      id: active.id.toString(),
+    let newElement = {
+      id: active.id,
       coordinates: calculateCanvasPosition(
         active.rect.current.initial,
         over,
@@ -190,20 +205,42 @@ export default function SeatingPlan({
         transform
       ),
       type: draggedElementType,
-      data: { text: `Table ${active.id}` },
-    } as SeatingPlanElementType;
+    };
+    if (draggedElementType === SeatingPlanElementTypes.CustomText) {
+      newElement = {
+        ...newElement,
+        width: TWO_SEAT_DESK.width,
+        height: TWO_SEAT_DESK.height,
+        data: { text: `Custom Text` },
+      } as SeatingPlanElementType;
+    } else {
+      newElement = {
+        ...newElement,
+        data: { text: `Table ${active.id}` },
+      } as SeatingPlanElementType;
+    }
 
     if (draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk) {
+      newElement = {
+        ...newElement,
+        width: TWO_SEAT_DESK.width,
+        height: TWO_SEAT_DESK.height,
+      } as TwoSeatsDeskSeatingPlanElementType;
       (newElement as TwoSeatsDeskSeatingPlanElementType).students =
         generateEmptySeatsForTable(active.id.toString(), 2);
     }
 
     if (draggedElementType === SeatingPlanElementTypes.OneSeatDesk) {
+      newElement = {
+        ...newElement,
+        width: ONE_SEAT_DESK.width,
+        height: ONE_SEAT_DESK.height,
+      } as OneSeatDeskSeatingPlanElementType;
       (newElement as OneSeatDeskSeatingPlanElementType).student =
         generateEmptySeatsForTable(active.id.toString(), 1)[0];
     }
 
-    setElements([...elements, newElement]);
+    setElements([...elements, newElement as SeatingPlanElementType]);
     setDraggedElementType(null);
   }
   useEffect(() => {
@@ -215,23 +252,6 @@ export default function SeatingPlan({
     }, 5000);
     return () => clearTimeout(delayDebounceFn);
   }, [elements]);
-
-  const [containerDimensions, setContainerDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setContainerDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <DndContext
@@ -265,16 +285,37 @@ export default function SeatingPlan({
             style={{
               transformOrigin: "top left",
               transform: `scale(${transform.k})`,
+              width: "auto",
+              height: "auto",
             }}
           >
             {draggedElementType === SeatingPlanElementTypes.TwoSeatsDesk ? (
-              <SeatingPlanElement className="w-48">
-                <div className="h-12 w-20 bg-accent rounded-md" />
-                <div className="h-12 w-20 bg-accent rounded-md" />
+              <SeatingPlanElement
+                style={{
+                  width: TWO_SEAT_DESK.width,
+                  height: TWO_SEAT_DESK.height,
+                }}
+              >
+                <div className="h-12 w-24 bg-accent rounded-md" />
+                <div className="h-12 w-24 bg-accent rounded-md" />
               </SeatingPlanElement>
             ) : draggedElementType === SeatingPlanElementTypes.OneSeatDesk ? (
-              <SeatingPlanElement className="w-24">
-                <div className="h-12 w-20 bg-accent rounded-md" />
+              <SeatingPlanElement
+                style={{
+                  width: ONE_SEAT_DESK.width,
+                  height: ONE_SEAT_DESK.height,
+                }}
+              >
+                <div className="h-12 w-24 bg-accent rounded-md" />
+              </SeatingPlanElement>
+            ) : draggedElementType === SeatingPlanElementTypes.CustomText ? (
+              <SeatingPlanElement
+                style={{
+                  width: TWO_SEAT_DESK.width,
+                  height: TWO_SEAT_DESK.height,
+                }}
+              >
+                <TextCursorInput className="h-10 w-full bg-accent rounded-md" />
               </SeatingPlanElement>
             ) : null}
           </div>

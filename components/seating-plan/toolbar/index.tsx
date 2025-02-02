@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import ToolbarItem from "./item";
 import { SeatingPlanElementTypes } from "@/lib/types/seating-plan";
-import { RectangleHorizontal } from "lucide-react";
+import { RectangleHorizontal, TextCursorInput } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function Toolbar() {
@@ -31,6 +31,18 @@ export default function Toolbar() {
           size="lg"
         >
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
+        </Button>
+      </ToolbarItem>
+      <ToolbarItem
+        type={SeatingPlanElementTypes.CustomText}
+        tooltipContent={t("toolbar.custom-tooltip")}
+      >
+        <Button
+          variant="outline"
+          className="hover:bg-white shadow-md h-14 [&_svg]:size-10"
+          size="lg"
+        >
+          <TextCursorInput className="size-8 fill-accent text-accent" />
         </Button>
       </ToolbarItem>
     </div>

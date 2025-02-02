@@ -29,6 +29,8 @@ export default function OneSeatDesk({
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
         left: `${element.coordinates.x * canvasTransform.k}px`,
+        width: element.width * canvasTransform.k,
+        height: element.height * canvasTransform.k,
         transformOrigin: "top left",
         ...(transform
           ? {
