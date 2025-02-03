@@ -47,8 +47,8 @@ export default function CustomText({
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
         left: `${element.coordinates.x * canvasTransform.k}px`,
-        width: element.width * canvasTransform.k,
-        height: element.height * canvasTransform.k,
+        width: element.width,
+        height: element.height,
         transformOrigin: "top left",
         ...(transform
           ? {
