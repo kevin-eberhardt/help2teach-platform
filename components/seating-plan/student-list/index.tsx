@@ -3,6 +3,9 @@ import StudentNode from "../nodes/student";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NodeType, SeatingPlanNode } from "@/lib/types/seating-plan";
 import { checkIfDesk } from "../utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 function findStudentInNodes(student: Student, nodes: SeatingPlanNode[]) {
   const nodeIds = nodes.map((node) => {
@@ -27,24 +30,47 @@ export default function StudentList({
   students: Student[];
   nodes: SeatingPlanNode[];
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="absolute right-4 top-1/2 -translate-y-1/2 w-auto p-2 bg-sidebar border border-sidebar z-10">
-      <ScrollArea className="h-48 md:h-96">
-        <div className="space-y-4">
-          {students.map((student) => {
-            const isInCanvas = findStudentInNodes(student, nodes);
-            if (isInCanvas) return null;
-            return (
-              <StudentNode
-                key={student.id}
-                data={student}
-                id={student.id}
-                type={"student-list"}
-              />
-            );
-          })}
-        </div>
-      </ScrollArea>
+    <div
+      className={`absolute right-2 top-1/3 -translate-y-1/3 flex items-center ${
+        isOpen || isHovered ? "translate-x-0" : "translate-x-[calc(100%-16px)]"
+      } transition-transform duration-300 ease-in-out z-10`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Button
+        size="icon"
+        className="size-4 relative z-20"
+        variant="ghost"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen || isHovered ? (
+          <ChevronRight className="transition-transform duration-300" />
+        ) : (
+          <ChevronLeft className="transition-transform duration-300" />
+        )}
+      </Button>
+      <div className="bg-sidebar border-sidebar-border p-2">
+        <ScrollArea className="h-48 md:h-80 relative">
+          <div className="space-y-4">
+            {students.map((student) => {
+              const isInCanvas = findStudentInNodes(student, nodes);
+              if (isInCanvas) return null;
+              return (
+                <StudentNode
+                  key={student.id}
+                  data={student}
+                  id={student.id}
+                  type={"student-list"}
+                />
+              );
+            })}
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 }

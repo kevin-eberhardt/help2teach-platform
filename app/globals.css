@@ -93,3 +93,7 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.react-flow__attribution {
+  display: none;
+}
