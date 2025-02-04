@@ -1,45 +1,31 @@
-import { UniqueIdentifier } from "@dnd-kit/core";
-import { Coordinates } from "@dnd-kit/utilities";
 
-export enum SeatingPlanElementTypes {
-  Student,
-  TwoSeatsDesk,
-  OneSeatDesk,
-  StudentList,
-  CustomText,
+import { Node as ReactFlowNode, NodeProps } from "@xyflow/react";
+import { SeatingPlan, Student } from "../supabase/types/additional.types";
+
+export type NodeType = "student" | "twoSeatsDesk" | "oneSeatDesk" | "student-list"
+
+export type Node<T = any, TType extends NodeType = any> = ReactFlowNode & {
+    data?: T;
+    type?: TType;
 }
-export type SeatingPlanCoreElementType = {
-  id: UniqueIdentifier;
-  coordinates: Coordinates;
-  data?: object;
-  type: SeatingPlanElementTypes;
-  rotation?: number;
-  width: number;
-  height: number;
-};
 
-export type CustomTextSeatingPlanElementType = SeatingPlanCoreElementType & {
-  data: {
-    text: string;
-  };
-};
+export type SeatingPlanProps = {
+    students: Student[];
+    nodes: Node[];
+    seatingPlan: SeatingPlan;
+}
 
-export type StudentListSeatingPlanElementType = SeatingPlanCoreElementType & {
-  students: StudentSeatingPlanElementType[];
-};
+export type OneSeatDeskNodeProps = Node<{
+    student: Student;
+}, "twoSeatsDesk">;
 
-export type StudentSeatingPlanElementType = SeatingPlanCoreElementType & {
-  data: StudentSeatingPlanElementType;
-};
-export type TwoSeatsDeskSeatingPlanElementType = SeatingPlanCoreElementType & {
-  students: StudentSeatingPlanElementType[];
-};
-export type OneSeatDeskSeatingPlanElementType = SeatingPlanCoreElementType & {
-  student: StudentSeatingPlanElementType;
-};
+export type TwoSeatsDeskNodeProps = Node<{
+    students: Student[];
+}, "twoSeatsDesk">;
 
-export type SeatingPlanElementType =
-  | CustomTextSeatingPlanElementType
-  | StudentSeatingPlanElementType
-  | TwoSeatsDeskSeatingPlanElementType
-  | OneSeatDeskSeatingPlanElementType;
+export type GenericNodeProps<T = any> = React.HTMLProps<HTMLDivElement> & { data?: T, type?: NodeType };
+
+export type StudentNodeProps = Node<Student, "student">;
+export type StudentSidebarProps = Node<Student, "student-list">;
+export type SeatingPlanNodeProps = NodeProps;
+export type SeatingPlanNode = StudentNodeProps | TwoSeatsDeskNodeProps | OneSeatDeskNodeProps;
