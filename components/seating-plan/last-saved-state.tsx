@@ -1,11 +1,14 @@
 "use client";
 import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
+import { Loader2 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
 export default function LastSavedState({
   lastEdit,
+  isSaving,
 }: {
   lastEdit: SeatingPlanProps["edited_at"];
+  isSaving: boolean;
 }) {
   const t = useTranslations("seating-plan");
   const format = useFormatter();
@@ -23,7 +26,15 @@ export default function LastSavedState({
 
   return (
     <div className="absolute bottom-4 right-4 text-xs text-gray-400 w-auto z-10">
-      {t("last-saved")} {lastEditDate}
+      {isSaving ? (
+        <div className="animate-pulse flex items-center gap-2">
+          <Loader2 className="animate-spin" /> {t("saving")}
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          {t("last-saved")} {lastEditDate}
+        </div>
+      )}
     </div>
   );
 }

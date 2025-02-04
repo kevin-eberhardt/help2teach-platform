@@ -19,7 +19,6 @@ export default async function SeatingPlanSettingsBar({
         }
       />
       <div className="flex items-center gap-2">
-        <SaveButton />
         <ExportImage />
       </div>
     </div>

@@ -45,6 +45,7 @@ import OneSeatDesk from "./elements/one-seat-desk";
 import StudentList from "./elements/student-list";
 import { useSeatingPlan } from "@/hooks/use-seating-plan";
 import CustomText from "./elements/custom/text";
+import { STUDENT } from "./constants";
 
 export default function SeatingPlanCanvas({
   elements,
@@ -82,7 +83,8 @@ export default function SeatingPlanCanvas({
       active &&
       active.data.current?.sortable &&
       !over &&
-      active.data.current?.type === SeatingPlanElementTypes.Student
+      active.data.current?.type === SeatingPlanElementTypes.Student &&
+      active.data.current?.type !== SeatingPlanElementTypes.CustomText
     ) {
       // Moving student from element to canvas
       const activeItem = active.data.current as StudentSeatingPlanElementType;
@@ -136,8 +138,8 @@ export default function SeatingPlanCanvas({
             )
           : { x: 0, y: 0 },
         data: activeItem.data,
-        width: activeItem.width,
-        height: activeItem.height,
+        width: STUDENT.width,
+        height: STUDENT.height,
         id: activeItem.id,
         type: SeatingPlanElementTypes.Student,
       };
@@ -147,7 +149,8 @@ export default function SeatingPlanCanvas({
       active.data.current?.sortable &&
       over &&
       over.data.current?.sortable &&
-      active.id !== over.id
+      active.id !== over.id &&
+      active.data.current?.type === SeatingPlanElementTypes.Student
     ) {
       // Moving student from table to table
       // container Id 'Sortable' is the default value if a student is not placed anywhere
@@ -398,6 +401,18 @@ export default function SeatingPlanCanvas({
       })
     );
   }
+
+  function updateElement(element: SeatingPlanElementType) {
+    setElements(
+      elements.map((e) => {
+        if (e.id === element.id) {
+          return element;
+        }
+        return e;
+      })
+    );
+  }
+
   return (
     <div
       ref={updateAndForwardRef}
@@ -462,15 +477,12 @@ export default function SeatingPlanCanvas({
           }}
         >
           {elements.map((element) => {
-            if (
-              element.type === SeatingPlanElementTypes.StudentList &&
-              (element as StudentListSeatingPlanElementType).students.length > 0
-            ) {
+            if (element.type === SeatingPlanElementTypes.StudentList) {
               return (
                 <StudentList
+                  canvasTransform={transform}
                   key={element.id}
                   element={element as StudentListSeatingPlanElementType}
-                  canvasTransform={transform}
                 />
               );
             }
@@ -478,8 +490,8 @@ export default function SeatingPlanCanvas({
             if (element.type === SeatingPlanElementTypes.TwoSeatsDesk) {
               return (
                 <TwoSeatsDesk
-                  key={element.id}
                   canvasTransform={transform}
+                  key={element.id}
                   element={element as TwoSeatsDeskSeatingPlanElementType}
                 />
               );
@@ -488,9 +500,9 @@ export default function SeatingPlanCanvas({
             if (element.type === SeatingPlanElementTypes.OneSeatDesk) {
               return (
                 <OneSeatDesk
+                  canvasTransform={transform}
                   key={element.id}
                   element={element as OneSeatDeskSeatingPlanElementType}
-                  canvasTransform={transform}
                 />
               );
             }
@@ -498,9 +510,9 @@ export default function SeatingPlanCanvas({
             if (element.type === SeatingPlanElementTypes.Student) {
               return (
                 <Student
+                  canvasTransform={transform}
                   key={element.id}
                   element={element as StudentSeatingPlanElementType}
-                  canvasTransform={transform}
                 />
               );
             }
@@ -508,10 +520,11 @@ export default function SeatingPlanCanvas({
             if (element.type === SeatingPlanElementTypes.CustomText) {
               return (
                 <CustomText
+                  canvasTransform={transform}
                   key={element.id}
                   element={element as CustomTextSeatingPlanElementType}
-                  canvasTransform={transform}
                   updateText={(text) => updateText(element.id, text)}
+                  updateElement={updateElement}
                 />
               );
             }

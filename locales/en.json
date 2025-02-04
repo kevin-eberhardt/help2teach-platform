@@ -159,6 +159,7 @@
       "custom-tooltip": "Custom"
     },
     "last-saved": "Last saved:",
+    "saving": "Saving...",
     "undo": "Undo",
     "redo": "Redo",
     "settings": {

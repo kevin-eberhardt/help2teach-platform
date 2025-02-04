@@ -190,6 +190,7 @@ export default function SeatingPlan({
   const mouseSensor = useSensor(MouseSensor);
   const keyboardSensor = useSensor(KeyboardSensor);
   const sensors = useSensors(touchSensor, mouseSensor, keyboardSensor);
+  const [isSaving, setIsSaving] = useState(false);
 
   function addToolbarItem({ over, active, delta }: DragEndEvent) {
     if (over?.id !== "canvas") return;
@@ -246,11 +247,14 @@ export default function SeatingPlan({
   useEffect(() => {
     store();
 
-    const delayDebounceFn = setTimeout(() => {
-      saveElements(elements, seatingPlan.id);
-      console.log("Saved");
+    const delayDebounceFn = setTimeout(async () => {
+      setIsSaving(true);
+      await saveElements(elements, seatingPlan.id);
+      setIsSaving(false);
     }, 5000);
-    return () => clearTimeout(delayDebounceFn);
+    return () => {
+      clearTimeout(delayDebounceFn);
+    };
   }, [elements]);
 
   return (
@@ -263,7 +267,7 @@ export default function SeatingPlan({
       id="canvas"
     >
       <SeatingPlanProvider>
-        <LastSavedState lastEdit={seatingPlan.edited_at} />
+        <LastSavedState lastEdit={seatingPlan.edited_at} isSaving={isSaving} />
         <Toolbar />
         <Controls
           zoom={transform}

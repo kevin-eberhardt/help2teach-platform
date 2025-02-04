@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { cn } from "@/lib/utils";
 import {
   SeatingPlanElementType,
@@ -13,6 +13,7 @@ interface SeatingPlanElementProps extends React.HTMLAttributes<HTMLDivElement> {
   element?: SeatingPlanElementType;
   isResizable?: boolean;
   onRotationChange?: (rotation: number) => void;
+  updateElement?: (element: SeatingPlanElementType) => void;
 }
 
 const SeatingPlanElement = React.forwardRef<
@@ -25,8 +26,9 @@ const SeatingPlanElement = React.forwardRef<
       children,
       isActive: isActiveProp = false,
       isResizable = false,
-      element,
+      element: elementProp,
       onRotationChange,
+      updateElement,
       style,
       ...props
     },
@@ -35,14 +37,23 @@ const SeatingPlanElement = React.forwardRef<
     const { selectedElement, setSelectedElement, setElementToDelete } =
       useSeatingPlan();
     const containerRef = useRef<HTMLDivElement>(null);
+    const [element, setElement] = useState<SeatingPlanElementType | undefined>(
+      elementProp || undefined
+    );
 
-    const [rotation, setRotation] = useState(element?.rotation || 0);
+    const [rotation, setRotation] = useState(elementProp?.rotation || 0);
     const [isActive, setIsActive] = useState(isActiveProp);
     const [isSelected, setIsSelected] = useState(false);
     const [isRotating, setIsRotating] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
-    const [width, setWidth] = useState(element?.width || style?.width || 0);
-    const [height, setHeight] = useState(element?.height || style?.height || 0);
+    const [width, setWidth] = useState(elementProp?.width || style?.width || 0);
+    const [height, setHeight] = useState(
+      elementProp?.height || style?.height || 0
+    );
+
+    useEffect(() => {
+      setElement(elementProp);
+    }, [elementProp]);
 
     useEffect(() => {
       setIsActive(isActiveProp);
@@ -57,6 +68,14 @@ const SeatingPlanElement = React.forwardRef<
         setRotation(element.rotation);
       }
     }, [element?.rotation]);
+
+    useEffect(() => {
+      if (element) {
+        if (!isResizing && !isRotating) {
+          updateElement?.(element);
+        }
+      }
+    }, [element, width, height, rotation]);
 
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -99,6 +118,13 @@ const SeatingPlanElement = React.forwardRef<
         const angleDiff = (currentAngle - startAngle) * (180 / Math.PI);
         const newRotation = initialRotation + angleDiff;
         setRotation(newRotation);
+
+        if (element) {
+          setElement({
+            ...element,
+            rotation: newRotation,
+          });
+        }
       };
 
       const onPointerUp = () => {
@@ -137,6 +163,14 @@ const SeatingPlanElement = React.forwardRef<
 
         setWidth(newWidth);
         setHeight(newHeight);
+
+        if (element) {
+          setElement({
+            ...element,
+            width: newWidth,
+            height: newHeight,
+          });
+        }
       };
 
       const onPointerUp = () => {
@@ -165,7 +199,7 @@ const SeatingPlanElement = React.forwardRef<
           isActive || isSelected ? "border-primary" : "border-accent",
           className
         )}
-        {...(!isRotating && props)}
+        {...(!isRotating && !isResizing && props)}
         onClick={() => {
           setSelectedElement(element);
         }}
@@ -174,7 +208,7 @@ const SeatingPlanElement = React.forwardRef<
           transform: `${
             style?.transform ? style.transform + " " : ""
           }rotate(${rotation}deg)`,
-          transformOrigin: "center center",
+          transformOrigin: "top left",
           pointerEvents: isRotating ? "none" : "auto",
           width: width,
           height: height,

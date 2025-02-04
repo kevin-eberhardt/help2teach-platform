@@ -10,10 +10,12 @@ export default function CustomText({
   element,
   canvasTransform,
   updateText,
+  updateElement,
 }: {
   element: CustomTextSeatingPlanElementType;
   canvasTransform: ZoomTransform;
   updateText: (text: string) => void;
+  updateElement: (element: CustomTextSeatingPlanElementType) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -32,17 +34,22 @@ export default function CustomText({
   }, [isEditing]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      updateText(text);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, [text, updateText]);
+    if (text !== element.data.text) {
+      const timeout = setTimeout(() => {
+        updateText(text);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [text, element.data.text]);
 
   return (
     <SeatingPlanElement
       isActive={isDragging}
       isResizable={true}
       element={element}
+      updateElement={(element) =>
+        updateElement(element as CustomTextSeatingPlanElementType)
+      }
       style={{
         position: "absolute",
         top: `${element.coordinates.y * canvasTransform.k}px`,
@@ -72,6 +79,7 @@ export default function CustomText({
     >
       <div className="flex items-center justify-center">
         <Input
+          style={{ width: text.length * 20 }}
           value={text}
           onChange={(e) => setText(e.target.value)}
           onClick={() => setIsEditing(!isEditing)}
