@@ -11,7 +11,6 @@ export type Node<T = any, TType extends NodeType = any> = ReactFlowNode & {
 
 export type SeatingPlanProps = {
     students: Student[];
-    nodes: Node[];
     seatingPlan: SeatingPlan;
 }
 

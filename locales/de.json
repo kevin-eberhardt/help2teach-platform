@@ -163,7 +163,8 @@
     "redo": "Wiederholen",
     "settings": {
       "undefined-name": "Unbenannter Sitzplan",
-      "name-input-error": "Bitte gib einen Namen für den Sitzplan ein"
+      "name-input-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "save-button-tooltip": "Sitzplan speichern"
     }
   }
 }

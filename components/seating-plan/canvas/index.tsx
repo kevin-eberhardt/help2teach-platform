@@ -36,9 +36,11 @@ import useMousePosition from "@/hooks/use-mouse";
 
 export default function Canvas({
   nodes: initialNodes,
+  setNodes: setInitialNodes,
   students,
 }: {
   nodes: SeatingPlanNode[];
+  setNodes: (nodes: SeatingPlanNode[]) => void;
   students: Student[];
 }) {
   const [nodes, setNodes] = useState<SeatingPlanNode[]>(initialNodes);
@@ -56,6 +58,10 @@ export default function Canvas({
     useSensor(TouchSensor),
     useSensor(KeyboardSensor)
   );
+
+  useEffect(() => {
+    setInitialNodes(nodes);
+  }, [nodes]);
 
   useEffect(() => {
     setNodes(initialNodes);
@@ -163,9 +169,9 @@ export default function Canvas({
         onDragEnd={handleDragEnd}
         sensors={sensors}
       >
+        <Flow nodes={nodes} setNodes={setNodes} />
         <StudentList students={students} nodes={nodes} />
         <StudentOverlay viewPort={viewPort} active={selectedStudent} />
-        <Flow nodes={nodes} setNodes={setNodes} />
         <Toolbar />
         <ToolbarOverlay viewPort={viewPort} active={selectedToolbarItem} />
       </DndContext>

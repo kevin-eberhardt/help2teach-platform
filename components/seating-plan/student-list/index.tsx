@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 function findStudentInNodes(student: Student, nodes: SeatingPlanNode[]) {
+  if (!nodes) return false;
   const nodeIds = nodes.map((node) => {
     if (checkIfDesk(node.data.type as NodeType) && "students" in node.data) {
       if (node.data.type === "twoSeatsDesk") {
@@ -40,6 +41,8 @@ export default function StudentList({
       } transition-transform duration-300 ease-in-out z-10`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onPointerLeave={() => setIsHovered(false)}
+      onPointerEnter={() => setIsHovered(true)}
     >
       <Button
         size="icon"
@@ -54,7 +57,7 @@ export default function StudentList({
         )}
       </Button>
       <div className="bg-sidebar border-sidebar-border p-2">
-        <ScrollArea className="h-auto max-h-48 md:max-h-80 relative overflow-scroll">
+        <ScrollArea className="h-auto max-h-48 md:max-h-80 relative overflow-scroll no-scrollbar">
           <div className="space-y-4">
             {students.map((student) => {
               const isInCanvas = findStudentInNodes(student, nodes);

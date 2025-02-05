@@ -27,10 +27,10 @@ export default function Flow({
     useHistory<SeatingPlanNode[]>(initialNodes);
   const [nodes, setNodes, onNodesChange] = useNodesState(history);
 
-  function updateNodes() {
-    setHistory(nodes);
-    store(nodes);
-    setInitialNodes(nodes);
+  function updateNodes(n?: SeatingPlanNode[]) {
+    setHistory(n ? n : nodes);
+    store(n ? n : nodes);
+    setInitialNodes(n ? n : nodes);
   }
 
   useEffect(() => {
@@ -59,7 +59,12 @@ export default function Flow({
       // onPaneClick={() => setSelectedNode(null)}
       onNodesChange={onNodesChange}
       nodeTypes={nodeTypes as unknown as NodeTypes}
-      onNodeDragStop={updateNodes}
+      onNodeDragStop={() => updateNodes()}
+      onNodesDelete={(deletedNodes) => {
+        const deletedIds = deletedNodes.map((node) => node.id);
+        const newNodes = nodes.filter((node) => !deletedIds.includes(node.id));
+        updateNodes(newNodes);
+      }}
       id="canvas"
       ref={setNodeRef}
     >

@@ -163,7 +163,8 @@
     "redo": "Redo",
     "settings": {
       "undefined-name": "Unnamed seating plan",
-      "name-input-error": "Please enter a name for the seating plan"
+      "name-input-error": "Please enter a name for the seating plan",
+      "save-button-tooltip": "Save seating plan"
     }
   }
 }

@@ -2,8 +2,10 @@
 import { ReactFlowProvider } from "@xyflow/react";
 import { Suspense, useEffect, useState } from "react";
 import "@xyflow/react/dist/style.css";
-import { SeatingPlanProps } from "@/lib/types/seating-plan";
+import { SeatingPlanNode, SeatingPlanProps } from "@/lib/types/seating-plan";
 import dynamic from "next/dynamic";
+import SettingsBar from "../settings-bar";
+import { Json } from "@/lib/supabase/types/database.types";
 
 const Canvas = dynamic(() => import("@/components/seating-plan/canvas/index"), {
   ssr: false,
@@ -11,20 +13,31 @@ const Canvas = dynamic(() => import("@/components/seating-plan/canvas/index"), {
 
 export default function SeatingPlan({
   students,
-  nodes: initialNodes,
-  seatingPlan,
+  seatingPlan: initialSeatingPlan,
 }: SeatingPlanProps) {
-  const [nodes, setNodes] = useState(initialNodes);
+  const [seatingPlan, setSeatingPlan] = useState(initialSeatingPlan);
 
   useEffect(() => {
-    setNodes(initialNodes);
-  }, [initialNodes]);
+    setSeatingPlan(initialSeatingPlan);
+  }, [initialSeatingPlan]);
 
   return (
     <ReactFlowProvider>
       <div className="relative">
         <Suspense fallback={<div>Loading...</div>}>
-          <Canvas nodes={nodes} students={students} />
+          <SettingsBar seatingPlan={seatingPlan} />
+          <Canvas
+            nodes={
+              seatingPlan.nodes
+                ? (seatingPlan.nodes as unknown as SeatingPlanNode[])
+                : []
+            }
+            setNodes={(nodes) => {
+              const newNodes = nodes as unknown as Json;
+              setSeatingPlan({ ...seatingPlan, nodes: newNodes });
+            }}
+            students={students}
+          />
         </Suspense>
       </div>
     </ReactFlowProvider>
