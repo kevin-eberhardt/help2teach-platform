@@ -5,7 +5,7 @@ export function useHistory<T>(initialState: T): {
   setHistory(s: T): void;
   undo(): void;
   redo(): void;
-  store(): void;
+  store(s?: T): void;
   redoStack: T[];
   undoStack: T[];
 } {
@@ -13,13 +13,13 @@ export function useHistory<T>(initialState: T): {
   const [undoStack, setUndoStack] = useState<T[]>([initialState]);
   const [redoStack, setRedoStack] = useState<T[]>([]);
 
-  const store = () => {
-    setUndoStack([...undoStack, history]);
-    console.log("Unstack length", [...undoStack, history].length, [
-      ...undoStack,
-      history,
-    ]);
-  };
+  function store(newState?: T) {
+    // Use the latest or stored “history”
+    const toStore = newState ?? history;
+
+    setUndoStack((prev) => [...prev, toStore]);
+    setRedoStack([]); // Clear redo when branching
+  }
 
   const undo = () => {
     if (undoStack.length > 1) {

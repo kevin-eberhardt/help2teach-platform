@@ -8,6 +8,11 @@ import {
   DndContext,
   DragEndEvent,
   DragStartEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import Flow from "../flow";
 import Toolbar from "../toolbar";
@@ -41,7 +46,12 @@ export default function Canvas({
     null
   );
   const [selectedStudent, setSelectedStudent] = useState<Active | null>(null);
-  const { screenToFlowPosition } = useReactFlow();
+
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor)
+  );
 
   useEffect(() => {
     setNodes(initialNodes);
@@ -142,12 +152,16 @@ export default function Canvas({
       className="relative"
       ref={reactFlowWrapper}
       style={{
-        height: window.innerHeight * 0.9,
-        width: window.innerWidth * 0.97,
+        height: window.innerHeight * 0.94,
+        width: window.innerWidth * 0.95,
       }}
     >
       <ViewportLogger setViewPort={setViewPort} viewPort={viewPort} />
-      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <DndContext
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+      >
         <StudentList students={students} nodes={nodes} />
         <StudentOverlay viewPort={viewPort} active={selectedStudent} />
         <Flow nodes={nodes} setNodes={setNodes} />

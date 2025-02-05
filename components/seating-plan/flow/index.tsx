@@ -2,7 +2,7 @@ import { useDroppable } from "@dnd-kit/core";
 import {
   Background,
   BackgroundVariant,
-  Controls,
+  Controls as ReactFlowControls,
   MiniMap,
   NodeTypes,
   ReactFlow,
@@ -13,6 +13,8 @@ import StudentNode from "../nodes/student";
 import TwoSeatsDesk from "../nodes/two-seats-desk";
 import { SeatingPlanNode } from "@/lib/types/seating-plan";
 import OneSeatDesk from "../nodes/one-seat-desk";
+import Controls from "../controls";
+import { useHistory } from "@/hooks/use-history";
 
 export default function Flow({
   nodes: initialNodes,
@@ -21,11 +23,19 @@ export default function Flow({
   nodes: SeatingPlanNode[];
   setNodes: (nodes: SeatingPlanNode[]) => void;
 }) {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const { history, setHistory, redo, undo, redoStack, undoStack, store } =
+    useHistory<SeatingPlanNode[]>(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(history);
 
   function updateNodes() {
+    setHistory(nodes);
+    store(nodes);
     setInitialNodes(nodes);
   }
+
+  useEffect(() => {
+    setNodes(history);
+  }, [history]);
 
   useEffect(() => {
     setNodes(initialNodes);
@@ -53,8 +63,14 @@ export default function Flow({
       id="canvas"
       ref={setNodeRef}
     >
-      <Controls />
-      <MiniMap />
+      <ReactFlowControls />
+      <Controls
+        redo={redo}
+        undo={undo}
+        isUndoDisabled={undoStack.length === 1}
+        isRedoDisabled={redoStack.length === 0}
+      />
+      <MiniMap pannable zoomable nodeColor={"hsl(var(--accent))"} />
       <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
     </ReactFlow>
   );

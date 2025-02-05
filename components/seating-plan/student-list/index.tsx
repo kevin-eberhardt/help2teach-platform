@@ -30,12 +30,12 @@ export default function StudentList({
   students: Student[];
   nodes: SeatingPlanNode[];
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      className={`absolute right-2 top-1/3 -translate-y-1/3 flex items-center ${
+      className={`absolute right-0 top-1/3 -translate-y-1/3 flex items-center ${
         isOpen || isHovered ? "translate-x-0" : "translate-x-[calc(100%-16px)]"
       } transition-transform duration-300 ease-in-out z-10`}
       onMouseEnter={() => setIsHovered(true)}
@@ -54,7 +54,7 @@ export default function StudentList({
         )}
       </Button>
       <div className="bg-sidebar border-sidebar-border p-2">
-        <ScrollArea className="h-48 md:h-80 relative">
+        <ScrollArea className="h-auto max-h-48 md:max-h-80 relative overflow-scroll">
           <div className="space-y-4">
             {students.map((student) => {
               const isInCanvas = findStudentInNodes(student, nodes);
