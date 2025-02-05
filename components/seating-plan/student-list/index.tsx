@@ -43,7 +43,7 @@ export default function StudentList({
     >
       <Button
         size="icon"
-        className="size-4 relative z-20"
+        className="size-4 relative z-20 bg-sidebar"
         variant="ghost"
         onClick={() => setIsOpen(!isOpen)}
       >
