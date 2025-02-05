@@ -18,10 +18,11 @@ import Flow from "../flow";
 import Toolbar from "../toolbar";
 import ToolbarOverlay from "../toolbar/overlay";
 import {
-  calculateCanvasPosition,
   checkIfToolbarItem,
   generateEmptySeatsForTable,
+  ONE_SEAT_DESK_SETTINGS,
   STUDENT_SETTINGS,
+  TWO_SEATS_DESK_SETTINGS,
 } from "../utils";
 import {
   OneSeatDeskNodeProps,
@@ -31,6 +32,7 @@ import {
 import StudentList from "../student-list";
 import { Student } from "@/lib/supabase/types/additional.types";
 import StudentOverlay from "../student-list/overlay";
+import useMousePosition from "@/hooks/use-mouse";
 
 export default function Canvas({
   nodes: initialNodes,
@@ -46,6 +48,8 @@ export default function Canvas({
     null
   );
   const [selectedStudent, setSelectedStudent] = useState<Active | null>(null);
+  const { screenToFlowPosition } = useReactFlow();
+  const { top, left } = useMousePosition();
 
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -83,11 +87,10 @@ export default function Canvas({
       const newNode = {
         id: selectedStudent.id.toString(),
         type: "student",
-        position: calculateCanvasPosition(
-          active.rect.current.initial,
-          over,
-          delta
-        ),
+        position: screenToFlowPosition({
+          x: top - STUDENT_SETTINGS.width / 2,
+          y: left - STUDENT_SETTINGS.height / 2,
+        }),
         data: {
           ...selectedStudent.data.current,
           type: "student",
@@ -107,11 +110,10 @@ export default function Canvas({
         newNode = {
           id: selectedToolbarItem.id.toString(),
           type: selectedToolbarItem.data.current.type,
-          position: calculateCanvasPosition(
-            active.rect.current.initial,
-            over,
-            delta
-          ),
+          position: screenToFlowPosition({
+            x: top - TWO_SEATS_DESK_SETTINGS.width / 2,
+            y: left - TWO_SEATS_DESK_SETTINGS.height / 2,
+          }),
           data: {
             students: generateEmptySeatsForTable(
               selectedToolbarItem.id.toString(),
@@ -123,11 +125,10 @@ export default function Canvas({
         newNode = {
           id: selectedToolbarItem.id.toString(),
           type: selectedToolbarItem.data.current.type,
-          position: calculateCanvasPosition(
-            active.rect.current.initial,
-            over,
-            delta
-          ),
+          position: screenToFlowPosition({
+            x: top - ONE_SEAT_DESK_SETTINGS.width / 2,
+            y: left - ONE_SEAT_DESK_SETTINGS.height / 2,
+          }),
           data: {
             student: generateEmptySeatsForTable(
               selectedToolbarItem.id.toString(),

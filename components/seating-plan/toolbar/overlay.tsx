@@ -4,6 +4,7 @@ import GenericNode from "../nodes/generic";
 import { RectangleHorizontal } from "lucide-react";
 import { ONE_SEAT_DESK_SETTINGS, TWO_SEATS_DESK_SETTINGS } from "../utils";
 import { Node } from "@/lib/types/seating-plan";
+import { snapCenterToCursor } from "@dnd-kit/modifiers";
 
 export default function ToolbarOverlay({
   viewPort,
@@ -17,7 +18,7 @@ export default function ToolbarOverlay({
   if (current) {
     if (current.type === "twoSeatsDesk") {
       return (
-        <DragOverlay>
+        <DragOverlay modifiers={[snapCenterToCursor]}>
           <div
             style={{
               position: "absolute",

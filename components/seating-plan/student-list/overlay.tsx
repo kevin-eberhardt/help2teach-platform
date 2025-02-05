@@ -3,6 +3,7 @@ import { Viewport } from "@xyflow/react";
 import { STUDENT_SETTINGS } from "../utils";
 import { Student } from "@/lib/supabase/types/additional.types";
 import StudentNode from "../nodes/student";
+import { snapCenterToCursor } from "@dnd-kit/modifiers";
 
 export default function StudentOverlay({
   viewPort,
@@ -16,7 +17,7 @@ export default function StudentOverlay({
   if (current) {
     if (current.type === "student-list") {
       return (
-        <DragOverlay>
+        <DragOverlay modifiers={[snapCenterToCursor]}>
           <div
             style={{
               position: "absolute",
