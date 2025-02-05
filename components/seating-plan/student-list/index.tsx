@@ -6,7 +6,6 @@ import { checkIfDesk } from "../utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import StudentListNode from "./item";
 
 function findStudentInNodes(
   studentId: Student["id"],
@@ -22,11 +21,9 @@ function findStudentInNodes(
       if (node.type === "oneSeatDesk") {
         nodeIds.push(node.data.student.id.toString());
       } else {
-        nodeIds.concat(
-          (node.data.students as Student[]).map((student) =>
-            student.id.toString()
-          )
-        );
+        const students = node.data.students as Student[];
+        nodeIds.push(students[0].id.toString());
+        nodeIds.push(students[1].id.toString());
       }
       nodeIds.push(node.id);
     }

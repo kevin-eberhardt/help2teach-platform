@@ -70,11 +70,9 @@ export default function Canvas({
 
   function handleDragStart(event: DragStartEvent) {
     const { active } = event;
-    console.log("active", active);
     if (!active.data || !active.data.current) return;
 
     if (checkIfToolbarItem(active.data.current.type)) {
-      console.log(active);
       setSelectedToolbarItem(active);
     }
   }
@@ -110,11 +108,9 @@ export default function Canvas({
           } as ReactFlowNode;
           setNodes((prevNodes) => [...prevNodes, newNode as SeatingPlanNode]);
         } else {
-          console.log("Replacing n", active);
           setNodes((prevNodes) =>
             prevNodes.map((n) => {
               if (n.id === active.data.current?.id.toString()) {
-                console.log("n found", n);
                 return {
                   ...n,
                   position: screenToFlowPosition({
@@ -147,6 +143,7 @@ export default function Canvas({
                 2
               ),
             },
+            dragHandle: ".drag-handle",
           } as TwoSeatsDeskNodeProps;
         } else if (selectedToolbarItem.data.current.type === "oneSeatDesk") {
           newNode = {
@@ -162,19 +159,18 @@ export default function Canvas({
                 1
               )[0],
             },
+            dragHandle: ".drag-handle",
           } as OneSeatDeskNodeProps;
         }
 
         if (newNode) {
-          console.log(newNode);
           setNodes([...nodes, newNode]);
         }
         setSelectedToolbarItem(null);
       }
     } else {
-      // handle drag from student-list to table
+      // handle drag from student node to table
       if (active.data.current.type === "student") {
-        console.log("drag from student-list to table");
         const activeElement = active.data.current as Student & {
           type: "student";
         };
@@ -186,18 +182,14 @@ export default function Canvas({
         ) as SeatingPlanNode;
         if (!overDesk) return;
 
-        console.log("overDesk", overDesk);
-
         // check what type of desk it is
         if (overDesk.type === "oneSeatDesk") {
           // check if seat is empty
           if (!overDesk.data.student.id.toString().includes("empty")) {
-            console.log("seat is not empty");
             return;
           } else {
-            console.log("seat is empty, setting activeElement", activeElement);
             // set student to seat
-            const newNodes: SeatingPlanNode[] = nodes.map((node) => {
+            let newNodes: SeatingPlanNode[] = nodes.map((node) => {
               if (node.id === overDesk.id) {
                 return {
                   ...node,
@@ -212,6 +204,9 @@ export default function Canvas({
               }
               return node;
             });
+            newNodes = newNodes.filter(
+              (n) => n.id !== activeElement.id.toString()
+            );
             setNodes(newNodes);
           }
         } else if (overDesk.type === "twoSeatsDesk") {
@@ -220,10 +215,47 @@ export default function Canvas({
           );
           if (overIndex === -1) return;
           console.log("Adding student to twoSeatsDesk");
+          console.log(overIndex);
+
+          // check if seat is empty
+          if (
+            !overDesk.data.students[overIndex].id.toString().includes("empty")
+          ) {
+            return;
+          } else {
+            // set student to seat
+            let newNodes: SeatingPlanNode[] = nodes.map((node) => {
+              if (node.id === overDesk.id) {
+                return {
+                  ...node,
+                  type: "twoSeatsDesk",
+                  data: {
+                    students: overDesk.data.students.map((student, index) => {
+                      if (index === overIndex) {
+                        return {
+                          ...activeElement,
+                          type: "student",
+                        };
+                      }
+                      return student;
+                    }),
+                  },
+                };
+              }
+              return node;
+            });
+            newNodes = newNodes.filter(
+              (n) => n.id !== activeElement.id.toString()
+            );
+            setNodes(newNodes);
+          }
+          // handle drag from table to table
+        } else {
+          // handle drag from student list directly to table
+          return;
         }
-        // handle drag from table to table
+        setSelectedToolbarItem(null);
       }
-      setSelectedToolbarItem(null);
     }
   }
 

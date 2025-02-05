@@ -27,6 +27,7 @@ export default function TwoSeatsDesk({
         items={data.students}
         strategy={horizontalListSortingStrategy}
       >
+        <div className="drag-handle">Drag handle</div>
         <div className="flex justify-center items-center gap-4">
           {data.students.map((item) => {
             const isEmpty = item.id.toString().includes("empty");

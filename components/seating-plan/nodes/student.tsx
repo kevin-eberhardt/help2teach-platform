@@ -24,9 +24,12 @@ export default function StudentNode({
       {...attributes}
       {...listeners}
       className={`
-        no-drag ${isDragging ? "opacity-0" : "opacity-100"}
-        ${
-          type === "student-list" && isDragging ? "opacity-40" : "opacity-100"
+        no-drag ${
+          isDragging
+            ? type === "student-list"
+              ? "opacity-40"
+              : "opacity-0"
+            : "opacity-100"
         }`}
     >
       <GenericNode key={id} id={id} data={data} selected={selected}>

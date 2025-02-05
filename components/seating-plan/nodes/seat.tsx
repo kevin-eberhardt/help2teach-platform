@@ -18,39 +18,26 @@ export default function Seat({
     transform,
     transition,
     isOver,
-    active,
-    over,
     setDroppableNodeRef,
     isDragging,
   } = useSortable({
     id: id,
-    data: element,
+    data: { ...element, type: "student" },
     disabled: element.id.toString().includes("empty"),
   });
 
   const style = {
-    transform: CSS.Transform.toString(
-      transform && {
-        ...transform,
-      }
-    ),
+    transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1,
   };
 
   return (
     <div
-      className="flex justify-center items-center gap-4"
-      style={{
-        ...style,
-      }}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      onPointerDown={(e) => {
-        listeners?.onPointerDown?.(e);
-        e.preventDefault();
-      }}
+      className="flex justify-center items-center gap-4"
     >
       {isEmpty ? (
         <div
@@ -58,14 +45,20 @@ export default function Seat({
             isOver ? "bg-primary text-primary-foreground" : "bg-accent"
           } h-12 w-24 flex items-center justify-center rounded-md`}
           ref={setDroppableNodeRef}
+          style={{
+            ...style,
+          }}
         ></div>
       ) : (
         <div
           className={`${
-            isOver ? "bg-primary/40" : "bg-primary text-primary-foreground"
+            isOver ? "bg-primary/40 text-primary-foreground" : "bg-accent"
           } h-12 w-24 flex items-center justify-center rounded-md`}
+          style={{
+            ...style,
+          }}
         >
-          <p>{element.name}</p>
+          {element.name}
         </div>
       )}
     </div>
