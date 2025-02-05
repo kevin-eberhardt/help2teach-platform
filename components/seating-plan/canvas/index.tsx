@@ -25,8 +25,10 @@ import {
   TWO_SEATS_DESK_SETTINGS,
 } from "../utils";
 import {
+  NodeType,
   OneSeatDeskNodeProps,
   SeatingPlanNode,
+  SeatNodeProps,
   TwoSeatsDeskNodeProps,
 } from "@/lib/types/seating-plan";
 import StudentList from "../student-list";
@@ -69,7 +71,7 @@ export default function Canvas({
 
   function handleDragStart(event: DragStartEvent) {
     const { active } = event;
-    console.log(active);
+    console.log("active", active);
     if (!active.data || !active.data.current) return;
 
     if (checkIfToolbarItem(active.data.current.type)) {
@@ -77,80 +79,136 @@ export default function Canvas({
       setSelectedToolbarItem(active);
     }
 
-    if (active.data.current.type === "student-list") {
+    if (active.data.current.type === "student") {
       setSelectedStudent(active);
     }
   }
 
   function handleDragEnd(event: DragEndEvent) {
-    const { active, over, delta } = event;
+    const { active, over } = event;
     if (!over) return;
-    if (!active.rect.current?.initial) return;
+    if (!active.data?.current || !active.rect.current?.initial) return;
 
-    if (selectedStudent && over.id === "canvas") {
-      if (!selectedStudent.data?.current) return;
+    // handle drag on canvas
+    if (over.id === "canvas") {
+      if (selectedStudent) {
+        if (!selectedStudent.data?.current) return;
 
-      const newNode = {
-        id: selectedStudent.id.toString(),
-        type: "student",
-        position: screenToFlowPosition({
-          x: top - STUDENT_SETTINGS.width / 2,
-          y: left - STUDENT_SETTINGS.height / 2,
-        }),
-        data: {
-          ...selectedStudent.data.current,
+        const newNode = {
+          id: selectedStudent.id.toString(),
           type: "student",
-        },
-        width: STUDENT_SETTINGS.width,
-        height: STUDENT_SETTINGS.height,
-      } as ReactFlowNode;
-
-      setNodes([...nodes, newNode as SeatingPlanNode]);
-    }
-    if (selectedToolbarItem && over.id === "canvas") {
-      if (!selectedToolbarItem.data?.current) return;
-
-      let newNode = null;
-
-      if (selectedToolbarItem.data.current.type === "twoSeatsDesk") {
-        newNode = {
-          id: selectedToolbarItem.id.toString(),
-          type: selectedToolbarItem.data.current.type,
           position: screenToFlowPosition({
-            x: top - TWO_SEATS_DESK_SETTINGS.width / 2,
-            y: left - TWO_SEATS_DESK_SETTINGS.height / 2,
+            x: top - STUDENT_SETTINGS.width / 2,
+            y: left - STUDENT_SETTINGS.height / 2,
           }),
           data: {
-            students: generateEmptySeatsForTable(
-              selectedToolbarItem.id.toString(),
-              2
-            ),
+            ...selectedStudent.data.current,
+            type: "student",
           },
-        } as TwoSeatsDeskNodeProps;
-      } else if (selectedToolbarItem.data.current.type === "oneSeatDesk") {
-        newNode = {
-          id: selectedToolbarItem.id.toString(),
-          type: selectedToolbarItem.data.current.type,
-          position: screenToFlowPosition({
-            x: top - ONE_SEAT_DESK_SETTINGS.width / 2,
-            y: left - ONE_SEAT_DESK_SETTINGS.height / 2,
-          }),
-          data: {
-            student: generateEmptySeatsForTable(
-              selectedToolbarItem.id.toString(),
-              1
-            )[0],
-          },
-        } as OneSeatDeskNodeProps;
-      }
+          width: STUDENT_SETTINGS.width,
+          height: STUDENT_SETTINGS.height,
+        } as ReactFlowNode;
+        setSelectedStudent(null);
 
-      if (newNode) {
-        console.log(newNode);
-        setNodes([...nodes, newNode]);
+        setNodes([...nodes, newNode as SeatingPlanNode]);
       }
+      if (selectedToolbarItem) {
+        if (!selectedToolbarItem.data?.current) return;
+
+        let newNode = null;
+
+        if (selectedToolbarItem.data.current.type === "twoSeatsDesk") {
+          newNode = {
+            id: selectedToolbarItem.id.toString(),
+            type: selectedToolbarItem.data.current.type,
+            position: screenToFlowPosition({
+              x: top - TWO_SEATS_DESK_SETTINGS.width / 2,
+              y: left - TWO_SEATS_DESK_SETTINGS.height / 2,
+            }),
+            data: {
+              students: generateEmptySeatsForTable(
+                selectedToolbarItem.id.toString(),
+                2
+              ),
+            },
+          } as TwoSeatsDeskNodeProps;
+        } else if (selectedToolbarItem.data.current.type === "oneSeatDesk") {
+          newNode = {
+            id: selectedToolbarItem.id.toString(),
+            type: selectedToolbarItem.data.current.type,
+            position: screenToFlowPosition({
+              x: top - ONE_SEAT_DESK_SETTINGS.width / 2,
+              y: left - ONE_SEAT_DESK_SETTINGS.height / 2,
+            }),
+            data: {
+              student: generateEmptySeatsForTable(
+                selectedToolbarItem.id.toString(),
+                1
+              )[0],
+            },
+          } as OneSeatDeskNodeProps;
+        }
+
+        if (newNode) {
+          console.log(newNode);
+          setNodes([...nodes, newNode]);
+        }
+        setSelectedToolbarItem(null);
+      }
+    } else {
+      // handle drag from student-list to table
+      if (active.data.current.type === "student") {
+        console.log("drag from student-list to table");
+        const activeElement = active.data.current as Student & {
+          type: "student";
+        };
+
+        const overElement = over.data as SeatNodeProps;
+        if (!overElement.current) return;
+        const overDesk = nodes.find(
+          (n) => n.id === overElement.current.sortable.containerId
+        ) as SeatingPlanNode;
+        if (!overDesk) return;
+
+        console.log("overDesk", overDesk);
+
+        // check what type of desk it is
+        if (overDesk.type === "oneSeatDesk") {
+          // check if seat is empty
+          if (!overDesk.data.student.id.toString().includes("empty")) {
+            console.log("seat is not empty");
+            return;
+          } else {
+            console.log("seat is empty, setting activeElement", activeElement);
+            // set student to seat
+            const newNodes: SeatingPlanNode[] = nodes.map((node) => {
+              if (node.id === overDesk.id) {
+                return {
+                  ...node,
+                  type: "oneSeatDesk",
+                  data: {
+                    student: {
+                      ...activeElement,
+                      type: "student",
+                    },
+                  },
+                };
+              }
+              return node;
+            });
+            setNodes(newNodes);
+          }
+        } else if (overDesk.type === "twoSeatsDesk") {
+          const overIndex = overDesk.data.students.findIndex(
+            (student) => student.id === overElement.current.id
+          );
+          if (overIndex === -1) return;
+          console.log("Adding student to twoSeatsDesk");
+        }
+        // handle drag from table to table
+      }
+      setSelectedToolbarItem(null);
     }
-    setSelectedToolbarItem(null);
-    setSelectedStudent(null);
   }
 
   // adjust height and width based on viewport

@@ -5,34 +5,50 @@ import { NodeType, SeatingPlanNode } from "@/lib/types/seating-plan";
 import { checkIfDesk } from "../utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import StudentListNode from "./item";
 
-function findStudentInNodes(student: Student, nodes: SeatingPlanNode[]) {
+function findStudentInNodes(
+  studentId: Student["id"],
+  nodes: SeatingPlanNode[]
+): boolean {
   if (!nodes) return false;
-  const nodeIds = nodes.map((node) => {
-    if (checkIfDesk(node.data.type as NodeType) && "students" in node.data) {
-      if (node.data.type === "twoSeatsDesk") {
-        return (node.data.students as Student[]).map((student) =>
-          student.id.toString()
-        );
+
+  const nodeIds: Array<string> = [];
+
+  nodes.forEach((node) => {
+    if (node.type == "student") nodeIds.push(node.data.id.toString());
+    if (checkIfDesk(node.type as NodeType)) {
+      if (node.type === "oneSeatDesk") {
+        nodeIds.push(node.data.student.id.toString());
       } else {
-        return [(node.data.student as Student).id.toString()];
+        nodeIds.concat(
+          (node.data.students as Student[]).map((student) =>
+            student.id.toString()
+          )
+        );
       }
-    } else {
-      return node.id.toString();
+      nodeIds.push(node.id);
     }
   });
-  return nodeIds.flat().includes(student.id.toString());
+  return nodeIds.includes(studentId.toString());
 }
+
 export default function StudentList({
-  students,
-  nodes,
+  students: initialStudents,
+  nodes: initialNodes,
 }: {
   students: Student[];
   nodes: SeatingPlanNode[];
 }) {
+  const [nodes, setNodes] = useState<SeatingPlanNode[]>(initialNodes);
+  const [students, setStudents] = useState<Student[]>(initialStudents);
   const [isOpen, setIsOpen] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    setNodes(initialNodes);
+  }, [initialNodes]);
 
   return (
     <div
@@ -60,14 +76,15 @@ export default function StudentList({
         <ScrollArea className="h-auto max-h-48 md:max-h-80 relative overflow-scroll no-scrollbar">
           <div className="space-y-4">
             {students.map((student) => {
-              const isInCanvas = findStudentInNodes(student, nodes);
+              const isInCanvas = findStudentInNodes(student.id, nodes);
               if (isInCanvas) return null;
               return (
                 <StudentNode
                   key={student.id}
                   data={student}
-                  id={student.id}
-                  type={"student-list"}
+                  type="student"
+                  id={student.id.toString()}
+                  position={{ x: 0, y: 0 }}
                 />
               );
             })}

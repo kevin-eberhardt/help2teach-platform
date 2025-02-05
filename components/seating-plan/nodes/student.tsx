@@ -26,9 +26,10 @@ export default function StudentNode({
         {...listeners}
         className={`${
           type === "student-list" && isDragging ? "opacity-40" : "opacity-100"
-        }`}
+        }
+        ${isDragging ? "bg-primary" : "bg-white"}`}
       >
-        <div className="text-center">{data.name}</div>
+        {data.name}
       </div>
     </GenericNode>
   );

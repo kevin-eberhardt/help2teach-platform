@@ -1,6 +1,8 @@
 
 import { Node as ReactFlowNode, NodeProps } from "@xyflow/react";
 import { SeatingPlan, Student } from "../supabase/types/additional.types";
+import { Over } from "@dnd-kit/core";
+import { SortableData } from "@dnd-kit/sortable";
 
 export type NodeType = "student" | "twoSeatsDesk" | "oneSeatDesk" | "student-list"
 
@@ -16,7 +18,7 @@ export type SeatingPlanProps = {
 
 export type OneSeatDeskNodeProps = Node<{
     student: Student;
-}, "twoSeatsDesk">;
+}, "oneSeatDesk">;
 
 export type TwoSeatsDeskNodeProps = Node<{
     students: Student[];
@@ -24,6 +26,13 @@ export type TwoSeatsDeskNodeProps = Node<{
 
 export type GenericNodeProps<T = any> = React.HTMLProps<HTMLDivElement> & { data?: T, type?: NodeType };
 
+export type SeatNodeProps = Over["data"] & {
+    current: Student & {
+        sortable: SortableData["sortable"];
+    };
+    
+
+}
 export type StudentNodeProps = Node<Student, "student">;
 export type StudentSidebarProps = Node<Student, "student-list">;
 export type SeatingPlanNodeProps = NodeProps;

@@ -17,12 +17,11 @@ export default function ToolbarItem({
   type: NodeType;
   children?: React.ReactNode;
 }) {
-  const id = uuidv4();
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id,
+    id: uuidv4(),
     data: {
       type,
-      id,
+      id: uuidv4(),
     },
   });
 

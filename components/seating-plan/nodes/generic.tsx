@@ -52,7 +52,6 @@ const GenericNode = React.forwardRef<HTMLDivElement, GenericNodeProps>(
 
     return (
       <div
-        ref={ref}
         className={cn(
           "bg-white border border-accent rounded-md shadow-md p-4",
           selected ? "border-primary" : "border-accent",

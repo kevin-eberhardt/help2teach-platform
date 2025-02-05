@@ -2,8 +2,8 @@ import { Active, DragOverlay } from "@dnd-kit/core";
 import { Viewport } from "@xyflow/react";
 import { STUDENT_SETTINGS } from "../utils";
 import { Student } from "@/lib/supabase/types/additional.types";
-import StudentNode from "../nodes/student";
 import { snapCenterToCursor } from "@dnd-kit/modifiers";
+import StudentNode from "../nodes/student";
 
 export default function StudentOverlay({
   viewPort,
@@ -14,8 +14,9 @@ export default function StudentOverlay({
 }) {
   const zoom = viewPort?.zoom || 1;
   const current = active?.data.current as Student & { type: string };
+  console.log("current", current);
   if (current) {
-    if (current.type === "student-list") {
+    if (current.type === "student" || current.type === "student-list") {
       return (
         <DragOverlay modifiers={[snapCenterToCursor]}>
           <div
@@ -31,7 +32,7 @@ export default function StudentOverlay({
             <StudentNode
               id={current.id.toString()}
               data={current}
-              type="student-list"
+              type="student"
               position={{ x: 0, y: 0 }}
             />
           </div>

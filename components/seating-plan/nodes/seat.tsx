@@ -40,6 +40,7 @@ export default function Seat({
 
   return (
     <div
+      className="flex justify-center items-center gap-4"
       style={{
         ...style,
       }}
@@ -50,7 +51,6 @@ export default function Seat({
         listeners?.onPointerDown?.(e);
         e.preventDefault();
       }}
-      className="flex justify-center items-center gap-4"
     >
       {isEmpty ? (
         <div

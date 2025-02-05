@@ -52,6 +52,7 @@ export default function Flow({
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -60,6 +61,7 @@ export default function Flow({
       onNodesChange={onNodesChange}
       nodeTypes={nodeTypes as unknown as NodeTypes}
       onNodeDragStop={() => updateNodes()}
+      onNodeClick={(event, node) => console.log(node)}
       onNodesDelete={(deletedNodes) => {
         const deletedIds = deletedNodes.map((node) => node.id);
         const newNodes = nodes.filter((node) => !deletedIds.includes(node.id));
