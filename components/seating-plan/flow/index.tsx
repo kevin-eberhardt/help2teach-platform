@@ -67,6 +67,7 @@ export default function Flow({
         const newNodes = nodes.filter((node) => !deletedIds.includes(node.id));
         updateNodes(newNodes);
       }}
+      autoFocus={false}
       id="canvas"
       ref={setNodeRef}
       noDragClassName="no-drag"

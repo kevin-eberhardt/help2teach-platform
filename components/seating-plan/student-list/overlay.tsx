@@ -11,7 +11,6 @@ export default function StudentOverlay({
   viewPort: Viewport | null;
 }) {
   const { active } = useDndContext();
-  console.log(active);
   const zoom = viewPort?.zoom || 1;
   const current = active?.data.current as Student & { type: string };
   if (current) {

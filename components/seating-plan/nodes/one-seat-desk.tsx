@@ -27,6 +27,10 @@ export default function OneSeatDesk({
         items={[data.student]}
         strategy={horizontalListSortingStrategy}
       >
+        <div className="absolute top-0 left-0 w-full h-4 drag-handle" />
+        <div className="absolute top-0 left-0 w-4 h-full drag-handle" />
+        <div className="absolute top-0 right-0 w-4 h-full drag-handle" />
+        <div className="absolute bottom-0 left-0 w-full h-4 drag-handle" />
         <div className="flex justify-center items-center gap-4">
           <Seat
             key={data.student.id}

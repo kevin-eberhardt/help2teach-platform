@@ -1,39 +1,55 @@
-
 import { Node as ReactFlowNode, NodeProps } from "@xyflow/react";
 import { SeatingPlan, Student } from "../supabase/types/additional.types";
-import { Over } from "@dnd-kit/core";
+import { Active, Over } from "@dnd-kit/core";
 import { SortableData } from "@dnd-kit/sortable";
 
-export type NodeType = "student" | "twoSeatsDesk" | "oneSeatDesk" | "student-list"
+export type NodeType =
+  | "student"
+  | "twoSeatsDesk"
+  | "oneSeatDesk"
+  | "student-list";
 
-export type Node<T = any, TType extends NodeType = any> = ReactFlowNode & {
-    data?: T;
-    type?: TType;
-}
+export type Node<T, TType extends NodeType> = ReactFlowNode & {
+  data?: T;
+  type?: TType;
+};
 
 export type SeatingPlanProps = {
-    students: Student[];
-    seatingPlan: SeatingPlan;
-}
+  students: Student[];
+  seatingPlan: SeatingPlan;
+};
 
-export type OneSeatDeskNodeProps = Node<{
+export type OneSeatDeskNodeProps = Node<
+  {
     student: Student;
-}, "oneSeatDesk">;
+  },
+  "oneSeatDesk"
+>;
 
-export type TwoSeatsDeskNodeProps = Node<{
+export type TwoSeatsDeskNodeProps = Node<
+  {
     students: Student[];
-}, "twoSeatsDesk">;
+  },
+  "twoSeatsDesk"
+>;
 
-export type GenericNodeProps<T = any> = React.HTMLProps<HTMLDivElement> & { data?: T, type?: NodeType };
+export type GenericNodeProps<T> = React.HTMLProps<HTMLDivElement> & {
+  data?: T;
+  type?: NodeType;
+};
+export type StudentDraggable = Active["data"] & {
+  type: "student";
+};
 
 export type SeatNodeProps = Over["data"] & {
-    current: Student & {
-        sortable: SortableData["sortable"];
-    };
-    
-
-}
+  current: Student & {
+    sortable: SortableData["sortable"];
+  };
+};
 export type StudentNodeProps = Node<Student, "student">;
 export type StudentSidebarProps = Node<Student, "student-list">;
 export type SeatingPlanNodeProps = NodeProps;
-export type SeatingPlanNode = StudentNodeProps | TwoSeatsDeskNodeProps | OneSeatDeskNodeProps;
+export type SeatingPlanNode =
+  | StudentNodeProps
+  | TwoSeatsDeskNodeProps
+  | OneSeatDeskNodeProps;

@@ -19,22 +19,26 @@ import Toolbar from "../toolbar";
 import ToolbarOverlay from "../toolbar/overlay";
 import {
   checkIfToolbarItem,
-  generateEmptySeatsForTable,
   ONE_SEAT_DESK_SETTINGS,
   STUDENT_SETTINGS,
   TWO_SEATS_DESK_SETTINGS,
 } from "../utils";
 import {
-  NodeType,
   OneSeatDeskNodeProps,
   SeatingPlanNode,
   SeatNodeProps,
+  StudentDraggable,
   TwoSeatsDeskNodeProps,
 } from "@/lib/types/seating-plan";
 import StudentList from "../student-list";
 import { Student } from "@/lib/supabase/types/additional.types";
 import StudentOverlay from "../student-list/overlay";
 import useMousePosition from "@/hooks/use-mouse";
+import {
+  generateEmptySeatsForTable,
+  moveStudentFromCanvasToOneSeatDesk,
+  moveStudentFromCanvasToTwoSeatsDesk,
+} from "./utils";
 
 export default function Canvas({
   nodes: initialNodes,
@@ -84,7 +88,7 @@ export default function Canvas({
     if (!active.data?.current || !active.rect.current?.initial) return;
 
     // handle drag on canvas
-    if (over.id === "canvas") {
+    if (over.id === "canvas" && !active.data.current.sortable) {
       if (
         active.data.current.type === "student" ||
         active.data.current.type === "student-list"
@@ -108,22 +112,29 @@ export default function Canvas({
           } as ReactFlowNode;
           setNodes((prevNodes) => [...prevNodes, newNode as SeatingPlanNode]);
         } else {
-          setNodes((prevNodes) =>
-            prevNodes.map((n) => {
-              if (n.id === active.data.current?.id.toString()) {
-                return {
-                  ...n,
-                  position: screenToFlowPosition({
-                    x: top - STUDENT_SETTINGS.width / 2,
-                    y: left - STUDENT_SETTINGS.height / 2,
-                  }),
-                } as SeatingPlanNode;
-              }
-              return n;
-            })
-          );
+          const activeNode = active.data as SeatNodeProps;
+          if (activeNode.current && activeNode.current.sortable) {
+            console.log("Student from table to canvas");
+          } else {
+            setNodes((prevNodes) =>
+              prevNodes.map((n) => {
+                if (n.id === active.data.current?.id.toString()) {
+                  return {
+                    ...n,
+                    position: screenToFlowPosition({
+                      x: top - STUDENT_SETTINGS.width / 2,
+                      y: left - STUDENT_SETTINGS.height / 2,
+                    }),
+                  } as SeatingPlanNode;
+                }
+                return n;
+              })
+            );
+          }
         }
       }
+
+      // handle drag from toolbar to canvas
       if (selectedToolbarItem) {
         if (!selectedToolbarItem.data?.current) return;
 
@@ -157,7 +168,7 @@ export default function Canvas({
               student: generateEmptySeatsForTable(
                 selectedToolbarItem.id.toString(),
                 1
-              )[0],
+              ),
             },
             dragHandle: ".drag-handle",
           } as OneSeatDeskNodeProps;
@@ -168,93 +179,53 @@ export default function Canvas({
         }
         setSelectedToolbarItem(null);
       }
-    } else {
-      // handle drag from student node to table
-      if (active.data.current.type === "student") {
-        const activeElement = active.data.current as Student & {
-          type: "student";
-        };
+    } else if (over.id === "canvas" && active.data.current.sortable) {
+      if (active.data.current.type !== "student") return;
+      const activeStudent = active.data as SeatNodeProps;
+      const activeDesk = nodes.find(
+        (n) => n.id === activeStudent.current.sortable.containerId
+      ) as SeatingPlanNode;
+      console.log(activeDesk);
 
-        const overElement = over.data as SeatNodeProps;
-        if (!overElement.current) return;
-        const overDesk = nodes.find(
-          (n) => n.id === overElement.current.sortable.containerId
-        ) as SeatingPlanNode;
-        if (!overDesk) return;
+      // handle drag from table to canvas
+      // 1. Check if the active element is a student node
+      // 2. Check if the over element is a desk node
+      // 3. Check what type of desk node it is
+      // 4. Check for empty seat if seat is empty, either move other student or replace with active element
+    }
 
-        // check what type of desk it is
-        if (overDesk.type === "oneSeatDesk") {
-          // check if seat is empty
-          if (!overDesk.data.student.id.toString().includes("empty")) {
-            return;
-          } else {
-            // set student to seat
-            let newNodes: SeatingPlanNode[] = nodes.map((node) => {
-              if (node.id === overDesk.id) {
-                return {
-                  ...node,
-                  type: "oneSeatDesk",
-                  data: {
-                    student: {
-                      ...activeElement,
-                      type: "student",
-                    },
-                  },
-                };
-              }
-              return node;
-            });
-            newNodes = newNodes.filter(
-              (n) => n.id !== activeElement.id.toString()
-            );
-            setNodes(newNodes);
-          }
-        } else if (overDesk.type === "twoSeatsDesk") {
-          const overIndex = overDesk.data.students.findIndex(
-            (student) => student.id === overElement.current.id
-          );
-          if (overIndex === -1) return;
-          console.log("Adding student to twoSeatsDesk");
-          console.log(overIndex);
+    if (active.data.current.type === "student" && over.data.current?.sortable) {
+      // handle drag student from canvas to table
+      // 1. Check if the active element is a student node
+      // 2. Check if the over element is a desk node
+      // 3. Check what type of desk node it is
+      // 4. Check for empty seat if seat is empty, either move other student or replace with active element
+      const activeStudent = active.data as StudentDraggable;
+      const overSeat = over.data as SeatNodeProps;
+      const overDesk = nodes.find(
+        (n) => n.id === overSeat.current.sortable.containerId
+      ) as SeatingPlanNode;
 
-          // check if seat is empty
-          if (
-            !overDesk.data.students[overIndex].id.toString().includes("empty")
-          ) {
-            return;
-          } else {
-            // set student to seat
-            let newNodes: SeatingPlanNode[] = nodes.map((node) => {
-              if (node.id === overDesk.id) {
-                return {
-                  ...node,
-                  type: "twoSeatsDesk",
-                  data: {
-                    students: overDesk.data.students.map((student, index) => {
-                      if (index === overIndex) {
-                        return {
-                          ...activeElement,
-                          type: "student",
-                        };
-                      }
-                      return student;
-                    }),
-                  },
-                };
-              }
-              return node;
-            });
-            newNodes = newNodes.filter(
-              (n) => n.id !== activeElement.id.toString()
-            );
-            setNodes(newNodes);
-          }
-          // handle drag from table to table
-        } else {
-          // handle drag from student list directly to table
-          return;
-        }
-        setSelectedToolbarItem(null);
+      if (overDesk.type === "oneSeatDesk") {
+        console.log("Moving student from canvas to one seat desk");
+        setNodes(
+          moveStudentFromCanvasToOneSeatDesk(
+            activeStudent,
+            overSeat,
+            overDesk,
+            nodes
+          )
+        );
+      } else if (overDesk.type === "twoSeatsDesk") {
+        console.log("Moving student from two seats desk to canvas");
+        setNodes(
+          moveStudentFromCanvasToTwoSeatsDesk(
+            activeStudent,
+            overSeat,
+            overDesk,
+            nodes
+          )
+        );
       }
     }
   }
