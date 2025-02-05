@@ -51,7 +51,6 @@ export default function Canvas({
   const [selectedToolbarItem, setSelectedToolbarItem] = useState<Active | null>(
     null
   );
-  const [selectedStudent, setSelectedStudent] = useState<Active | null>(null);
   const { screenToFlowPosition } = useReactFlow();
   const { top, left } = useMousePosition();
 
@@ -78,39 +77,56 @@ export default function Canvas({
       console.log(active);
       setSelectedToolbarItem(active);
     }
-
-    if (active.data.current.type === "student") {
-      setSelectedStudent(active);
-    }
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
+    console.log(active, over);
     if (!over) return;
     if (!active.data?.current || !active.rect.current?.initial) return;
 
     // handle drag on canvas
     if (over.id === "canvas") {
-      if (selectedStudent) {
-        if (!selectedStudent.data?.current) return;
+      if (
+        active.data.current.type === "student" ||
+        active.data.current.type === "student-list"
+      ) {
+        if (!active.data?.current) return;
 
-        const newNode = {
-          id: selectedStudent.id.toString(),
-          type: "student",
-          position: screenToFlowPosition({
-            x: top - STUDENT_SETTINGS.width / 2,
-            y: left - STUDENT_SETTINGS.height / 2,
-          }),
-          data: {
-            ...selectedStudent.data.current,
+        if (active.data.current.type === "student-list") {
+          const newNode = {
+            id: active.id.toString(),
             type: "student",
-          },
-          width: STUDENT_SETTINGS.width,
-          height: STUDENT_SETTINGS.height,
-        } as ReactFlowNode;
-        setSelectedStudent(null);
-
-        setNodes([...nodes, newNode as SeatingPlanNode]);
+            position: screenToFlowPosition({
+              x: top - STUDENT_SETTINGS.width / 2,
+              y: left - STUDENT_SETTINGS.height / 2,
+            }),
+            data: {
+              ...active.data.current,
+              type: "student",
+            },
+            width: STUDENT_SETTINGS.width,
+            height: STUDENT_SETTINGS.height,
+          } as ReactFlowNode;
+          setNodes((prevNodes) => [...prevNodes, newNode as SeatingPlanNode]);
+        } else {
+          console.log("Replacing n", active);
+          setNodes((prevNodes) =>
+            prevNodes.map((n) => {
+              if (n.id === active.data.current?.id.toString()) {
+                console.log("n found", n);
+                return {
+                  ...n,
+                  position: screenToFlowPosition({
+                    x: top - STUDENT_SETTINGS.width / 2,
+                    y: left - STUDENT_SETTINGS.height / 2,
+                  }),
+                } as SeatingPlanNode;
+              }
+              return n;
+            })
+          );
+        }
       }
       if (selectedToolbarItem) {
         if (!selectedToolbarItem.data?.current) return;
@@ -229,7 +245,7 @@ export default function Canvas({
       >
         <Flow nodes={nodes} setNodes={setNodes} />
         <StudentList students={students} nodes={nodes} />
-        <StudentOverlay viewPort={viewPort} active={selectedStudent} />
+        <StudentOverlay viewPort={viewPort} />
         <Toolbar />
         <ToolbarOverlay viewPort={viewPort} active={selectedToolbarItem} />
       </DndContext>

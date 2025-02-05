@@ -1,4 +1,4 @@
-import { Active, DragOverlay } from "@dnd-kit/core";
+import { DragOverlay, useDndContext } from "@dnd-kit/core";
 import { Viewport } from "@xyflow/react";
 import { STUDENT_SETTINGS } from "../utils";
 import { Student } from "@/lib/supabase/types/additional.types";
@@ -7,14 +7,12 @@ import StudentNode from "../nodes/student";
 
 export default function StudentOverlay({
   viewPort,
-  active,
 }: {
   viewPort: Viewport | null;
-  active: Active | null;
 }) {
+  const { active } = useDndContext();
   const zoom = viewPort?.zoom || 1;
   const current = active?.data.current as Student & { type: string };
-  console.log("current", current);
   if (current) {
     if (current.type === "student" || current.type === "student-list") {
       return (

@@ -82,7 +82,7 @@ export default function StudentList({
                 <StudentNode
                   key={student.id}
                   data={student}
-                  type="student"
+                  type="student-list"
                   id={student.id.toString()}
                   position={{ x: 0, y: 0 }}
                 />

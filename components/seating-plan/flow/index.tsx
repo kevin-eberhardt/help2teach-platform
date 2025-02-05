@@ -69,6 +69,7 @@ export default function Flow({
       }}
       id="canvas"
       ref={setNodeRef}
+      noDragClassName="no-drag"
     >
       <ReactFlowControls />
       <Controls

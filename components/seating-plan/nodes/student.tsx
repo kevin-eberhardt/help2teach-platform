@@ -19,18 +19,19 @@ export default function StudentNode({
     },
   });
   return (
-    <GenericNode key={id} id={id} data={data} selected={selected}>
-      <div
-        ref={setNodeRef}
-        {...attributes}
-        {...listeners}
-        className={`${
+    <div
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      className={`
+        no-drag ${isDragging ? "opacity-0" : "opacity-100"}
+        ${
           type === "student-list" && isDragging ? "opacity-40" : "opacity-100"
-        }
-        ${isDragging ? "bg-primary" : "bg-white"}`}
-      >
+        }`}
+    >
+      <GenericNode key={id} id={id} data={data} selected={selected}>
         {data.name}
-      </div>
-    </GenericNode>
+      </GenericNode>
+    </div>
   );
 }
