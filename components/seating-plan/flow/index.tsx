@@ -32,6 +32,7 @@ export default function Flow({
     setHistory(n ? n : nodes);
     store(n ? n : nodes);
     setInitialNodes(n ? n : nodes);
+    console.log("nodes changed");
   }
 
   useEffect(() => {

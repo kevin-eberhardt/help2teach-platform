@@ -6,7 +6,20 @@ import TextNodeInput from "../../canvas/input";
 import { ONE_SEAT_DESK_SETTINGS } from "../../utils";
 
 function TextNode({ id, data, selected, className, style }: TextNodeProps) {
-  const { setNodes } = useReactFlow();
+  const { setNodes, getNodes } = useReactFlow();
+
+  function handleResizeEnd(width: number, height: number) {
+    console.log("resize", width, height);
+    setNodes((nodes) =>
+      getNodes().map((node) => {
+        if (node.id === id) {
+          return { ...node, width, height };
+        } else {
+          return node;
+        }
+      })
+    );
+  }
 
   return (
     <GenericNode
@@ -29,6 +42,9 @@ function TextNode({ id, data, selected, className, style }: TextNodeProps) {
         isVisible={selected}
         minWidth={ONE_SEAT_DESK_SETTINGS.width}
         minHeight={30}
+        onResizeEnd={(_, params) =>
+          handleResizeEnd(params.width, params.height)
+        }
       />
       <TextNodeInput id={id} text={data.text} />
     </GenericNode>
