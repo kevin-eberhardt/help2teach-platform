@@ -1,6 +1,7 @@
 import { Student } from "@/lib/supabase/types/additional.types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useEffect, useState } from "react";
 
 export default function Seat({
   id,
@@ -20,11 +21,29 @@ export default function Seat({
     isOver,
     setDroppableNodeRef,
     isDragging,
+    over,
+    active,
   } = useSortable({
     id: id,
     data: { ...element, type: "student" },
     disabled: element.id.toString().includes("empty"),
   });
+  const [isOverValid, setIsOverValid] = useState(false);
+
+  useEffect(() => {
+    if (over && over.id === id && active) {
+      if (
+        active.data.current?.type === "student" ||
+        active.data.current?.type === "student-list"
+      ) {
+        setIsOverValid(true);
+      } else {
+        setIsOverValid(false);
+      }
+    } else {
+      setIsOverValid(false);
+    }
+  }, [isOver]);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -42,7 +61,7 @@ export default function Seat({
       {isEmpty ? (
         <div
           className={`${
-            isOver ? "bg-primary text-primary-foreground" : "bg-accent"
+            isOverValid ? "bg-primary text-primary-foreground" : "bg-accent"
           } h-12 w-24 flex items-center justify-center rounded-md`}
           ref={setDroppableNodeRef}
           style={{
@@ -52,7 +71,7 @@ export default function Seat({
       ) : (
         <div
           className={`${
-            isOver ? "bg-primary/40 text-primary-foreground" : "bg-accent"
+            isOverValid ? "bg-primary/40 text-primary-foreground" : "bg-accent"
           } h-12 w-24 flex items-center justify-center rounded-md`}
           style={{
             ...style,
