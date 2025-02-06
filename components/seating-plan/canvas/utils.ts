@@ -195,8 +195,6 @@ export function moveStudentInSameDesk(
     },
   };
 
-  console.log("newDesk", newDesk);
-
   const newNodes = nodes.map((node) => {
     if (node.id === commonDesk.id) {
       return newDesk;
@@ -350,7 +348,6 @@ export function moveStudentFromDeskToCanvas(
         return node;
       }
     });
-    console.log("newNodes", [...newNodes, newStudentItem]);
     return [...newNodes, newStudentItem];
   } else {
     const newStudents = [...(activeDesk.data.students as Student[])];
@@ -374,7 +371,50 @@ export function moveStudentFromDeskToCanvas(
         return node;
       }
     });
-    console.log("newNodes", [...newNodes, newStudentItem]);
     return [...newNodes, newStudentItem];
   }
+}
+
+export function moveStudentFromStudentListToDesk(
+  activeStudent: StudentDraggable,
+  overSeat: SeatNodeProps,
+  nodes: SeatingPlanNode[]
+) {
+  let desk = nodes.find((n) => n.id === overSeat.current.sortable.containerId);
+  if (!desk) return nodes;
+
+  let newDesk = desk;
+  // check if students or student is in desk.data and either set it as TwoSeatsDeskNodeProps or OneSeatDeskNodeProps
+  if ((desk as TwoSeatsDeskNodeProps).data.students) {
+    desk = desk as TwoSeatsDeskNodeProps;
+    const overSeatIndex = desk.data.students.findIndex(
+      (s) => s.id === overSeat.current.id
+    );
+    const newStudents = [...desk.data.students];
+    newStudents[overSeatIndex] = activeStudent.current as Student;
+
+    newDesk = {
+      ...desk,
+      data: {
+        ...desk.data,
+        students: newStudents,
+      },
+    };
+  } else {
+    desk = desk as OneSeatDeskNodeProps;
+    newDesk = {
+      ...desk,
+      data: {
+        ...desk.data,
+        student: activeStudent.current as Student,
+      },
+    };
+  }
+  return nodes.map((node) => {
+    if (node.id === desk.id) {
+      return newDesk;
+    } else {
+      return node;
+    }
+  });
 }
