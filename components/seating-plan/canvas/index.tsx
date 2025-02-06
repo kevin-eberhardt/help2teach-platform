@@ -38,6 +38,8 @@ import {
   generateEmptySeatsForTable,
   moveStudentFromCanvasToOneSeatDesk,
   moveStudentFromCanvasToTwoSeatsDesk,
+  moveStudentFromDeskToCanvas,
+  moveStudentFromDeskToDesk,
   moveStudentInSameDesk,
 } from "./utils";
 
@@ -183,9 +185,22 @@ export default function Canvas({
     } else if (over.id === "canvas" && active.data.current.sortable) {
       // handle drag from desk to canvas
       if (active.data.current.type !== "student") return;
+      console.log("Dragging student from desk to canvas");
+
+      const position = screenToFlowPosition({
+        x: top - STUDENT_SETTINGS.width / 2,
+        y: left - STUDENT_SETTINGS.height / 2,
+      });
+      const activeStudent = active.data as StudentDraggable;
+
+      setNodes(moveStudentFromDeskToCanvas(activeStudent, nodes, position));
     }
 
-    if (active.data.current.type === "student" && over.data.current?.sortable) {
+    if (
+      active.data.current.type === "student" &&
+      over.data.current?.sortable &&
+      over.id !== "canvas"
+    ) {
       if (active.data.current.sortable) {
         // handle drag from desk to desk
         if (
@@ -200,6 +215,10 @@ export default function Canvas({
           setNodes(moveStudentInSameDesk(activeStudent, overSeat, nodes));
         } else {
           console.log("Dragging student from one desk to another");
+          const activeStudent = active.data as StudentDraggable;
+          const overSeat = over.data as SeatNodeProps;
+
+          setNodes(moveStudentFromDeskToDesk(activeStudent, overSeat, nodes));
         }
       } else if (!active.data.current.sortable) {
         // handle drag from canvas to desk
@@ -212,12 +231,7 @@ export default function Canvas({
         if (overDesk.type === "oneSeatDesk") {
           console.log("Moving student from canvas to one seat desk");
           setNodes(
-            moveStudentFromCanvasToOneSeatDesk(
-              activeStudent,
-              overSeat,
-              overDesk,
-              nodes
-            )
+            moveStudentFromCanvasToOneSeatDesk(activeStudent, overDesk, nodes)
           );
         } else if (overDesk.type === "twoSeatsDesk") {
           console.log("Moving student from two seats desk to canvas");
