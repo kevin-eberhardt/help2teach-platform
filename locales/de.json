@@ -156,7 +156,7 @@
     "toolbar": {
       "two-seats-desk-tooltip": "2er-Tisch",
       "one-seat-desk-tooltip": "Einzeltisch",
-      "custom-tooltip": "Benutzerdefiniert"
+      "text-tooltip": "Benutzerdefinierter Text"
     },
     "last-saved": "Zuletzt gespeichert:",
     "undo": "Rückgängig",

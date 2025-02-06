@@ -156,7 +156,7 @@
     "toolbar": {
       "two-seats-desk-tooltip": "2-seater table",
       "one-seat-desk-tooltip": "Single table",
-      "custom-tooltip": "Custom"
+      "text-tooltip": "Custom text"
     },
     "last-saved": "Last saved:",
     "undo": "Undo",

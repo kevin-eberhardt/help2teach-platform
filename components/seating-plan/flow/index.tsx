@@ -15,6 +15,7 @@ import { SeatingPlanNode } from "@/lib/types/seating-plan";
 import OneSeatDesk from "../nodes/one-seat-desk";
 import Controls from "../controls";
 import { useHistory } from "@/hooks/use-history";
+import TextNode from "../nodes/text";
 
 export default function Flow({
   nodes: initialNodes,
@@ -46,6 +47,7 @@ export default function Flow({
       student: StudentNode,
       twoSeatsDesk: TwoSeatsDesk,
       oneSeatDesk: OneSeatDesk,
+      text: TextNode,
     }),
     []
   );
@@ -71,6 +73,7 @@ export default function Flow({
       id="canvas"
       ref={setNodeRef}
       noDragClassName="no-drag"
+      fitView
     >
       <ReactFlowControls />
       <Controls

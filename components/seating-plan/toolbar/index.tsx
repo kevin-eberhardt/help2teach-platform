@@ -32,6 +32,15 @@ export default function Toolbar() {
           <RectangleHorizontal className="size-10 fill-accent text-accent" />
         </Button>
       </ToolbarItem>
+      <ToolbarItem type={"text"} tooltipContent={t("toolbar.text-tooltip")}>
+        <Button
+          variant="outline"
+          className="hover:bg-white shadow-md h-14 [&_svg]:size-14"
+          size="lg"
+        >
+          <TextCursorInput className="size-10 fill-accent text-accent" />
+        </Button>
+      </ToolbarItem>
     </div>
   );
 }

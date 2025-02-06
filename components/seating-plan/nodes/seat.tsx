@@ -2,6 +2,7 @@ import { Student } from "@/lib/supabase/types/additional.types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useState } from "react";
+import { STUDENT_SETTINGS } from "../utils";
 
 export default function Seat({
   id,
@@ -62,19 +63,23 @@ export default function Seat({
         <div
           className={`${
             isOverValid ? "bg-primary text-primary-foreground" : "bg-accent"
-          } h-12 w-24 flex items-center justify-center rounded-md`}
+          } flex items-center justify-center rounded-md`}
           ref={setDroppableNodeRef}
           style={{
             ...style,
+            width: STUDENT_SETTINGS.width,
+            height: STUDENT_SETTINGS.height,
           }}
         ></div>
       ) : (
         <div
           className={`${
             isOverValid ? "bg-primary/40 text-primary-foreground" : "bg-accent"
-          } h-12 w-24 flex items-center justify-center rounded-md`}
+          } flex items-center justify-center rounded-md`}
           style={{
             ...style,
+            width: STUDENT_SETTINGS.width,
+            height: STUDENT_SETTINGS.height,
           }}
         >
           {element.name}

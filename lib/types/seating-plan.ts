@@ -4,6 +4,7 @@ import { Active, Over } from "@dnd-kit/core";
 import { SortableData } from "@dnd-kit/sortable";
 
 export type NodeType =
+  | "text"
   | "student"
   | "twoSeatsDesk"
   | "oneSeatDesk"
@@ -24,6 +25,13 @@ export type OneSeatDeskNodeProps = Node<
     student: Student;
   },
   "oneSeatDesk"
+>;
+
+export type TextNodeProps = Node<
+  {
+    text: string;
+  },
+  "text"
 >;
 
 export type TwoSeatsDeskNodeProps = Node<
@@ -52,4 +60,5 @@ export type SeatingPlanNodeProps = NodeProps;
 export type SeatingPlanNode =
   | StudentNodeProps
   | TwoSeatsDeskNodeProps
-  | OneSeatDeskNodeProps;
+  | OneSeatDeskNodeProps
+  | TextNodeProps;

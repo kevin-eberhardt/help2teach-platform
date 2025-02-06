@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { SeatingPlan } from "@/lib/supabase/types/additional.types";
 import { saveSeatingPlan } from "./actions";
+import { useReactFlow } from "@xyflow/react";
+import { SeatingPlanNode } from "@/lib/types/seating-plan";
 
 export default function SaveButton({
   seatingPlan,
@@ -14,9 +16,12 @@ export default function SaveButton({
 }) {
   const t = useTranslations("seating-plan");
   const [isPending, startTransition] = useTransition();
+  const { toObject } = useReactFlow();
   function handleClick() {
+    console.log(toObject());
     startTransition(async () => {
-      await saveSeatingPlan(seatingPlan);
+      const nodes = toObject().nodes as SeatingPlanNode[];
+      await saveSeatingPlan(seatingPlan, nodes);
     });
   }
 

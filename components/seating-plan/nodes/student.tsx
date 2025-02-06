@@ -4,6 +4,7 @@ import {
 } from "@/lib/types/seating-plan";
 import GenericNode from "./generic";
 import { useDraggable } from "@dnd-kit/core";
+import { STUDENT_SETTINGS } from "../utils";
 
 export default function StudentNode({
   id,
@@ -32,7 +33,16 @@ export default function StudentNode({
             : "opacity-100"
         }`}
     >
-      <GenericNode key={id} id={id} data={data} selected={selected}>
+      <GenericNode
+        key={id}
+        id={id}
+        data={data}
+        selected={selected}
+        style={{
+          width: STUDENT_SETTINGS.width,
+          height: STUDENT_SETTINGS.height,
+        }}
+      >
         {data.name}
       </GenericNode>
     </div>

@@ -28,6 +28,7 @@ import {
   SeatingPlanNode,
   SeatNodeProps,
   StudentDraggable,
+  TextNodeProps,
   TwoSeatsDeskNodeProps,
 } from "@/lib/types/seating-plan";
 import StudentList from "../student-list";
@@ -176,6 +177,18 @@ export default function Canvas({
             },
             dragHandle: ".drag-handle",
           } as OneSeatDeskNodeProps;
+        } else if (selectedToolbarItem.data.current.type === "text") {
+          newNode = {
+            id: selectedToolbarItem.id.toString(),
+            type: selectedToolbarItem.data.current.type,
+            position: screenToFlowPosition({
+              x: top - ONE_SEAT_DESK_SETTINGS.width / 2,
+              y: left - ONE_SEAT_DESK_SETTINGS.height / 2,
+            }),
+            data: {
+              text: "",
+            },
+          } as TextNodeProps;
         }
 
         if (newNode) {
@@ -266,8 +279,8 @@ export default function Canvas({
       className="relative"
       ref={reactFlowWrapper}
       style={{
-        height: window.innerHeight * 0.94,
-        width: window.innerWidth * 0.95,
+        height: window.innerHeight * 0.96,
+        width: window.innerWidth * 0.97,
       }}
     >
       <ViewportLogger setViewPort={setViewPort} viewPort={viewPort} />

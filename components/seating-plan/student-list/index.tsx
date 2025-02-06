@@ -47,6 +47,11 @@ export default function StudentList({
     setNodes(initialNodes);
   }, [initialNodes]);
 
+  // if all students are in nodes return null
+  if (students.every((student) => findStudentInNodes(student.id, nodes))) {
+    return null;
+  }
+
   return (
     <div
       className={`absolute right-0 top-1/3 -translate-y-1/3 flex items-center ${
@@ -69,8 +74,8 @@ export default function StudentList({
           <ChevronLeft className="transition-transform duration-300" />
         )}
       </Button>
-      <div className="bg-sidebar border-sidebar-border p-2">
-        <ScrollArea className="h-auto max-h-48 md:max-h-80 relative overflow-scroll no-scrollbar">
+      <div className="bg-sidebar border-sidebar-border p-2 shadow-md">
+        <ScrollArea className="h-auto max-h-1/2 md:max-h-1/2 relative overflow-scroll no-scrollbar">
           <div className="space-y-4">
             {students.map((student) => {
               const isInCanvas = findStudentInNodes(student.id, nodes);
