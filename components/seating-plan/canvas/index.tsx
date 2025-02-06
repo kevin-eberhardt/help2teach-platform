@@ -276,11 +276,11 @@ export default function Canvas({
   // adjust height and width based on viewport
   return (
     <div
-      className="relative"
+      className="relative no-scrollbar"
       ref={reactFlowWrapper}
       style={{
-        height: window.innerHeight * 0.96,
-        width: window.innerWidth * 0.97,
+        height: window.innerHeight * 0.94,
+        width: window.innerWidth * 0.95,
       }}
     >
       <ViewportLogger setViewPort={setViewPort} viewPort={viewPort} />

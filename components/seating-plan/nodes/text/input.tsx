@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { useReactFlow } from "@xyflow/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { ONE_SEAT_DESK_SETTINGS } from "../../utils";
 
 export default function TextNodeInput({
   id,
@@ -10,8 +11,9 @@ export default function TextNodeInput({
   id: string;
   text: string;
 }) {
-  const [value, setValue] = useState(text);
   const t = useTranslations("seating-plan");
+  const [value, setValue] = useState(text);
+
   const { setNodes } = useReactFlow();
 
   function handleSave() {
@@ -35,7 +37,9 @@ export default function TextNodeInput({
   return (
     <Input
       style={{
-        width: `${value.length * 20}px`,
+        width: `${
+          value.length > 0 ? value.length * 15 : ONE_SEAT_DESK_SETTINGS.width
+        }px`,
       }}
       value={value}
       onChange={(e) => setValue(e.target.value)}

@@ -7,6 +7,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 import { getSchoolClassById } from "@/lib/supabase/queries";
 import { cookies } from "next/headers";
 
@@ -38,6 +39,7 @@ export default async function AppLayout({
         </header>
         {children}
       </SidebarInset>
+      <Toaster />
     </SidebarProvider>
   );
 }

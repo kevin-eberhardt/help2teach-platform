@@ -75,7 +75,7 @@ export default function StudentList({
         )}
       </Button>
       <div className="bg-sidebar border-sidebar-border p-2 shadow-md">
-        <ScrollArea className="h-auto max-h-1/2 md:max-h-1/2 relative overflow-scroll no-scrollbar">
+        <ScrollArea className="h-auto max-h-[50dvh] md:max-h-[50dvh] relative overflow-scroll no-scrollbar">
           <div className="space-y-4">
             {students.map((student) => {
               const isInCanvas = findStudentInNodes(student.id, nodes);

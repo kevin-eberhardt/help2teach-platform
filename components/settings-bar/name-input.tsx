@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import { saveName } from "./actions";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NameInput({
   seatingPlanName,
@@ -19,6 +20,7 @@ export default function NameInput({
   );
   const [isChanged, setIsChanged] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
@@ -38,6 +40,9 @@ export default function NameInput({
       if (!isChanged) return;
       await saveName(value, seatingPlanId);
       setIsChanged(false);
+    });
+    toast({
+      title: t("messages.saved"),
     });
   }
 

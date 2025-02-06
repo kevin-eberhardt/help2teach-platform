@@ -165,6 +165,10 @@
       "undefined-name": "Unnamed seating plan",
       "name-input-error": "Please enter a name for the seating plan",
       "save-button-tooltip": "Save seating plan"
+    },
+    "messages": {
+      "saving": "Saving seating plan...",
+      "saved": "Seating plan saved"
     }
   }
 }

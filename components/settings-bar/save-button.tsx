@@ -8,12 +8,15 @@ import { SeatingPlan } from "@/lib/supabase/types/additional.types";
 import { saveSeatingPlan } from "./actions";
 import { useReactFlow } from "@xyflow/react";
 import { SeatingPlanNode } from "@/lib/types/seating-plan";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SaveButton({
   seatingPlan,
 }: {
   seatingPlan: SeatingPlan;
 }) {
+  const { toast } = useToast();
+
   const t = useTranslations("seating-plan");
   const [isPending, startTransition] = useTransition();
   const { toObject } = useReactFlow();
@@ -22,6 +25,9 @@ export default function SaveButton({
     startTransition(async () => {
       const nodes = toObject().nodes as SeatingPlanNode[];
       await saveSeatingPlan(seatingPlan, nodes);
+    });
+    toast({
+      title: t("messages.saved"),
     });
   }
 
