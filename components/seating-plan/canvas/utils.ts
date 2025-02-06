@@ -90,7 +90,6 @@ export function moveStudentFromCanvasToTwoSeatsDesk(
   nodes: SeatingPlanNode[]
 ): SeatingPlanNode[] {
   const desk = overDesk as unknown as TwoSeatsDeskNodeProps;
-  console.log(overSeat);
   let seatIndex = overSeat.current.sortable.index;
   if (seatIndex === -1) {
     seatIndex = overSeat.current.sortable.items.findIndex(
@@ -113,7 +112,6 @@ export function moveStudentFromCanvasToTwoSeatsDesk(
         students: newStudents,
       },
     };
-    console.log(newDesk);
 
     const newNodes = nodes
       .map((node) => {
@@ -160,4 +158,48 @@ export function moveStudentFromCanvasToTwoSeatsDesk(
     });
     return newNodes as SeatingPlanNode[];
   }
+}
+
+export function moveStudentInSameDesk(
+  activeStudent: StudentDraggable,
+  overStudent: SeatNodeProps,
+  nodes: SeatingPlanNode[]
+) {
+  if (!activeStudent.current) return nodes;
+  if (activeStudent.current.id === overStudent.current.id) return nodes;
+
+  const commonDesk = nodes.find(
+    (n) => n.id === activeStudent.current?.sortable.containerId
+  );
+  if (!commonDesk) return nodes;
+
+  const activeSeatIndex = activeStudent.current?.sortable.items.findIndex(
+    (item: number | string) =>
+      item.toString() === activeStudent.current?.id.toString()
+  );
+  const overSeatIndex = overStudent.current.sortable.items.findIndex(
+    (item) => item.toString() === overStudent.current?.id.toString()
+  );
+  const newStudents = [...(commonDesk.data.students as Student[])];
+  console.log(activeSeatIndex, " => ", overSeatIndex);
+  newStudents[activeSeatIndex] = overStudent.current as Student;
+  newStudents[overSeatIndex] = activeStudent.current as Student;
+
+  const newDesk = {
+    ...commonDesk,
+    data: {
+      ...commonDesk.data,
+      students: newStudents,
+    },
+  };
+
+  const newNodes = nodes.map((node) => {
+    if (node.id === commonDesk.id) {
+      return newDesk;
+    } else {
+      return node;
+    }
+  });
+
+  return newNodes;
 }

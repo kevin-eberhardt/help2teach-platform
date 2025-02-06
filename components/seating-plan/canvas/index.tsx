@@ -38,6 +38,7 @@ import {
   generateEmptySeatsForTable,
   moveStudentFromCanvasToOneSeatDesk,
   moveStudentFromCanvasToTwoSeatsDesk,
+  moveStudentInSameDesk,
 } from "./utils";
 
 export default function Canvas({
@@ -180,52 +181,55 @@ export default function Canvas({
         setSelectedToolbarItem(null);
       }
     } else if (over.id === "canvas" && active.data.current.sortable) {
+      // handle drag from desk to canvas
       if (active.data.current.type !== "student") return;
-      const activeStudent = active.data as SeatNodeProps;
-      const activeDesk = nodes.find(
-        (n) => n.id === activeStudent.current.sortable.containerId
-      ) as SeatingPlanNode;
-      console.log(activeDesk);
-
-      // handle drag from table to canvas
-      // 1. Check if the active element is a student node
-      // 2. Check if the over element is a desk node
-      // 3. Check what type of desk node it is
-      // 4. Check for empty seat if seat is empty, either move other student or replace with active element
     }
 
     if (active.data.current.type === "student" && over.data.current?.sortable) {
-      // handle drag student from canvas to table
-      // 1. Check if the active element is a student node
-      // 2. Check if the over element is a desk node
-      // 3. Check what type of desk node it is
-      // 4. Check for empty seat if seat is empty, either move other student or replace with active element
-      const activeStudent = active.data as StudentDraggable;
-      const overSeat = over.data as SeatNodeProps;
-      const overDesk = nodes.find(
-        (n) => n.id === overSeat.current.sortable.containerId
-      ) as SeatingPlanNode;
+      if (active.data.current.sortable) {
+        // handle drag from desk to desk
+        if (
+          active.data.current.sortable.containerId ===
+          over.data.current.sortable.containerId
+        ) {
+          console.log("Dragging student within the same desk");
+          console.log(active, over);
+          const activeStudent = active.data as StudentDraggable;
+          const overSeat = over.data as SeatNodeProps;
 
-      if (overDesk.type === "oneSeatDesk") {
-        console.log("Moving student from canvas to one seat desk");
-        setNodes(
-          moveStudentFromCanvasToOneSeatDesk(
-            activeStudent,
-            overSeat,
-            overDesk,
-            nodes
-          )
-        );
-      } else if (overDesk.type === "twoSeatsDesk") {
-        console.log("Moving student from two seats desk to canvas");
-        setNodes(
-          moveStudentFromCanvasToTwoSeatsDesk(
-            activeStudent,
-            overSeat,
-            overDesk,
-            nodes
-          )
-        );
+          setNodes(moveStudentInSameDesk(activeStudent, overSeat, nodes));
+        } else {
+          console.log("Dragging student from one desk to another");
+        }
+      } else if (!active.data.current.sortable) {
+        // handle drag from canvas to desk
+        const activeStudent = active.data as StudentDraggable;
+        const overSeat = over.data as SeatNodeProps;
+        const overDesk = nodes.find(
+          (n) => n.id === overSeat.current.sortable.containerId
+        ) as SeatingPlanNode;
+
+        if (overDesk.type === "oneSeatDesk") {
+          console.log("Moving student from canvas to one seat desk");
+          setNodes(
+            moveStudentFromCanvasToOneSeatDesk(
+              activeStudent,
+              overSeat,
+              overDesk,
+              nodes
+            )
+          );
+        } else if (overDesk.type === "twoSeatsDesk") {
+          console.log("Moving student from two seats desk to canvas");
+          setNodes(
+            moveStudentFromCanvasToTwoSeatsDesk(
+              activeStudent,
+              overSeat,
+              overDesk,
+              nodes
+            )
+          );
+        }
       }
     }
   }
