@@ -1,9 +1,15 @@
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
-export default function GlobalLayout({
+export default async function GlobalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  const locale = await getLocale();
+  return (
+    <html lang={locale}>
+      <body>{children}</body>
+    </html>
+  );
 }

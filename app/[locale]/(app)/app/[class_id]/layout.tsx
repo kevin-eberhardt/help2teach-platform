@@ -10,8 +10,9 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import { getSchoolClassById } from "@/lib/supabase/queries";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
-export default async function AppLayout({
+export default async function ClassLayout({
   children,
   params,
 }: {
@@ -22,6 +23,10 @@ export default async function AppLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   const currentSchoolClass = await getSchoolClassById(class_id);
+
+  if (!currentSchoolClass) {
+    return notFound();
+  }
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>

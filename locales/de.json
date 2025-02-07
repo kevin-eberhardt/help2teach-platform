@@ -109,6 +109,7 @@
     "new-school-class": "Neue Klasse",
     "create-new-school-class": "Klasse erstellen",
     "school-class": "Klasse",
+    "school-class-placeholder": "Klasse auswählen",
     "school-classes": "Klassen",
     "students": "Schüler*innen",
     "seating-plans": "Sitzpläne",
@@ -167,5 +168,11 @@
       "save-button": "Sitzplan speichern",
       "export-button": "Sitzplan exportieren"
     }
+  },
+  "not-found-page": {
+    "title": "Seite nicht gefunden",
+    "description": "Die angeforderte Seite konnte nicht gefunden werden.",
+    "to-app": "Zur Anwendung",
+    "to-homepage": "Zur Startseite"
   }
 }

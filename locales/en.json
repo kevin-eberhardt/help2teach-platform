@@ -109,6 +109,7 @@
     "new-school-class": "New class",
     "create-new-school-class": "Create a class",
     "school-class": "Class",
+    "school-class-placeholder": "Select a class",
     "school-classes": "Classes",
     "students": "Students",
     "seating-plans": "Seating Plans",
@@ -167,5 +168,11 @@
       "save-button": "Save seating plan",
       "export-button": "Export seating plan"
     }
+  },
+  "not-found-page": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist.",
+    "to-app": "To the application",
+    "to-homepage": "To the homepage"
   }
 }

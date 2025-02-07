@@ -48,7 +48,7 @@ function findStudentInNodes(
 }
 
 export default function StudentList({
-  defaultOpen = false,
+  defaultOpen = true,
   width = "auto",
   className,
   students: initialStudents,
@@ -58,7 +58,7 @@ export default function StudentList({
   const [nodes, setNodes] = useState<SeatingPlanNode[]>(initialNodes);
   const [students, setStudents] = useState<Student[]>(initialStudents);
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [isLocked, setIsLocked] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
 
   useEffect(() => {
     setNodes(initialNodes);
