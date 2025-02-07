@@ -43,7 +43,7 @@ export default function StudentNode({
           height: STUDENT_SETTINGS.height,
         }}
       >
-        {data.name}
+        <p className="text-center">{data.name}</p>
       </GenericNode>
     </div>
   );
