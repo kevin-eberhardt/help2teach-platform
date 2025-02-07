@@ -57,7 +57,6 @@ export default function Flow({
       onNodesChange={(changes) => setTimeout(() => onNodesChange(changes))} // Timeout is needed to fix this error: "ResizeObserver loop completed with undelivered notifications."
       nodeTypes={nodeTypes as unknown as NodeTypes}
       onNodeDragStop={() => updateNodes()}
-      onNodeClick={(event, node) => console.log(node)}
       onNodesDelete={(deletedNodes) => {
         const deletedIds = deletedNodes.map((node) => node.id);
         const newNodes = nodes.filter((node) => !deletedIds.includes(node.id));

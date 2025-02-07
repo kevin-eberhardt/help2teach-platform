@@ -71,7 +71,6 @@ function SaveMenuItem({
   const router = useRouter();
 
   function handleClick() {
-    console.log(toObject());
     startTransition(async () => {
       const nodes = toObject().nodes as SeatingPlanNode[];
       await saveSeatingPlan(seatingPlan, nodes);

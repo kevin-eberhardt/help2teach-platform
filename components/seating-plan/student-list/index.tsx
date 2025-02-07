@@ -72,7 +72,6 @@ export default function StudentList({
   const handleInteraction = () => {
     setIsOpen(!isOpen);
     setIsLocked(false);
-    console.log("click");
   };
 
   const handleMouseEnter = () => {
