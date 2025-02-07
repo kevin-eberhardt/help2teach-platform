@@ -42,7 +42,7 @@ export type TwoSeatsDeskNodeProps = Node<
 >;
 
 export type GenericNodeProps<T> = React.HTMLProps<HTMLDivElement> & {
-  data?: T;
+  data?: T & { rotation: number };
   type?: NodeType;
 };
 export type StudentDraggable = Active["data"] & {

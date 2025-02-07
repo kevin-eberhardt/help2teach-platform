@@ -1,21 +1,38 @@
 import { SeatingPlan } from "@/lib/supabase/types/additional.types";
 import NameInput from "./name-input";
-import SaveButton from "./save-button";
+import { Menu } from "./menu";
+import LastSavedText from "./last-saved-text";
+import { useEffect, useState } from "react";
 
 export default function SettingsBar({
-  seatingPlan,
+  seatingPlan: initialSeatingPlan,
+  setSeatingPlan: setInitialSeatingPlan,
 }: {
   seatingPlan: SeatingPlan;
+  setSeatingPlan: (seatingPlan: SeatingPlan) => void;
 }) {
+  const [seatingPlan, setSeatingPlan] = useState(initialSeatingPlan);
+
+  useEffect(() => {
+    setSeatingPlan(initialSeatingPlan);
+  }, [initialSeatingPlan]);
+
+  useEffect(() => {
+    setInitialSeatingPlan(seatingPlan);
+  }, [seatingPlan]);
+
   return (
-    <div className="absolute top-3 left-4 w-[calc(100%-4rem)] z-10 flex items-center justify-between">
-      <NameInput
-        seatingPlanName={seatingPlan.name}
-        seatingPlanId={seatingPlan.id}
-      />
-      <div className="bg-white border border-sidebar-border rounded-md">
-        <SaveButton seatingPlan={seatingPlan} />
+    <div className="absolute top-3 left-4 w-auto z-10">
+      <div className="flex items-center justify-between bg-background shadow-md gap-2 p-2">
+        <div>
+          <NameInput
+            seatingPlanName={seatingPlan.name}
+            seatingPlanId={seatingPlan.id}
+          />
+        </div>
+        <Menu seatingPlan={seatingPlan} />
       </div>
+      <LastSavedText lastSavedDate={seatingPlan.edited_at} />
     </div>
   );
 }

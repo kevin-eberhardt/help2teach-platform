@@ -164,7 +164,8 @@
     "settings": {
       "undefined-name": "Unnamed seating plan",
       "name-input-error": "Please enter a name for the seating plan",
-      "save-button-tooltip": "Save seating plan"
+      "save-button": "Save seating plan",
+      "export-button": "Export seating plan"
     }
   }
 }

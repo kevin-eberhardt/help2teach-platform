@@ -44,6 +44,7 @@ import {
   moveStudentFromStudentListToDesk,
   moveStudentInSameDesk,
 } from "./utils";
+import { useTranslations } from "next-intl";
 
 export default function Canvas({
   nodes: initialNodes,
@@ -55,13 +56,14 @@ export default function Canvas({
   students: Student[];
 }) {
   const [nodes, setNodes] = useState<SeatingPlanNode[]>(initialNodes);
-  const reactFlowWrapper = useRef(null);
+  const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const [viewPort, setViewPort] = useState<Viewport | null>(null);
   const [selectedToolbarItem, setSelectedToolbarItem] = useState<Active | null>(
     null
   );
   const { screenToFlowPosition } = useReactFlow();
   const { top, left } = useMousePosition();
+  const t = useTranslations("seating-plan");
 
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -186,8 +188,10 @@ export default function Canvas({
               y: left - ONE_SEAT_DESK_SETTINGS.height / 2,
             }),
             data: {
-              text: "",
+              text: t("toolbar.text-tooltip"),
             },
+            width: TWO_SEATS_DESK_SETTINGS.width,
+            height: TWO_SEATS_DESK_SETTINGS.height,
           } as TextNodeProps;
         }
 
@@ -272,15 +276,13 @@ export default function Canvas({
       );
     }
   }
-
-  // adjust height and width based on viewport
   return (
     <div
       className="relative"
       ref={reactFlowWrapper}
       style={{
-        height: window.innerHeight * 0.96,
-        width: window.innerWidth * 0.97,
+        height: "100%",
+        width: "100%",
       }}
     >
       <ViewportLogger setViewPort={setViewPort} viewPort={viewPort} />
@@ -290,7 +292,7 @@ export default function Canvas({
         sensors={sensors}
       >
         <Flow nodes={nodes} setNodes={setNodes} />
-        <StudentList students={students} nodes={nodes} />
+        <StudentList students={students} nodes={nodes} className="top-1/2" />
         <StudentOverlay viewPort={viewPort} />
         <Toolbar />
         <ToolbarOverlay viewPort={viewPort} active={selectedToolbarItem} />

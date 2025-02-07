@@ -32,7 +32,6 @@ export default function Flow({
     setHistory(n ? n : nodes);
     store(n ? n : nodes);
     setInitialNodes(n ? n : nodes);
-    console.log("nodes changed");
   }
 
   useEffect(() => {
@@ -71,6 +70,7 @@ export default function Flow({
         updateNodes(newNodes);
       }}
       autoFocus={false}
+      selectNodesOnDrag={false}
       id="canvas"
       ref={setNodeRef}
       noDragClassName="no-drag"
