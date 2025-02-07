@@ -3,7 +3,6 @@ import { createClient } from "@/lib/supabase/server";
 import { SeatingPlan } from "@/lib/supabase/types/additional.types";
 import { Json } from "@/lib/supabase/types/database.types";
 import { SeatingPlanNode } from "@/lib/types/seating-plan";
-import { getLocale } from "next-intl/server";
 
 export async function saveName(name: string, id: string) {
   const supabase = await createClient();

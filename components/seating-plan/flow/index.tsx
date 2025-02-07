@@ -1,3 +1,4 @@
+"use client";
 import { useDroppable } from "@dnd-kit/core";
 import {
   Background,
@@ -8,7 +9,7 @@ import {
   ReactFlow,
   useNodesState,
 } from "@xyflow/react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import StudentNode from "../nodes/student";
 import TwoSeatsDesk from "../nodes/two-seats-desk";
 import { SeatingPlanNode } from "@/lib/types/seating-plan";
@@ -17,7 +18,7 @@ import Controls from "../controls";
 import { useHistory } from "@/hooks/use-history";
 import TextNode from "../nodes/text";
 
-const nodeTypes = {
+export const nodeTypes = {
   student: StudentNode,
   twoSeatsDesk: TwoSeatsDesk,
   oneSeatDesk: OneSeatDesk,

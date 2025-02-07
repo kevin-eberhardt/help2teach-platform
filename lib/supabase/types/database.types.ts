@@ -771,6 +771,7 @@ export type Database = {
           id: string
           name: string | null
           nodes: Json | null
+          preview_img_data: string | null
         }
         Insert: {
           class_id?: number | null
@@ -779,6 +780,7 @@ export type Database = {
           id?: string
           name?: string | null
           nodes?: Json | null
+          preview_img_data?: string | null
         }
         Update: {
           class_id?: number | null
@@ -787,6 +789,7 @@ export type Database = {
           id?: string
           name?: string | null
           nodes?: Json | null
+          preview_img_data?: string | null
         }
         Relationships: [
           {
