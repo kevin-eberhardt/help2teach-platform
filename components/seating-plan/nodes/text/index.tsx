@@ -2,24 +2,30 @@ import { TextNodeProps } from "@/lib/types/seating-plan";
 import GenericNode from "../generic";
 import { NodeResizer, useReactFlow } from "@xyflow/react";
 import { cn } from "@/lib/utils";
-import TextNodeInput from "../../canvas/input";
+import TextNodeInput from "./input";
 import { ONE_SEAT_DESK_SETTINGS } from "../../utils";
+import { memo, useCallback } from "react";
 
 function TextNode({ id, data, selected, className, style }: TextNodeProps) {
   const { setNodes, getNodes } = useReactFlow();
 
-  function handleResizeEnd(width: number, height: number) {
-    console.log("resize", width, height);
-    setNodes((nodes) =>
-      getNodes().map((node) => {
-        if (node.id === id) {
-          return { ...node, width, height };
-        } else {
-          return node;
-        }
-      })
-    );
-  }
+  const handleResizeEnd = useCallback(
+    (width: number, height: number) => {
+      try {
+        setNodes((nodes) =>
+          getNodes().map((node) => {
+            if (node.id === id) {
+              return { ...node, width, height };
+            }
+            return node;
+          })
+        );
+      } catch (error) {
+        console.warn("Resize operation failed:", error);
+      }
+    },
+    [id, setNodes, getNodes]
+  );
 
   return (
     <GenericNode
@@ -51,4 +57,4 @@ function TextNode({ id, data, selected, className, style }: TextNodeProps) {
   );
 }
 
-export default TextNode;
+export default memo(TextNode);

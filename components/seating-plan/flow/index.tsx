@@ -17,6 +17,12 @@ import Controls from "../controls";
 import { useHistory } from "@/hooks/use-history";
 import TextNode from "../nodes/text";
 
+const nodeTypes = {
+  student: StudentNode,
+  twoSeatsDesk: TwoSeatsDesk,
+  oneSeatDesk: OneSeatDesk,
+  text: TextNode,
+};
 export default function Flow({
   nodes: initialNodes,
   setNodes: setInitialNodes,
@@ -41,16 +47,6 @@ export default function Flow({
   useEffect(() => {
     setNodes(initialNodes);
   }, [initialNodes]);
-
-  const nodeTypes = useMemo(
-    () => ({
-      student: StudentNode,
-      twoSeatsDesk: TwoSeatsDesk,
-      oneSeatDesk: OneSeatDesk,
-      text: TextNode,
-    }),
-    []
-  );
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
@@ -58,9 +54,7 @@ export default function Flow({
   return (
     <ReactFlow
       nodes={nodes}
-      // onNodeClick={(event, node) => setSelectedNode(node as SeatingPlanNode)}
-      // onPaneClick={() => setSelectedNode(null)}
-      onNodesChange={onNodesChange}
+      onNodesChange={(changes) => setTimeout(() => onNodesChange(changes))} // Timeout is needed to fix this error: "ResizeObserver loop completed with undelivered notifications."
       nodeTypes={nodeTypes as unknown as NodeTypes}
       onNodeDragStop={() => updateNodes()}
       onNodeClick={(event, node) => console.log(node)}
@@ -74,7 +68,6 @@ export default function Flow({
       id="canvas"
       ref={setNodeRef}
       noDragClassName="no-drag"
-      fitView
     >
       <ReactFlowControls />
       <Controls

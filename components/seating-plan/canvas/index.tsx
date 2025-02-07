@@ -278,7 +278,7 @@ export default function Canvas({
   }
   return (
     <div
-      className="relative"
+      className="relative no-scrollbar"
       ref={reactFlowWrapper}
       style={{
         height: "100%",
