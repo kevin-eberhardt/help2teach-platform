@@ -1,5 +1,6 @@
-import { Link } from "@/lib/i18n/routing";
+import SeatingPlanCard from "@/components/pages/overview/seating-plans/card";
 import { getSeatingPlansByClassId } from "@/lib/supabase/queries";
+import { getTranslations } from "next-intl/server";
 
 export default async function SeatingPlansPage({
   params,
@@ -8,18 +9,16 @@ export default async function SeatingPlansPage({
 }) {
   const { class_id } = await params;
   const seatingPlans = await getSeatingPlansByClassId(class_id);
+  const t = await getTranslations("general");
   return (
-    <div>
-      <h1>Seating Plans</h1>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold">{t("seating-plans")}</h1>
       <ul>
-        {seatingPlans &&
-          seatingPlans.map((plan) => (
-            <li key={plan.id}>
-              <Link href={`/app/${class_id}/seating-plans/${plan.id}`}>
-                {plan.name}
-              </Link>
-            </li>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+          {seatingPlans?.map((seatingPlan) => (
+            <SeatingPlanCard key={seatingPlan.id} {...seatingPlan} />
           ))}
+        </div>
       </ul>
     </div>
   );

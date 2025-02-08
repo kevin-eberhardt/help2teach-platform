@@ -1,4 +1,10 @@
 {
+  "general": {
+    "cancel": "Cancel",
+    "open": "Open",
+    "seating-plans": "Seating plans",
+    "see-all": "See all"
+  },
   "homepage": {
     "heading": "Class management rethought.",
     "text": "Help2Teach is an innovative cloud platform specifically designed to help teachers organize and structure their classes. With the help and ideas of teachers, the platform is constantly evolving to provide new, useful classroom management features. From creating seating plans to other practical tools, Help2Teach helps save valuable time so teachers can focus on what's important: teaching."
@@ -138,7 +144,7 @@
   "students": {
     "page": {
       "heading": "Students",
-      "description": "Here you can manage the students of your class."
+      "description": "Here you will find an overview of all students in your class. You can add, edit or delete students."
     },
     "edit-table": {
       "student-placeholder": "Student",
@@ -160,6 +166,7 @@
       "text-tooltip": "Custom text"
     },
     "last-saved": "Last saved:",
+    "last-worked": "Last worked:",
     "undo": "Undo",
     "redo": "Redo",
     "settings": {

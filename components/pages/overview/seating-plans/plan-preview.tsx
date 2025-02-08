@@ -12,8 +12,9 @@ export default function SeatingPlanPreview({
         <Image
           src={previewData}
           alt="Seating plan preview"
-          height={384}
-          width={534}
+          height={768}
+          width={1024}
+          className="object-contain"
         />
       )}
     </div>

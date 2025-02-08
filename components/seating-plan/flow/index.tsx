@@ -64,7 +64,6 @@ export default function Flow({
         updateNodes(newNodes);
       }}
       autoFocus={false}
-      selectNodesOnDrag={false}
       id="canvas"
       ref={setNodeRef}
       noDragClassName="no-drag"
