@@ -20,7 +20,7 @@ export default async function ClassPage({
   return (
     <div className="p-4">
       <h1 className="text-4xl font-bold">{currentSchoolClass.name}</h1>
-      <div className="flex flex-col gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         {seatingPlans?.map((seatingPlan) => (
           <SeatingPlanCard key={seatingPlan.id} {...seatingPlan} />
         ))}

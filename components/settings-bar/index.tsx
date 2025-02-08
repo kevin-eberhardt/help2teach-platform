@@ -3,6 +3,9 @@ import NameInput from "./name-input";
 import { Menu } from "./menu";
 import LastSavedText from "./last-saved-text";
 import { useEffect, useState } from "react";
+import { getNodesBounds, getViewportForBounds, useReactFlow } from "@xyflow/react";
+import { toPng } from "html-to-image";
+import { updateSeatingPlanPreview } from "../seating-plan/canvas/actions";
 
 export default function SettingsBar({
   seatingPlan: initialSeatingPlan,
@@ -12,9 +15,41 @@ export default function SettingsBar({
   setSeatingPlan: (seatingPlan: SeatingPlan) => void;
 }) {
   const [seatingPlan, setSeatingPlan] = useState(initialSeatingPlan);
+  const {getNodes} = useReactFlow();
 
+  function handleSave() {
+      const imageWidth = 1024;
+        const imageHeight = 768;
+        const nodesBounds = getNodesBounds(getNodes());
+        const viewport = getViewportForBounds(
+          nodesBounds,
+          imageWidth,
+          imageHeight,
+          1,
+          6,
+          1
+        );
+    
+        const element = document.querySelector(".react-flow__viewport");
+        if (!element) return;
+    
+        toPng(element as HTMLElement, {
+          backgroundColor: "rgba(255,255,255,0)",
+          width: imageWidth,
+          height: imageHeight,
+          style: {
+            width: imageWidth.toString(),
+            height: imageHeight.toString(),
+            transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+          },
+        }).then(async (dataUrl) => {
+          const {data, error} = await updateSeatingPlanPreview(seatingPlan.id, dataUrl);
+          console.log(data, error);
+        });
+  }
   useEffect(() => {
     setSeatingPlan(initialSeatingPlan);
+    handleSave();
   }, [initialSeatingPlan]);
 
   useEffect(() => {
