@@ -97,3 +97,8 @@
 .react-flow__attribution {
   display: none;
 }
+
+.react-flow__resize-control.handle {
+  width: 10px !important;
+  height: 10px !important;
+}

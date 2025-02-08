@@ -190,8 +190,10 @@ export default function Canvas({
             data: {
               text: t("toolbar.text-tooltip"),
             },
-            width: TWO_SEATS_DESK_SETTINGS.width,
-            height: TWO_SEATS_DESK_SETTINGS.height,
+            style: {
+              width: TWO_SEATS_DESK_SETTINGS.width,
+              height: TWO_SEATS_DESK_SETTINGS.height,
+            },
           } as TextNodeProps;
         }
 
