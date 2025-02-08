@@ -24,14 +24,13 @@ export default function StudentNode({
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className={`
-        no-drag ${
-          isDragging
-            ? type === "student-list"
-              ? "opacity-40"
-              : "opacity-0"
-            : "opacity-100"
-        }`}
+      className={`no-drag ${
+        isDragging
+          ? type === "student-list"
+            ? "opacity-40"
+            : "opacity-0"
+          : "opacity-100"
+      }`}
     >
       <GenericNode
         key={id}

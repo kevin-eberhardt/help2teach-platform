@@ -147,10 +147,8 @@ export default function StudentList({
               </Tooltip>
             </TooltipProvider>
           )}
-          <ScrollArea
-            className={`h-96 relative overflow-scroll no-scrollbar w-[120px]`}
-          >
-            <div className="space-y-4">
+          <ScrollArea className={`h-96 relative overflow-scroll no-scrollbar`}>
+            <div className="space-y-4 max-w-[120px]">
               {students.map((student) => {
                 const isInCanvas = findStudentInNodes(student.id, nodes);
                 if (isInCanvas) return null;

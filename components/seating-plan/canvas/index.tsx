@@ -67,7 +67,13 @@ export default function Canvas({
 
   const sensors = useSensors(
     useSensor(MouseSensor),
-    useSensor(TouchSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        distance: 5,
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor)
   );
 
