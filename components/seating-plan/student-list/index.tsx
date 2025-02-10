@@ -128,7 +128,7 @@ export default function StudentList({
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="absolute right-2 top-2"
+                    className="absolute right-2 top-2 z-10"
                     onClick={toggleLock}
                   >
                     {isLocked ? (
