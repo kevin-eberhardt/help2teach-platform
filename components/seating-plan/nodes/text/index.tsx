@@ -8,32 +8,29 @@ import { memo } from "react";
 
 function TextNode({ id, data, selected, className, style }: TextNodeProps) {
   return (
-    <>
+    <GenericNode
+      className={cn(
+        "h-full",
+        "w-full",
+        "flex",
+        "items-center",
+        "justify-center",
+        className
+      )}
+      style={{ ...style }}
+      selected={selected}
+      data={data}
+      id={id}
+      key={id}
+    >
       <NodeResizer
         color="hsl(var(--primary))"
         isVisible={selected}
         minWidth={ONE_SEAT_DESK_SETTINGS.width}
         minHeight={30}
       />
-
-      <GenericNode
-        className={cn(
-          "h-full",
-          "w-full",
-          "flex",
-          "items-center",
-          "justify-center",
-          className
-        )}
-        style={{ ...style }}
-        selected={selected}
-        data={data}
-        id={id}
-        key={id}
-      >
-        <TextNodeInput id={id} text={data.text} />
-      </GenericNode>
-    </>
+      <TextNodeInput id={id} text={data.text} />
+    </GenericNode>
   );
 }
 

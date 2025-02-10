@@ -23,7 +23,7 @@ export default function SeatingPlan({
 
   return (
     <ReactFlowProvider>
-      <div className="relative h-[calc(100vh-120px)] md:h-[calc(100vh-50px)]">
+      <div className="relative h-[calc(100vh-120px)] md:h-[calc(100vh-60px)]">
         <Suspense fallback={<div>Loading...</div>}>
           <SettingsBar
             seatingPlan={seatingPlan}
