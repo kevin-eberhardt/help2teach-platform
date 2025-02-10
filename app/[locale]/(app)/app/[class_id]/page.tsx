@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import SeatingPlanPreviewCard from "@/components/seating-plan/preview-card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/i18n/routing";
 import {
@@ -7,9 +8,11 @@ import {
   getSeatingPlansByClassId,
   getUser,
 } from "@/lib/supabase/queries";
+import { Heart, X } from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Params } from "next/dist/server/request/params";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({
@@ -43,28 +46,22 @@ export default async function ClassPage({
     return notFound();
   }
   const seatingPlans = await getSeatingPlansByClassId(class_id, 4);
-  const t = await getTranslations("general");
+  const t = await getTranslations("app-start-page");
   const tSeatingPlan = await getTranslations("seating-plan");
   const user = await getUser();
 
   return (
-    <main className="scroll-smooth">
-      <div className="p-4 bg-accent flex flex-col gap-4">
-        <div className="text-base md:text-lg">
-          <p className="text-xl md:text-2xl font-bold mb-2">
-            Willkommen {user.user_metadata.full_name} 👋🏼
-          </p>
-          <p>
-            Vielen Dank, dass Du Help2Teach schon in den Anfängen nutzt!
-            <br />
-            Wir arbeiten fleißig daran, die Plattform auszubauen und immer mehr
-            Features hinzuzufügen!
-          </p>
-          <p>
-            Du kannst bereits jetzt schon deine Schüler*innen anlegen und deine
-            Sitzpläne erstellen.
-          </p>
-        </div>
+    <main className="flex flex-col flex-grow">
+      <div className="p-4 flex flex-col gap-4">
+        <Alert variant="default" className="bg-sidebar">
+          <Heart className="h-4 w-4" />
+          <AlertTitle>
+            {t("alert.heading", { name: user.user_metadata.full_name })}
+          </AlertTitle>
+          <AlertDescription>
+            <p>{t("alert.description")}</p>
+          </AlertDescription>
+        </Alert>
       </div>
       <div className="p-4 flex flex-col gap-4 flex-1">
         <div id="seating-plans">
@@ -94,21 +91,21 @@ export default async function ClassPage({
           {seatingPlans?.length === 4 && (
             <div className="flex justify-center mt-4">
               <Link href={`/app/${class_id}/seating-plans`}>
-                <Button variant="outline">{t("see-all")}</Button>
+                <Button variant="outline">{t("see-all-button")}</Button>
               </Link>
             </div>
           )}
         </div>
       </div>
       <div className="p-4 bg-accent text-center">
-        <p className="text-base md:text-lg">
-          Du hast noch weitere Ideen, die du gerne in der Plattform finden
-          würdest?
-          <br />
-          Wir würden gerne mehr darüber erfahren! Schreib uns ganz einfach einen
-          Vorschlag mit einer kurzen Beschreibung 🙂
+        <p>
+          Hast du Ideen, die du gerne in Help2Teach sehen würdest? Wir freuen
+          uns darauf! Teile uns deinen Vorschlag mit einer kurzen Beschreibung
+          mit – wir sind gespannt. 🙂
         </p>
-        <Button className="mt-2">Idee vorschlagen</Button>
+        <Link href="/feedback">
+          <Button variant="outline">Idee vorschlagen</Button>
+        </Link>
       </div>
       <Footer />
     </main>

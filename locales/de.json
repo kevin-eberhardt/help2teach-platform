@@ -161,7 +161,13 @@
     "settings": "Einstellungen"
   },
   "app-start-page": {
-    "heading": "Überblick"
+    "heading": "Überblick",
+    "alert": {
+      "heading": "Willkommen {name} 👋🏼",
+      "description": "Vielen Dank, dass du Help2Teach von Anfang an nutzt! Wir arbeiten fleißig daran, die Plattform weiter auszubauen – schon jetzt kannst du deine Schüler*innen anlegen und Sitzpläne erstellen. 🚀"
+    },
+    "seating-plans": "Sitzpläne",
+    "see-all-button": "Alle anzeigen"
   },
   "school-class": {
     "create-page": {
