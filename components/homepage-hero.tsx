@@ -59,11 +59,11 @@ export default function HomeHero() {
         <DynamicLottie animationData={teachingData} />
         <div>
           <h2 className="text-3xl font-bold mb-4">{t("info.heading")}</h2>
-          <div className="text-lg text-muted-foreground">
+          <div className="text-base text-muted-foreground">
             {t.rich("info.text", {
               b: (chunks) => <p>{chunks}</p>,
               s: (chunks) => (
-                <p className="mt-1 font-bold text-black">{chunks}</p>
+                <span className="font-bold text-black">{chunks}</span>
               ),
             })}
           </div>
@@ -74,7 +74,7 @@ export default function HomeHero() {
           <h2 className="text-2xl font-bold">Im Handumdrehen einsatzbereit</h2>
           <div className="flex justify-center items-center gap-2 max-w-lg ">
             <Undo className="-rotate-45" />
-            <p className="text-lg">
+            <p className="text-base">
               See how to go from zero to seating plan in 2 minutes
             </p>
           </div>
