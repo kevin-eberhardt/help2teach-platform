@@ -167,8 +167,10 @@
     }
   },
   "seating-plan": {
-    "no-seating-plans": "There are no seating plans in this class yet.",
-    "create-seating-plan": "Create seating plan",
+    "no-seating-plans": {
+      "heading": "No seating plans",
+      "description": "Create a seating plan to start with your students! 💪"
+    },    "create-seating-plan": "Create seating plan",
     "create-seating-plan-dialog": {
       "heading": "Create seating plan",
       "description": "Enter a name for the seating plan and click on <quotes>Create seating plan</quotes>.",
@@ -188,7 +190,7 @@
     },
     "delete-dialog": {
       "heading": "Delete seating plan",
-      "description": "Are you sure you want to delete the seating plan <quotes>{name}</quotes>?",
+      "description": "Do you really want to delete this seating plan? This action cannot be undone.",
       "delete-button": "Delete",
       "cancel-button": "Cancel"
     },
