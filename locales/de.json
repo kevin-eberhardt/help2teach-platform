@@ -3,7 +3,14 @@
     "cancel": "Abbrechen",
     "open": "Öffnen",
     "seating-plans": "Sitzpläne",
-    "see-all": "Alle anzeigen"
+    "see-all": "Alle anzeigen",
+    "duplicate": "Duplizieren",
+    "delete": "Löschen",
+    "rename": "Umbenennen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "open-menu": "Menü öffnen",
+    "copy": "Kopie"
   },
   "homepage": {
     "heading": "Klassenmanagement neu gedacht.",
@@ -172,6 +179,21 @@
       "name-description": "Der Name des Sitzplans",
       "name-error": "Bitte gib einen Namen für den Sitzplan ein",
       "create-button": "Sitzplan erstellen"
+    },
+    "rename-dialog": {
+      "heading": "Sitzplan umbenennen",
+      "description": "Gib einen neuen Namen für den Sitzplan ein und klicke auf <quotes>Umbenennen</quotes>.",
+      "name": "Name",
+      "name-description": "Der neue Name des Sitzplans",
+      "name-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "rename-button": "Umbenennen",
+      "cancel-button": "Abbrechen"
+    },
+    "delete-dialog": {
+      "heading": "Sitzplan löschen",
+      "description": "Möchtest du diesen Sitzplan wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "delete-button": "Löschen",
+      "cancel-button": "Abbrechen"
     },
     "toolbar": {
       "two-seats-desk-tooltip": "2er-Tisch",

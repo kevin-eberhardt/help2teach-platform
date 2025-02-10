@@ -1,4 +1,4 @@
-import CreateSeatingPlanDialog from "@/components/seating-plan/create-dialog/dialog";
+import CreateSeatingPlanDialog from "@/components/seating-plan/dialogs/create-dialog";
 import SeatingPlanPreviewCard from "@/components/seating-plan/preview-card";
 import { getSeatingPlansByClassId } from "@/lib/supabase/queries";
 import { getTranslations } from "next-intl/server";
@@ -21,13 +21,16 @@ export default async function SeatingPlansPage({
         <div className="mt-4 flex gap-4">
           <p className="text-xl">{t("no-seating-plans.description")}</p>
         </div>
-        <CreateSeatingPlanDialog />
+        <CreateSeatingPlanDialog classId={parseInt(class_id)} />
       </div>
     );
   } else {
     return (
       <div className="p-4">
-        <h1 className="text-3xl font-bold">{heading}</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold">{heading}</h1>
+          <CreateSeatingPlanDialog classId={parseInt(class_id)} />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           {seatingPlans?.map((seatingPlan) => (
             <SeatingPlanPreviewCard key={seatingPlan.id} {...seatingPlan} />

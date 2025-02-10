@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import OptionsMenu from "./options-menu";
 
 function SeatingPlanPreviewImage({
   previewData,
@@ -51,18 +52,27 @@ export default function SeatingPlanPreviewCard({
     }
   );
   return (
-    <Link className="h-full" href={`/app/${class_id}/seating-plans/${id}`}>
-      <Card className="h-full flex flex-col">
-        <CardHeader>
-          <CardTitle>{name}</CardTitle>
-          <CardDescription>
-            {tSeatingPlan("last-worked")} {changeDate}
-          </CardDescription>
-        </CardHeader>
+    <Card className="h-full flex flex-col">
+      <CardHeader>
+        <div className="flex justify-between items-center">
+          <Link
+            className="h-full"
+            href={`/app/${class_id}/seating-plans/${id}`}
+          >
+            <CardTitle>{name}</CardTitle>
+          </Link>
+          <OptionsMenu seatingPlanId={id} seatingPlanName={name} />
+        </div>
+        <CardDescription>
+          {tSeatingPlan("last-worked")} {changeDate}
+        </CardDescription>
+      </CardHeader>
+
+      <Link className="h-full" href={`/app/${class_id}/seating-plans/${id}`}>
         <CardContent className="flex-grow">
           <SeatingPlanPreviewImage previewData={preview_img_data} />
         </CardContent>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 }

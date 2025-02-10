@@ -3,7 +3,14 @@
     "cancel": "Cancel",
     "open": "Open",
     "seating-plans": "Seating plans",
-    "see-all": "See all"
+    "see-all": "See all",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "rename": "Rename",
+    "edit": "Edit",
+    "save": "Save",
+    "open-menu": "Open menu",
+    "copy": "Copy"
   },
   "homepage": {
     "heading": "Class management rethought.",
@@ -169,6 +176,21 @@
       "name-description": "The name of the seating plan",
       "name-error": "Please enter a name for the seating plan",
       "create-button": "Create seating plan"
+    },
+    "rename-dialog": {
+      "heading": "Rename seating plan",
+      "description": "Enter a new name for the seating plan and click on <quotes>Rename</quotes>.",
+      "name": "Name",
+      "name-description": "The name of the seating plan",
+      "name-error": "Please enter a name for the seating plan",
+      "rename-button": "Rename",
+      "cancel-button": "Cancel"
+    },
+    "delete-dialog": {
+      "heading": "Delete seating plan",
+      "description": "Are you sure you want to delete the seating plan <quotes>{name}</quotes>?",
+      "delete-button": "Delete",
+      "cancel-button": "Cancel"
     },
     "toolbar": {
       "two-seats-desk-tooltip": "2-seater table",
