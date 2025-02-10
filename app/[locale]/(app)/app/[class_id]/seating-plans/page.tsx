@@ -1,4 +1,5 @@
-import SeatingPlanCard from "@/components/pages/overview/seating-plans/card";
+import CreateSeatingPlanDialog from "@/components/seating-plan/create-dialog/dialog";
+import SeatingPlanPreviewCard from "@/components/seating-plan/preview-card";
 import { getSeatingPlansByClassId } from "@/lib/supabase/queries";
 import { getTranslations } from "next-intl/server";
 
@@ -9,17 +10,30 @@ export default async function SeatingPlansPage({
 }) {
   const { class_id } = await params;
   const seatingPlans = await getSeatingPlansByClassId(class_id);
-  const t = await getTranslations("general");
-  return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold">{t("seating-plans")}</h1>
-      <ul>
+  let t = await getTranslations("general");
+  const heading = t("seating-plans");
+
+  if (seatingPlans?.length === 0) {
+    t = await getTranslations("seating-plan");
+    return (
+      <div className="p-4">
+        <h1 className="text-3xl font-bold">{heading}</h1>
+        <div className="mt-4 flex gap-4">
+          <p className="text-xl">{t("no-seating-plans.description")}</p>
+        </div>
+        <CreateSeatingPlanDialog />
+      </div>
+    );
+  } else {
+    return (
+      <div className="p-4">
+        <h1 className="text-3xl font-bold">{heading}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           {seatingPlans?.map((seatingPlan) => (
-            <SeatingPlanCard key={seatingPlan.id} {...seatingPlan} />
+            <SeatingPlanPreviewCard key={seatingPlan.id} {...seatingPlan} />
           ))}
         </div>
-      </ul>
-    </div>
-  );
+      </div>
+    );
+  }
 }

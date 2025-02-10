@@ -1,6 +1,6 @@
 "use client";
 import { SeatingPlan } from "@/lib/supabase/types/additional.types";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";

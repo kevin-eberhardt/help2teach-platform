@@ -1,18 +1,35 @@
-import { Button } from "@/components/ui/button";
+import { Link } from "@/lib/i18n/routing";
+import { SeatingPlan } from "@/lib/supabase/types/additional.types";
+import { useFormatter, useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SeatingPlan } from "@/lib/supabase/types/additional.types";
-import { useFormatter, useTranslations } from "next-intl";
-import SeatingPlanPreview from "./plan-preview";
-import { Link } from "@/lib/i18n/routing";
+import Image from "next/image";
 
-export default function SeatingPlanCard({
+function SeatingPlanPreviewImage({
+  previewData,
+}: {
+  previewData: SeatingPlan["preview_img_data"];
+}) {
+  return (
+    <div>
+      {previewData && (
+        <Image
+          src={previewData}
+          alt="Seating plan preview"
+          height={768}
+          width={1024}
+          className="object-contain"
+        />
+      )}
+    </div>
+  );
+}
+export default function SeatingPlanPreviewCard({
   name,
   class_id,
   id,
@@ -20,7 +37,6 @@ export default function SeatingPlanCard({
   created_at,
   preview_img_data,
 }: SeatingPlan) {
-  const t = useTranslations("general");
   const tSeatingPlan = useTranslations("seating-plan");
   const format = useFormatter();
 
@@ -44,7 +60,7 @@ export default function SeatingPlanCard({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-grow">
-          <SeatingPlanPreview previewData={preview_img_data} />
+          <SeatingPlanPreviewImage previewData={preview_img_data} />
         </CardContent>
       </Card>
     </Link>

@@ -9,7 +9,7 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 import { toPng } from "html-to-image";
-import { updateSeatingPlanPreview } from "../seating-plan/canvas/actions";
+import { updateSeatingPlanPreview } from "../canvas/actions";
 
 export default function SettingsBar({
   seatingPlan: initialSeatingPlan,

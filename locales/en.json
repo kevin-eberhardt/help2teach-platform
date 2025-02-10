@@ -160,6 +160,16 @@
     }
   },
   "seating-plan": {
+    "no-seating-plans": "There are no seating plans in this class yet.",
+    "create-seating-plan": "Create seating plan",
+    "create-seating-plan-dialog": {
+      "heading": "Create seating plan",
+      "description": "Enter a name for the seating plan and click on <quotes>Create seating plan</quotes>.",
+      "name": "Name",
+      "name-description": "The name of the seating plan",
+      "name-error": "Please enter a name for the seating plan",
+      "create-button": "Create seating plan"
+    },
     "toolbar": {
       "two-seats-desk-tooltip": "2-seater table",
       "one-seat-desk-tooltip": "Single table",

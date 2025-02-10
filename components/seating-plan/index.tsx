@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import "@xyflow/react/dist/style.css";
 import { SeatingPlanNode, SeatingPlanProps } from "@/lib/types/seating-plan";
 import dynamic from "next/dynamic";
-import SettingsBar from "../settings-bar";
+import SettingsBar from "./settings-bar";
 import { Json } from "@/lib/supabase/types/database.types";
 
 const Canvas = dynamic(() => import("@/components/seating-plan/canvas/index"), {

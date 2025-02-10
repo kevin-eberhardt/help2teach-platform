@@ -160,6 +160,19 @@
     }
   },
   "seating-plan": {
+    "no-seating-plans": {
+      "heading": "Es gibt noch keine Sitzpläne in dieser Klasse.",
+      "description": "Erstelle einen Sitzplan, um mit deinen Schüler*innen zu beginnen! 💪"
+    },
+    "create-seating-plan": "Sitzplan erstellen",
+    "create-seating-plan-dialog": {
+      "heading": "Sitzplan erstellen",
+      "description": "Gib einen Namen für den Sitzplan ein und klicke auf <quotes>Sitzplan erstellen</quotes>.",
+      "name": "Name",
+      "name-description": "Der Name des Sitzplans",
+      "name-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "create-button": "Sitzplan erstellen"
+    },
     "toolbar": {
       "two-seats-desk-tooltip": "2er-Tisch",
       "one-seat-desk-tooltip": "Einzeltisch",
