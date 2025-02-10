@@ -7,8 +7,30 @@ import {
   getSeatingPlansByClassId,
   getUser,
 } from "@/lib/supabase/queries";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { Params } from "next/dist/server/request/params";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { class_id } = params;
+  if (!class_id) {
+    return notFound();
+  }
+  const currentSchoolClass = await getSchoolClassById(class_id as string);
+  if (!currentSchoolClass) {
+    return notFound();
+  }
+
+  const t = await getTranslations("login-page");
+  return {
+    title: "Overview",
+  };
+}
 
 export default async function ClassPage({
   params,

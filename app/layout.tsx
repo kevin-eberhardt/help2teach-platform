@@ -1,6 +1,6 @@
 import { getLocale } from "next-intl/server";
 import "./globals.css";
-import { Viewport } from "next";
+import { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -8,6 +8,15 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
 };
+
+export function generateMetadata(): Metadata {
+  return {
+    title: {
+      default: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
+      template: `%s | ${process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach"}`,
+    },
+  };
+}
 
 export default async function GlobalLayout({
   children,

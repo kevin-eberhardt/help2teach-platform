@@ -12,6 +12,15 @@ import {
   SynchronousParams,
   SynchronousSearchParams,
 } from "@/lib/next/types/layout";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("login-page");
+  return {
+    title: t("heading"),
+  };
+}
 
 export default function LoginPage(props: {
   params: SynchronousParams;

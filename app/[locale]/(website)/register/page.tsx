@@ -12,6 +12,15 @@ import {
 import { useTranslations } from "next-intl";
 import { use } from "react";
 import RegisterForm from "./form";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("register-page");
+  return {
+    title: t("heading"),
+  };
+}
 
 export default function RegisterPage(props: {
   params: SynchronousParams;

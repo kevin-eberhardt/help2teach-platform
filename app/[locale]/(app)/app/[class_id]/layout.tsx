@@ -10,8 +10,32 @@ import {
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
 import { getSchoolClassById } from "@/lib/supabase/queries";
+import { Metadata } from "next";
+import { Params } from "next/dist/server/request/params";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { class_id } = params;
+  if (!class_id) {
+    return notFound();
+  }
+  const currentSchoolClass = await getSchoolClassById(class_id as string);
+  if (!currentSchoolClass || !currentSchoolClass.name) {
+    return notFound();
+  }
+
+  return {
+    title: {
+      default: currentSchoolClass.name,
+      template: `%s | ${currentSchoolClass.name}`,
+    },
+  };
+}
 
 export default async function ClassLayout({
   children,
