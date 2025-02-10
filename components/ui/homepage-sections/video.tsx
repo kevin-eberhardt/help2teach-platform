@@ -1,6 +1,5 @@
 import { Undo } from "lucide-react";
 import { useTranslations } from "next-intl";
-
 export default function VideoSection() {
   const t = useTranslations("homepage");
   return (
@@ -11,11 +10,8 @@ export default function VideoSection() {
           <Undo className="-rotate-45" />
           <p className="text-base">{t("tutorial-video.text")}</p>
         </div>
-        <video autoPlay loop muted className="rounded-md w-full aspect-video">
-          <source
-            src="https://cdn.pixabay.com/video/2021/09/11/88207-602915574_large.mp4"
-            type="video/mp4"
-          />
+        <video autoPlay loop muted className="rounded-md w-full aspect-video ">
+          <source src={"/seating-plan_video.mp4"} type="video/mp4" />
         </video>
       </div>
     </section>

@@ -18,9 +18,9 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
-  const { class_id } = params;
+  const { class_id } = await params;
   if (!class_id) {
     return notFound();
   }
@@ -32,7 +32,7 @@ export async function generateMetadata({
   return {
     title: {
       default: currentSchoolClass.name,
-      template: `%s | ${currentSchoolClass.name}`,
+      template: `%s | ${currentSchoolClass.name} | ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`,
     },
   };
 }

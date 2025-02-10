@@ -1,7 +1,15 @@
 import { StudentsEditTable } from "@/components/students/edit-table";
 import { columns } from "@/components/students/edit-table/columns";
 import { getStudentsByClassId } from "@/lib/supabase/queries";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("sidebar");
+  return {
+    title: `${t("students")}`,
+  };
+}
 
 export default async function StudentsPage({
   params,

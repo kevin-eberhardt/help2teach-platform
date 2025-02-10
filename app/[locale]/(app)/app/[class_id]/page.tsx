@@ -15,9 +15,9 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
-  const { class_id } = params;
+  const { class_id } = await params;
   if (!class_id) {
     return notFound();
   }
@@ -26,9 +26,9 @@ export async function generateMetadata({
     return notFound();
   }
 
-  const t = await getTranslations("login-page");
+  const t = await getTranslations("app-start-page");
   return {
-    title: "Overview",
+    title: `${t("heading")} | ${currentSchoolClass.name}`,
   };
 }
 

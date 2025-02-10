@@ -13,13 +13,33 @@
     "copy": "Copy"
   },
   "homepage": {
+    "metadata": {
+      "title": "Help2Teach - Class management rethought.",
+      "description": "Help2Teach is an innovative cloud platform that helps teachers organize their classes. Save valuable time with smart tools for seating plans and class management, developed in cooperation with teachers for teachers."
+    },
     "hero": {
       "heading": "Class management rethought.",
-      "sub-heading": "The innovative cloud platform that helps teachers organize their classes. Save valuable time with smart tools for seating plans and class management, developed in cooperation with teachers for teachers."
+      "sub-heading": "The innovative cloud platform that helps teachers organize their classes. Save valuable time with smart tools for seating plans and class management, developed in cooperation with teachers for teachers.",
+      "start-button": "Get started",
+      "demo-button": "Watch demo"
+    },
+    "features": {
+      "feature-1": {
+        "heading": "Own arrangement",
+        "description": "You can insert single tables and two-seater tables as needed into the plan. The students can be placed with a click on the seats and easily moved if needed."
+      },
+      "feature-2": {
+        "heading": "Own elements",
+        "description": "To make the plan more realistic, you can include custom elements, such as a desk or a lectern in the seating plan."
+      },
+      "feature-3": {
+        "heading": "Individual",
+        "description": "Create different seating plans for different occasions or teaching phases and store them for easy management."
+      }
     },
     "info": {
       "heading": "Efficient class management made easy with Help2Teach - The innovative companion for teachers",
-      "text": "<b>Help2Teach is an innovative cloud platform specifically designed to help teachers organize and structure their classes.</b> <b>With the help and ideas of teachers, the platform is constantly evolving to provide new, useful classroom management features.</b> <b>From creating seating plans to other practical tools, Help2Teach helps save valuable time so teachers can focus on what's important:</b> teaching."
+      "text": "<b>Help2Teach is an innovative cloud platform specifically designed to help teachers organize and structure their classes.</b> <b>With the help and ideas of teachers, the platform is constantly evolving to provide new, useful classroom management features.</b> <b>From creating seating plans to other practical tools, Help2Teach helps save valuable time so teachers can focus on what's important: <s>teaching.</s></b> "
     },
     "tutorial-video": {
       "heading": "Get up and running in no time",
@@ -140,6 +160,9 @@
     "tools": "Tools",
     "settings": "Settings"
   },
+  "app-start-page": {
+    "heading": "Overview"
+  },
   "school-class": {
     "create-page": {
       "heading": "Getting Started",
@@ -180,7 +203,8 @@
     "no-seating-plans": {
       "heading": "No seating plans",
       "description": "Create a seating plan to start with your students! 💪"
-    },    "create-seating-plan": "Create seating plan",
+    },
+    "create-seating-plan": "Create seating plan",
     "create-seating-plan-dialog": {
       "heading": "Create seating plan",
       "description": "Enter a name for the seating plan and click on <quotes>Create seating plan</quotes>.",

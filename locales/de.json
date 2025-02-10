@@ -13,9 +13,29 @@
     "copy": "Kopie"
   },
   "homepage": {
+    "metadata": {
+      "title": "Help2Teach - Klassenmanagement neu gedacht.",
+      "description": "Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten."
+    },
     "hero": {
       "heading": "Klassenmanagement neu gedacht.",
-      "sub-heading": "Die innovative Cloud-Plattform, die Lehrer*innen bei der Organisation ihrer Klassen unterstützt. Spare wertvolle Zeit mit smarten Tools für Sitzpläne und Klassenmanagement, entwickelt in Kooperation mit Lehrer*innen für Lehrer*innen."
+      "sub-heading": "Die innovative Cloud-Plattform, die Lehrer*innen bei der Organisation ihrer Klassen unterstützt. Spare wertvolle Zeit mit smarten Tools für Sitzpläne und Klassenmanagement, entwickelt in Kooperation mit Lehrer*innen für Lehrer*innen.",
+      "start-button": "Jetzt starten",
+      "demo-button": "Demo ansehen"
+    },
+    "features": {
+      "feature-1": {
+        "heading": "Eigene Anordnung",
+        "description": "Du kannst Einzeltische und Zweiertische ganz nach Bedarf in den Plan einfügen. Die Schüler*innen lassen sich mit einem Klick auf die Plätze setzen und bei Bedarf unkompliziert verschieben."
+      },
+      "feature-2": {
+        "heading": "Eigene Elemente",
+        "description": "Um den Plan realistischer zu gestalten, kannst Du benutzerdefinierte Elemente, wie z.B. eine Tafel oder einen Pult in den Sitzplan aufnehmen."
+      },
+      "feature-3": {
+        "heading": "Individuell",
+        "description": "Erstelle für unterschiedliche Anlässe oder Unterrichtsphasen verschiedene Sitzpläne und speichere diese für eine einfache Verwaltung."
+      }
     },
     "info": {
       "heading": "Effizientes Klassenmanagement leicht gemacht mit Help2Teach – Der innovative Begleiter für Lehrer*innen",
@@ -139,6 +159,9 @@
     "sociograms": "Soziogramme",
     "tools": "Tools",
     "settings": "Einstellungen"
+  },
+  "app-start-page": {
+    "heading": "Überblick"
   },
   "school-class": {
     "create-page": {

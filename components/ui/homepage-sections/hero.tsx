@@ -32,7 +32,7 @@ export default function HeroSection() {
               <div className="flex flex-col gap-3 md:flex-row">
                 <Link href="/register" className="w-full md:w-auto">
                   <Button size="lg" className="gap-2 w-full">
-                    Jetzt starten
+                    {t("hero.start-button")}
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
@@ -43,7 +43,7 @@ export default function HeroSection() {
                   className="gap-2"
                   onClick={scrollSmoothly}
                 >
-                  Sitzplan-Demo ansehen
+                  {t("hero.demo-button")}
                   <PlayCircle className="h-4 w-4" />
                 </Button>
               </div>

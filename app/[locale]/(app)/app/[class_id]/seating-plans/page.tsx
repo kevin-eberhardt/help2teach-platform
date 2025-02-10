@@ -1,7 +1,15 @@
 import CreateSeatingPlanDialog from "@/components/seating-plan/dialogs/create-dialog";
 import SeatingPlanPreviewCard from "@/components/seating-plan/preview-card";
 import { getSeatingPlansByClassId } from "@/lib/supabase/queries";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("sidebar");
+  return {
+    title: `${t("seating-plans")}`,
+  };
+}
 
 export default async function SeatingPlansPage({
   params,
