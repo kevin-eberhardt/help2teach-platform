@@ -8,7 +8,7 @@ import { Combine, Replace, Sparkle } from "lucide-react";
 
 export default function FeaturesSection() {
   return (
-    <section className="flex flex-col items-center gap-8 py-12">
+    <section className="flex flex-col items-center gap-8 py-12 px-4">
       <div className="mx-auto grid gap-8 sm:max-w-3xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
         <Card>
           <CardHeader>

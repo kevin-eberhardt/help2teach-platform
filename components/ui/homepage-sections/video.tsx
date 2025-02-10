@@ -1,17 +1,17 @@
 import { Undo } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function VideoSection() {
+  const t = useTranslations("homepage");
   return (
-    <section id="tutorial-video">
+    <section id="tutorial-video" className="mx-auto container">
       <div className="flex flex-col justify-center items-center gap-4">
-        <h2 className="text-2xl font-bold">Im Handumdrehen einsatzbereit</h2>
+        <h2 className="text-2xl font-bold">{t("tutorial-video.heading")}</h2>
         <div className="flex justify-center items-center gap-2 max-w-lg ">
           <Undo className="-rotate-45" />
-          <p className="text-base">
-            See how to go from zero to seating plan in 2 minutes
-          </p>
+          <p className="text-base">{t("tutorial-video.text")}</p>
         </div>
-        <video autoPlay loop muted className="w-2/3">
+        <video autoPlay loop muted className="rounded-md w-full aspect-video">
           <source
             src="https://cdn.pixabay.com/video/2021/09/11/88207-602915574_large.mp4"
             type="video/mp4"
