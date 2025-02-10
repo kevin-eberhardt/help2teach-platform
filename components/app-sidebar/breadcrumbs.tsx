@@ -8,6 +8,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import React from "react";
 import BreadcrumbItem from "./breadcrumb-item";
+import Image from "next/image";
 
 export default function SidebarBreadcrumbs({
   currentSchoolClass,
@@ -19,7 +20,7 @@ export default function SidebarBreadcrumbs({
   return (
     <Breadcrumb className="px-4">
       <BreadcrumbList>
-        <BreadcrumbItem key={"home"} title={"Help2Teach"} />
+        <Image src="/logo.svg" alt="Logo" width={30} height={30} />
         {currentSchoolClass && (
           <React.Fragment key={"school-class"}>
             <BreadcrumbSeparator />

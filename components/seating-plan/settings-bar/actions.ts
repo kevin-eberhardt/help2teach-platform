@@ -1,12 +1,31 @@
 "use server";
-
 import { createClient } from "@/lib/supabase/server";
-import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
+import { SeatingPlan } from "@/lib/supabase/types/additional.types";
+import { Json } from "@/lib/supabase/types/database.types";
+import { SeatingPlanNode } from "@/lib/types/seating-plan";
 
-export async function editName(seatingPlanId: SeatingPlanProps["id"], newName: string) {
-    const supabase = await createClient();
-    const {data, error} = await supabase.from("seating_plans").update({name: newName, edited_at: new Date().toISOString()}).match({id: seatingPlanId});
-    if (error) {
-        throw error;
-    }
+export async function saveName(name: string, id: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("seating_plans")
+    .update({ name })
+    .eq("id", id);
+  return { data, error };
+}
+
+export async function saveSeatingPlan(
+  seatingPlan: SeatingPlan,
+  nodes: SeatingPlanNode[]
+) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("seating_plans")
+    .update({
+      edited_at: new Date().toISOString(),
+      name: seatingPlan.name,
+      nodes: nodes as unknown as Json,
+    })
+    .eq("id", seatingPlan.id);
+  return { data, error };
 }

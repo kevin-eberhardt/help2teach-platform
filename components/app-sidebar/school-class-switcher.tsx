@@ -71,20 +71,20 @@ export function SchoolClassSwitcher({
               {t("school-classes")}
             </DropdownMenuLabel>
             {schoolClasses &&
-              schoolClasses
-                .filter((s) => s.id !== currentSchoolClass.id)
-                .map((schoolClass) => (
-                  <DropdownMenuItem
-                    key={schoolClass.name}
-                    onClick={() => handleClick(schoolClass.id)}
-                    className="gap-2 p-2"
-                  >
-                    <div className="flex size-6 items-center justify-center rounded-sm border">
-                      <School className="size-4 shrink-0" />
-                    </div>
-                    {schoolClass.name}
-                  </DropdownMenuItem>
-                ))}
+              schoolClasses.map((schoolClass) => (
+                <DropdownMenuItem
+                  key={schoolClass.name}
+                  onClick={() => handleClick(schoolClass.id)}
+                  className={`gap-2 p-2 ${
+                    schoolClass.id === currentSchoolClass.id && "bg-accent"
+                  }`}
+                >
+                  <div className="flex size-6 items-center justify-center rounded-sm border">
+                    <School className="size-4 shrink-0" />
+                  </div>
+                  {schoolClass.name}
+                </DropdownMenuItem>
+              ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="gap-2 p-2"

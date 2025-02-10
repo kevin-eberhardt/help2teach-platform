@@ -1,4 +1,17 @@
 {
+  "general": {
+    "cancel": "Cancel",
+    "open": "Open",
+    "seating-plans": "Seating plans",
+    "see-all": "See all",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "rename": "Rename",
+    "edit": "Edit",
+    "save": "Save",
+    "open-menu": "Open menu",
+    "copy": "Copy"
+  },
   "homepage": {
     "heading": "Class management rethought.",
     "text": "Help2Teach is an innovative cloud platform specifically designed to help teachers organize and structure their classes. With the help and ideas of teachers, the platform is constantly evolving to provide new, useful classroom management features. From creating seating plans to other practical tools, Help2Teach helps save valuable time so teachers can focus on what's important: teaching."
@@ -109,6 +122,7 @@
     "new-school-class": "New class",
     "create-new-school-class": "Create a class",
     "school-class": "Class",
+    "school-class-placeholder": "Select a class",
     "school-classes": "Classes",
     "students": "Students",
     "seating-plans": "Seating Plans",
@@ -137,7 +151,7 @@
   "students": {
     "page": {
       "heading": "Students",
-      "description": "Here you can manage the students of your class."
+      "description": "Here you will find an overview of all students in your class. You can add, edit or delete students."
     },
     "edit-table": {
       "student-placeholder": "Student",
@@ -153,18 +167,51 @@
     }
   },
   "seating-plan": {
+    "no-seating-plans": "There are no seating plans in this class yet.",
+    "create-seating-plan": "Create seating plan",
+    "create-seating-plan-dialog": {
+      "heading": "Create seating plan",
+      "description": "Enter a name for the seating plan and click on <quotes>Create seating plan</quotes>.",
+      "name": "Name",
+      "name-description": "The name of the seating plan",
+      "name-error": "Please enter a name for the seating plan",
+      "create-button": "Create seating plan"
+    },
+    "rename-dialog": {
+      "heading": "Rename seating plan",
+      "description": "Enter a new name for the seating plan and click on <quotes>Rename</quotes>.",
+      "name": "Name",
+      "name-description": "The name of the seating plan",
+      "name-error": "Please enter a name for the seating plan",
+      "rename-button": "Rename",
+      "cancel-button": "Cancel"
+    },
+    "delete-dialog": {
+      "heading": "Delete seating plan",
+      "description": "Are you sure you want to delete the seating plan <quotes>{name}</quotes>?",
+      "delete-button": "Delete",
+      "cancel-button": "Cancel"
+    },
     "toolbar": {
       "two-seats-desk-tooltip": "2-seater table",
       "one-seat-desk-tooltip": "Single table",
-      "custom-tooltip": "Custom"
+      "text-tooltip": "Custom text"
     },
     "last-saved": "Last saved:",
-    "saving": "Saving...",
+    "last-worked": "Last worked:",
     "undo": "Undo",
     "redo": "Redo",
     "settings": {
       "undefined-name": "Unnamed seating plan",
-      "name-input-error": "Please enter a name for the seating plan"
+      "name-input-error": "Please enter a name for the seating plan",
+      "save-button": "Save seating plan",
+      "export-button": "Export seating plan"
     }
+  },
+  "not-found-page": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist.",
+    "to-app": "To the application",
+    "to-homepage": "To the homepage"
   }
 }

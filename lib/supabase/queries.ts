@@ -47,15 +47,27 @@ export async function getSchoolClassById(
   return schoolClass;
 }
 export async function getSeatingPlansByClassId(
-  classId: string
+  classId: string,
+  limit: number | undefined = undefined
 ): Promise<SeatingPlan[] | null> {
   const supabase = await createClient();
+  if (limit) {
+    const { data: seatingPlans } = await supabase
+      .from("seating_plans")
+      .select("*")
+      .eq("class_id", classId)
+      .order("edited_at", { ascending: false })
+      .limit(limit);
+    return seatingPlans;
+  }
   const { data: seatingPlans } = await supabase
     .from("seating_plans")
     .select("*")
-    .eq("class_id", classId);
+    .eq("class_id", classId)
+    .order("edited_at", { ascending: false });
   return seatingPlans;
 }
+
 export async function getSeatingPlanById(
   id: string
 ): Promise<SeatingPlan | null> {

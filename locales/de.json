@@ -1,4 +1,17 @@
 {
+  "general": {
+    "cancel": "Abbrechen",
+    "open": "Öffnen",
+    "seating-plans": "Sitzpläne",
+    "see-all": "Alle anzeigen",
+    "duplicate": "Duplizieren",
+    "delete": "Löschen",
+    "rename": "Umbenennen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "open-menu": "Menü öffnen",
+    "copy": "Kopie"
+  },
   "homepage": {
     "heading": "Klassenmanagement neu gedacht.",
     "text": "Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten. Von der Erstellung von Sitzplänen bis hin zu anderen praktischen Tools hilft Help2Teach, wertvolle Zeit zu sparen, damit Lehrer*innen sich auf das Wesentliche konzentrieren können: das Unterrichten."
@@ -109,6 +122,7 @@
     "new-school-class": "Neue Klasse",
     "create-new-school-class": "Klasse erstellen",
     "school-class": "Klasse",
+    "school-class-placeholder": "Klasse auswählen",
     "school-classes": "Klassen",
     "students": "Schüler*innen",
     "seating-plans": "Sitzpläne",
@@ -153,18 +167,54 @@
     }
   },
   "seating-plan": {
+    "no-seating-plans": {
+      "heading": "Es gibt noch keine Sitzpläne in dieser Klasse.",
+      "description": "Erstelle einen Sitzplan, um mit deinen Schüler*innen zu beginnen! 💪"
+    },
+    "create-seating-plan": "Sitzplan erstellen",
+    "create-seating-plan-dialog": {
+      "heading": "Sitzplan erstellen",
+      "description": "Gib einen Namen für den Sitzplan ein und klicke auf <quotes>Sitzplan erstellen</quotes>.",
+      "name": "Name",
+      "name-description": "Der Name des Sitzplans",
+      "name-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "create-button": "Sitzplan erstellen"
+    },
+    "rename-dialog": {
+      "heading": "Sitzplan umbenennen",
+      "description": "Gib einen neuen Namen für den Sitzplan ein und klicke auf <quotes>Umbenennen</quotes>.",
+      "name": "Name",
+      "name-description": "Der neue Name des Sitzplans",
+      "name-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "rename-button": "Umbenennen",
+      "cancel-button": "Abbrechen"
+    },
+    "delete-dialog": {
+      "heading": "Sitzplan löschen",
+      "description": "Möchtest du diesen Sitzplan wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "delete-button": "Löschen",
+      "cancel-button": "Abbrechen"
+    },
     "toolbar": {
       "two-seats-desk-tooltip": "2er-Tisch",
       "one-seat-desk-tooltip": "Einzeltisch",
-      "custom-tooltip": "Benutzerdefiniert"
+      "text-tooltip": "Benutzerdefinierter Text"
     },
     "last-saved": "Zuletzt gespeichert:",
-    "saving": "Speichern...",
+    "last-worked": "Zuletzt bearbeitet:",
     "undo": "Rückgängig",
     "redo": "Wiederholen",
     "settings": {
       "undefined-name": "Unbenannter Sitzplan",
-      "name-input-error": "Bitte gib einen Namen für den Sitzplan ein"
+      "name-input-error": "Bitte gib einen Namen für den Sitzplan ein",
+      "save-button": "Sitzplan speichern",
+      "export-button": "Sitzplan exportieren"
     }
+  },
+  "not-found-page": {
+    "title": "Seite nicht gefunden",
+    "description": "Die angeforderte Seite konnte nicht gefunden werden.",
+    "to-app": "Zur Anwendung",
+    "to-homepage": "Zur Startseite"
   }
 }
