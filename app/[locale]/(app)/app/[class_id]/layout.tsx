@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import SidebarBreadcrumbs from "@/components/app-sidebar/breadcrumbs";
+import Footer from "@/components/footer";
 import LocaleSwitcher from "@/components/locale-switcher";
 import { Separator } from "@/components/ui/separator";
 import {

@@ -13,8 +13,14 @@
     "copy": "Kopie"
   },
   "homepage": {
-    "heading": "Klassenmanagement neu gedacht.",
-    "text": "Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten. Von der Erstellung von Sitzplänen bis hin zu anderen praktischen Tools hilft Help2Teach, wertvolle Zeit zu sparen, damit Lehrer*innen sich auf das Wesentliche konzentrieren können: das Unterrichten."
+    "hero": {
+      "heading": "Klassenmanagement neu gedacht.",
+      "sub-heading": "Die innovative Cloud-Plattform, die Lehrer*innen bei der Organisation ihrer Klassen unterstützt. Spare wertvolle Zeit mit smarten Tools für Sitzpläne und Klassenmanagement, entwickelt in Kooperation mit Lehrer*innen für Lehrer*innen."
+    },
+    "info": {
+      "heading": "Effizientes Klassenmanagement leicht gemacht mit Help2Teach – Der innovative Begleiter für Lehrer*innen",
+      "text": "<b>Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. </b> <b>Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten. </b> <b>Von der Erstellung von Sitzplänen bis hin zu anderen praktischen Tools hilft Help2Teach, wertvolle Zeit zu sparen, damit Lehrer*innen sich auf das Wesentliche konzentrieren können: </b> <s>das Unterrichten.</s>"
+    }
   },
   "locale-switcher": {
     "label": "Sprache ändern",

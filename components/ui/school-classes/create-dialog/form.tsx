@@ -73,7 +73,7 @@ export default function CreateSchoolClassForm({
         console.error(error);
       }
       if (data) {
-        router.push(`/app/${data[0].id}`);
+        router.push(`/app/${data[0].id}/students`);
       }
       if (callback) {
         callback(false);
