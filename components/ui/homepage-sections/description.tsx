@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import dynamic from "next/dynamic";
 const DynamicLottie = dynamic(() => import("lottie-react"), { ssr: false });
 import animationData from "@/assets/media/teaching.json";
@@ -9,9 +8,9 @@ export default function DescriptionSection() {
   const t = useTranslations("homepage");
 
   return (
-    <section className="mx-auto max-w-screen-2xl p-4 flex flex-col-reverse md:flex-row items-center gap-4">
+    <section className="mx-auto container p-4 flex flex-col-reverse md:flex-row items-center gap-4">
       <DynamicLottie animationData={animationData} />
-      <div className="w-4/5">
+      <div>
         <h2 className="text-xl md:text-3xl font-bold mb-4">
           {t("info.heading")}
         </h2>

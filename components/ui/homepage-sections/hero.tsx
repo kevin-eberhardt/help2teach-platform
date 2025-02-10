@@ -29,9 +29,9 @@ export default function HeroSection() {
                   {t("hero.sub-heading")}
                 </p>
               </div>
-              <div className="flex flex-col gap-3 min-[400px]:flex-row">
-                <Link href="/register">
-                  <Button size="lg" className="gap-2">
+              <div className="flex flex-col gap-3 md:flex-row">
+                <Link href="/register" className="w-full md:w-auto">
+                  <Button size="lg" className="gap-2 w-full">
                     Jetzt starten
                     <ArrowRight className="h-4 w-4" />
                   </Button>

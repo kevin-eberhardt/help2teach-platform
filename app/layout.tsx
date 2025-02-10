@@ -1,5 +1,13 @@
 import { getLocale } from "next-intl/server";
 import "./globals.css";
+import { Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export default async function GlobalLayout({
   children,
