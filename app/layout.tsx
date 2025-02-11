@@ -1,3 +1,4 @@
+import { GoogleTagManager } from "@next/third-parties/google";
 import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { Metadata, Viewport } from "next";
@@ -60,6 +61,7 @@ export default async function GlobalLayout({
   const locale = await getLocale();
   return (
     <html lang={locale}>
+      <GoogleTagManager gtmId="GTM-KZCZMGNL" />
       <body>{children}</body>
     </html>
   );
