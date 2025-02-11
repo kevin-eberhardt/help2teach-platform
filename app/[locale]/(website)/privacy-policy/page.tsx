@@ -441,68 +441,48 @@ export default function PrivacyPolicyPage() {
         technisch fehlerfreien Darstellung und der Optimierung seiner Website
         &ndash; hierzu m&uuml;ssen die Server-Log-Files erfasst werden.
       </p>
-      <h2 className="text-2xl mt-4 mb-2">5. Plugins und Tools</h2>
-      <h3 className="text-xl my-2">Google Fonts</h3>
+      <h3 className="text-xl my-2">Google Analytics</h3>
       <p>
-        Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so
-        genannte Google Fonts, die von Google bereitgestellt werden. Beim Aufruf
-        einer Seite l&auml;dt Ihr Browser die ben&ouml;tigten Fonts in ihren
-        Browsercache, um Texte und Schriftarten korrekt anzuzeigen.
+        Unsere Website verwendet Funktionen des Webanalysedienstes Google
+        Analytics. Anbieter des Webanalysedienstes ist die Google Inc., 1600
+        Amphitheatre Parkway, Mountain View, CA 94043, USA. Google Analytics
+        verwendet “Cookies.” Das sind kleine Textdateien, die Ihr Webbrowser auf
+        Ihrem Endgerät speichert und eine Analyse der Website-Benutzung
+        ermöglichen. Mittels Cookie erzeugte Informationen über Ihre Benutzung
+        unserer Website werden an einen Server von Google übermittelt und dort
+        gespeichert. Server-Standort ist im Regelfall die USA. Das Setzen von
+        Google-Analytics-Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f
+        DSGVO. Als Betreiber dieser Website haben wir ein berechtigtes Interesse
+        an der Analyse des Nutzerverhaltens, um unser Webangebot und ggf. auch
+        Werbung zu optimieren.
+        <h4 className="text-lg my-1">IP-Anonymisierung</h4>
+        Wir setzen Google Analytics in Verbindung mit der Funktion
+        IP-Anonymisierung ein. Sie gewährleistet, dass Google Ihre IP-Adresse
+        innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen
+        Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum vor
+        der Übermittlung in die USA kürzt. Es kann Ausnahmefälle geben, in denen
+        Google die volle IP-Adresse an einen Server in den USA überträgt und
+        dort kürzt. In unserem Auftrag wird Google diese Informationen benutzen,
+        um Ihre Nutzung der Website auszuwerten, um Reports über
+        Websiteaktivitäten zu erstellen und um weitere mit der Websitenutzung
+        und der Internetnutzung verbundene Dienstleistungen gegenüber uns zu
+        erbringen. Es findet keine Zusammenführung der von Google Analytics
+        übermittelten IP-Adresse mit anderen Daten von Google statt.
       </p>
+      <h3 className="text-xl my-2">
+        Demografische Merkmale bei Google Analytics
+      </h3>
       <p>
-        Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den
-        Servern von Google aufnehmen. Hierdurch erlangt Google Kenntnis
-        dar&uuml;ber, dass &uuml;ber Ihre IP-Adresse diese Website aufgerufen
-        wurde. Die Nutzung von Google Fonts erfolgt auf Grundlage von Art. 6
-        Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse
-        an der einheitlichen Darstellung des Schriftbildes auf seiner Website.
-        Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die
-        Verarbeitung ausschlie&szlig;lich auf Grundlage von Art. 6 Abs. 1 lit. a
-        DSGVO und &sect; 25 Abs. 1 TDDDG, soweit die Einwilligung die
-        Speicherung von Cookies oder den Zugriff auf Informationen im
-        Endger&auml;t des Nutzers (z.&nbsp;B. Device-Fingerprinting) im Sinne
-        des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.
-      </p>
-      <p>
-        Wenn Ihr Browser Google Fonts nicht unterst&uuml;tzt, wird eine
-        Standardschrift von Ihrem Computer genutzt.
-      </p>
-      <p>
-        Weitere Informationen zu Google Fonts finden Sie unter
-        <a
-          href="https://developers.google.com/fonts/faq"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          https://developers.google.com/fonts/faq
-        </a>
-        und in der Datenschutzerkl&auml;rung von Google:
-        <a
-          href="https://policies.google.com/privacy?hl=de"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          https://policies.google.com/privacy?hl=de
-        </a>
-        .
-      </p>
-      <p>
-        Das Unternehmen verf&uuml;gt &uuml;ber eine Zertifizierung nach dem
-        &bdquo;EU-US Data Privacy Framework&ldquo; (DPF). Der DPF ist ein
-        &Uuml;bereinkommen zwischen der Europ&auml;ischen Union und den USA, der
-        die Einhaltung europ&auml;ischer Datenschutzstandards bei
-        Datenverarbeitungen in den USA gew&auml;hrleisten soll. Jedes nach dem
-        DPF zertifizierte Unternehmen verpflichtet sich, diese
-        Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten
-        Sie vom Anbieter unter folgendem Link:
-        <a
-          href="https://www.dataprivacyframework.gov/participant/5780"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          https://www.dataprivacyframework.gov/participant/5780
-        </a>
-        .
+        Unsere Website verwendet die Funktion “demografische Merkmale” von
+        Google Analytics. Mit ihr lassen sich Berichte erstellen, die Aussagen
+        zu Alter, Geschlecht und Interessen der Seitenbesucher enthalten. Diese
+        Daten stammen aus interessenbezogener Werbung von Google sowie aus
+        Besucherdaten von Drittanbietern. Eine Zuordnung der Daten zu einer
+        bestimmten Person ist nicht möglich. Sie können diese Funktion jederzeit
+        deaktivieren. Dies ist über die Anzeigeneinstellungen in Ihrem
+        Google-Konto möglich oder indem Sie die Erfassung Ihrer Daten durch
+        Google Analytics, wie im Punkt “Widerspruch gegen die Datenerfassung”
+        erläutert, generell untersagen.
       </p>
     </div>
   );
