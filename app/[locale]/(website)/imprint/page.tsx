@@ -14,8 +14,8 @@ export default async function FeedbackPage() {
   const t = await getTranslations("imprint-page");
 
   return (
-    <main className="flex flex-col flex-grow">
-      <div className="p-4 flex flex-col gap-4">
+    <main className="flex flex-col flex-grow container mx-auto">
+      <div className="p-4 flex flex-col gap-4 w-4/5">
         <h1 className="text-3xl font-bold">{t("heading")}</h1>
         <div>
           <h2 className="text-2xl mb-2">{t("contact")}</h2>
@@ -32,19 +32,10 @@ export default async function FeedbackPage() {
           </p>
         </div>
         <div>
-          <h2 className="text-2xl mb-2">Urheberrecht</h2>
-          <p>
-            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf
-            diesen Seiten unterliegen dem deutschen Urheberrecht. Downloads und
-            Kopien dieser Seite sind nur für den privaten und schulischen, nicht
-            kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser
-            Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
-            Dritter beachtet. Insbesondere werden Inhalte Dritter als solche
-            gekennzeichnet. Sollten Sie trotzdem auf eine
-            Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
-            entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
-            werden wir derartige Inhalte umgehend entfernen.
-          </p>
+          <h2 className="text-2xl mb-2">{t("copyright.title")}</h2>
+          {t.rich("copyright.text", {
+            p: (chunks) => <p>{chunks}</p>,
+          })}
         </div>
       </div>
     </main>

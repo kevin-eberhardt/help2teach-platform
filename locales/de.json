@@ -39,7 +39,7 @@
     },
     "info": {
       "heading": "Effizientes Klassenmanagement leicht gemacht mit Help2Teach – Der innovative Begleiter für Lehrer*innen",
-      "text": "<b>Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. </b> <b>Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten. </b> <b>Von der Erstellung von Sitzplänen bis hin zu anderen praktischen Tools hilft Help2Teach, wertvolle Zeit zu sparen, damit Lehrer*innen sich auf das Wesentliche konzentrieren können: <s>das Unterrichten.</s></b>"
+      "text": "<b>Help2Teach ist eine innovative Cloud-Plattform, die speziell entwickelt wurde, um Lehrer*innen bei der Organisation und Strukturierung ihrer Klassen zu unterstützen. </b><b>Mit Hilfe und Ideen von Lehrer*innen wird die Plattform kontinuierlich weiterentwickelt, um neue, nützliche Funktionen für das Klassenmanagement zu bieten. </b><b>Von der Erstellung von Sitzplänen bis hin zu anderen praktischen Tools hilft Help2Teach, wertvolle Zeit zu sparen, damit Lehrer*innen sich auf das Wesentliche konzentrieren können: <s>das Unterrichten.</s></b>"
     },
     "tutorial-video": {
       "heading": "Im Handumdrehen einsatzbereit",
@@ -56,7 +56,11 @@
   },
   "imprint-page": {
     "heading": "Impressum",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "copyright": {
+      "title":"Urheberrecht",
+      "text": "<p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Downloads und Kopien dieser Seite sind nur für den privaten und schulischen, nicht kommerziellen Gebrauch gestattet.</p><p>Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>"
+    }
   },
   "login-form": {
     "email": "E-Mail-Adresse",
