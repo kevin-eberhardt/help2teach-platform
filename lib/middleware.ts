@@ -19,6 +19,8 @@ export async function handleRequest(request: NextRequest, user: User | null) {
     "/reset-password",
     "/welcome",
     "/auth/callback",
+    "/privacy-policy",
+    "/imprint",
   ];
 
   if (

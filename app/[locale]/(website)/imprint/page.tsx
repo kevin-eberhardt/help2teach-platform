@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/i18n/routing";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";

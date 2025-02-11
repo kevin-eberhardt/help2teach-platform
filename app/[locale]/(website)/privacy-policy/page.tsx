@@ -1,5 +1,19 @@
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import Link from "next/link";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  if (locale === "en") {
+    return {
+      title: "Privacy Policy",
+    };
+  } else {
+    return {
+      title: "Datenschutzerklärung",
+    };
+  }
+}
 
 export default async function PrivacyPolicyPage() {
   const locale = await getLocale();
