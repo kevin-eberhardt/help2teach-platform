@@ -103,7 +103,10 @@ export default async function ClassPage({
           uns darauf! Teile uns deinen Vorschlag mit einer kurzen Beschreibung
           mit – wir sind gespannt. 🙂
         </p>
-        <Link href="/feedback">
+        <Link
+          href="https://github.com/orgs/Help2Teach/discussions"
+          target="_blank"
+        >
           <Button variant="outline">Idee vorschlagen</Button>
         </Link>
       </div>
