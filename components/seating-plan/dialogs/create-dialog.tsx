@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createSeatingPlan } from "./actions";
 import { useRouter } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export function FormSchema(t?: (key: string) => string) {
   return z.object({
@@ -63,6 +64,7 @@ export default function CreateSeatingPlanDialog({
         router.push(`/app/${classId}/seating-plans/${seatingPlan.id}`);
       }
     });
+    sendGTMEvent({ event: "create_seating_plan" });
   }
   return (
     <Dialog>

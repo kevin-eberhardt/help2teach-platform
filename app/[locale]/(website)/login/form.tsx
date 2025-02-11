@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
 import { createClient } from "@/lib/supabase/client";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export function getLoginFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -58,6 +59,7 @@ export default function LoginForm(props: LoginFormProps) {
     startTransition(() => {
       login(values);
     });
+    sendGTMEvent({ event: "login", method: "email" });
   }
 
   async function loginWithGoogle() {
@@ -81,6 +83,8 @@ export default function LoginForm(props: LoginFormProps) {
     });
     if (error) {
       console.error("Error logging in with Google:", error);
+    } else {
+      sendGTMEvent({ event: "login", method: "google" });
     }
   }
 
