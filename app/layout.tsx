@@ -12,6 +12,7 @@ export const viewport: Viewport = {
 
 export function generateMetadata(): Metadata {
   return {
+    metadataBase: new URL("https://help2teach.de"),
     title: {
       default: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
       template: `%s | ${process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach"}`,

@@ -1,4 +1,5 @@
 import { Link } from "@/lib/i18n/routing";
+import ConsentButton from "./consent-button";
 
 export default function Footer() {
   const date = new Date();
@@ -10,6 +11,7 @@ export default function Footer() {
           <p>&copy; {date.getFullYear()} - Help2Teach</p>
         </div>
         <div className="flex gap-4 text-muted-foreground">
+          <ConsentButton />
           <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/imprint">Impressum</Link>
         </div>

@@ -102,3 +102,15 @@
   width: 10px !important;
   height: 10px !important;
 }
+
+#CookiebotWidget {
+  visibility: hidden;
+  bottom: 0 !important;
+  left: 0 !important;
+  min-width: 1px !important;
+  min-height: 1px !important;
+}
+
+#CookiebotWidget .CookiebotWidget-logo {
+  display: none !important;
+}
