@@ -54,6 +54,10 @@
     "heading": "Sign in",
     "description": "Please sign in with your email address and password."
   },
+  "imprint-page": {
+    "heading": "Imprint",
+    "contact": "Contact"
+  },
   "login-form": {
     "email": "Email address",
     "email-description": "Your email address",

@@ -54,6 +54,10 @@
     "heading": "Anmelden",
     "description": "Bitte melde dich mit deiner E-Mail-Adresse und deinem Passwort an."
   },
+  "imprint-page": {
+    "heading": "Impressum",
+    "contact": "Kontakt"
+  },
   "login-form": {
     "email": "E-Mail-Adresse",
     "email-description": "Deine E-Mail-Adresse",
