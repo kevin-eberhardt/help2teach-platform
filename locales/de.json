@@ -155,6 +155,22 @@
     "register": "Registrieren",
     "logout": "Abmelden"
   },
+  "user-form": {
+    "firstName": "Vorname",
+    "firstName-description": "Dein Vorname",
+    "firstName-error": "Bitte gib deinen Vornamen ein",
+    "lastName": "Nachname",
+    "lastName-description": "Dein Nachname",
+    "lastName-error": "Bitte gib deinen Nachnamen ein",
+    "fullName": "Anzeigename",
+    "fullName-description": "Dein Anzeigename",
+    "fullName-error": "Bitte gib einen Anzeigennamen ein",
+    "submit": "Speichern",
+    "cancel": "Abbrechen",
+    "submit-messages": {
+      "user-updated": "Deine Daten wurden erfolgreich aktualisiert."
+    }
+  },
   "sidebar": {
     "overview": "Übersicht",
     "new-school-class": "Neue Klasse",

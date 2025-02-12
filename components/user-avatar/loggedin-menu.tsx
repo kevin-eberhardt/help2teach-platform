@@ -9,6 +9,8 @@ import { createClient } from "@/lib/supabase/client";
 import { LogOut, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AccountDialog } from "../account/dialog";
 
 export default function LoggedInMenu() {
   const router = useRouter();
@@ -18,12 +20,16 @@ export default function LoggedInMenu() {
     await supabase.auth.signOut();
     router.refresh();
   }
+
+  const [accountSettingsDialogOpen, setAccountSettingsDialogOpen] =
+    useState(false);
+
   return (
     <>
       <DropdownMenuLabel>{t("account")}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setAccountSettingsDialogOpen(true)}>
           <User />
           <span>{t("profile")}</span>
         </DropdownMenuItem>
@@ -32,6 +38,10 @@ export default function LoggedInMenu() {
           <span>{t("logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuGroup>
+      <AccountDialog
+        open={accountSettingsDialogOpen}
+        setOpen={setAccountSettingsDialogOpen}
+      />
     </>
   );
 }

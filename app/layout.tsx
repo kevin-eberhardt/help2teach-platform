@@ -12,7 +12,9 @@ export const viewport: Viewport = {
 
 export function generateMetadata(): Metadata {
   return {
-    metadataBase: new URL("https://help2teach.de"),
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://help2teach.de"
+    ),
     title: {
       default: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
       template: `%s | ${process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach"}`,
@@ -32,10 +34,14 @@ export function generateMetadata(): Metadata {
       "Online-Tool",
     ],
     alternates: {
-      canonical: "https://help2teach.de",
+      canonical: process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://help2teach.de",
       languages: {
-        de: "https://help2teach.de/de",
-        en: "https://help2teach.de/en",
+        de: `${
+          process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://help2teach.de"
+        }/de`,
+        en: `${
+          process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://help2teach.de"
+        }/en`,
       },
     },
     applicationName: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
@@ -45,7 +51,7 @@ export function generateMetadata(): Metadata {
     openGraph: {
       title: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
       description: process.env.NEXT_PUBLIC_WEBSITE_DESCRIPTION ?? "Help2Teach",
-      url: "https://help2teach.de",
+      url: process.env.NEXT_PUBLIC_WEBSITE_URL ?? "https://help2teach.de",
       siteName: process.env.NEXT_PUBLIC_WEBSITE_NAME ?? "Help2Teach",
       images: [{ url: "/og-image.png" }],
       locale: "de",
