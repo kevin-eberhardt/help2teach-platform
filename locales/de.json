@@ -58,7 +58,7 @@
     "heading": "Impressum",
     "contact": "Kontakt",
     "copyright": {
-      "title":"Urheberrecht",
+      "title": "Urheberrecht",
       "text": "<p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Downloads und Kopien dieser Seite sind nur für den privaten und schulischen, nicht kommerziellen Gebrauch gestattet.</p><p>Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>"
     }
   },
@@ -169,6 +169,9 @@
     "cancel": "Abbrechen",
     "submit-messages": {
       "user-updated": "Deine Daten wurden erfolgreich aktualisiert."
+    },
+    "submit-errors": {
+      "name-not-changed": "Es ist ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und versuche es erneut."
     }
   },
   "sidebar": {

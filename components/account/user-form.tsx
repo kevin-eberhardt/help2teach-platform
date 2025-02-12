@@ -15,9 +15,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { User } from "@/lib/supabase/types/additional.types";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { updateUserName } from "./actions";
 
 export function getUserFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -32,28 +33,41 @@ export type UserFormValues = z.infer<
 >;
 
 type UserFormProps = {
-  error?: boolean;
-  message?: string;
   user: User;
 };
 
 export default function UserForm(props: UserFormProps) {
   const t = useTranslations("user-form");
-  const { user, error, message } = props;
+  const [user, setUser] = useState<User>(props.user);
+  const [error, setError] = useState<string | null>(null);
 
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<UserFormValues>({
     resolver: zodResolver(getUserFormSchema(t)),
     defaultValues: {
-      first_name: user.user_metadata.first_name,
-      last_name: user.user_metadata.last_name,
-      full_name: user.user_metadata.full_name,
+      first_name: user.user_metadata.first_name || "",
+      last_name: user.user_metadata.last_name || "",
+      full_name: user.user_metadata.full_name || "",
     },
   });
-  function onSubmit(values: UserFormValues) {
-    startTransition(() => {
-      console.log("Update user", values);
+
+  const [formHasChanged, setFormHasChanged] = useState(false);
+
+  useEffect(() => {
+    const subscription = form.watch(() => setFormHasChanged(true));
+    return () => subscription.unsubscribe();
+  }, [form]);
+
+  async function onSubmit(values: UserFormValues) {
+    startTransition(async () => {
+      const { data, error } = await updateUserName(user, values);
+      if (error) {
+        setError(error.message);
+      } else {
+        setUser(data.user as unknown as User);
+        setFormHasChanged(false);
+      }
     });
   }
 
@@ -110,21 +124,25 @@ export default function UserForm(props: UserFormProps) {
                 </FormItem>
               )}
             />
+            {error && (
+              <FormMessage className="mt-4">
+                {t("submit-errors.name-not-changed")}
+              </FormMessage>
+            )}
           </CardContent>
           <CardFooter className="gap-4 justify-between">
             <Button type="reset" variant="outline" onClick={() => form.reset()}>
               {t("cancel")}
             </Button>
-            <Button type="submit" loading={isPending}>
+            <Button
+              type="submit"
+              loading={isPending}
+              disabled={!formHasChanged}
+            >
               {t("submit")}
             </Button>
           </CardFooter>
         </form>
-        {error && message === "invalid_credentials" && (
-          <FormMessage className="mt-4">
-            {t("submit-errors.invalid-credentials")}
-          </FormMessage>
-        )}
       </Card>
     </Form>
   );
