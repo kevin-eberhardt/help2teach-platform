@@ -47,11 +47,7 @@ export default function SettingsBar({
         transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
       },
     }).then(async (dataUrl) => {
-      const { data, error } = await updateSeatingPlanPreview(
-        seatingPlan.id,
-        dataUrl
-      );
-      console.log(data, error);
+      await updateSeatingPlanPreview(seatingPlan.id, dataUrl);
     });
   }
   useEffect(() => {

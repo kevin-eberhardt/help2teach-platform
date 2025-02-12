@@ -1,11 +1,13 @@
 "use client";
 import { ReactFlowProvider } from "@xyflow/react";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import "@xyflow/react/dist/style.css";
 import { SeatingPlanNode, SeatingPlanProps } from "@/lib/types/seating-plan";
 import dynamic from "next/dynamic";
 import SettingsBar from "./settings-bar";
 import { Json } from "@/lib/supabase/types/database.types";
+import { SeatingPlan } from "@/lib/supabase/types/additional.types";
+import { saveSeatingPlan } from "./action";
 
 const Canvas = dynamic(() => import("@/components/seating-plan/canvas/index"), {
   ssr: false,
@@ -20,6 +22,40 @@ export default function SeatingPlan({
   useEffect(() => {
     setSeatingPlan(initialSeatingPlan);
   }, [initialSeatingPlan]);
+
+  const saveToDatabase = async (latestSeatingPlan: SeatingPlan) => {
+    console.log("Sitzplan wird gespeichert:", seatingPlan);
+    const { data, error } = await saveSeatingPlan(latestSeatingPlan);
+    if (error) {
+      console.error("Fehler beim Speichern des Sitzplans:", error);
+    } else {
+      if (data) {
+        setSeatingPlan(data);
+      }
+      console.log("Sitzplan erfolgreich gespeichert:", data);
+    }
+  };
+
+  const lastSavedSeatingPlanRef = useRef(seatingPlan);
+  const latestSeatingPlanRef = useRef(seatingPlan);
+
+  useEffect(() => {
+    latestSeatingPlanRef.current = seatingPlan;
+  }, [seatingPlan]);
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      if (
+        JSON.stringify(lastSavedSeatingPlanRef.current) !==
+        JSON.stringify(latestSeatingPlanRef.current)
+      ) {
+        console.log("Änderungen im Sitzplan festgestellt. Speichern...");
+        await saveToDatabase(latestSeatingPlanRef.current);
+        lastSavedSeatingPlanRef.current = latestSeatingPlanRef.current;
+      }
+    }, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <ReactFlowProvider>
@@ -37,6 +73,7 @@ export default function SeatingPlan({
             }
             setNodes={(nodes) => {
               const newNodes = nodes as unknown as Json;
+              console.log("Update nodes on index");
               setSeatingPlan({ ...seatingPlan, nodes: newNodes });
             }}
             students={students}
