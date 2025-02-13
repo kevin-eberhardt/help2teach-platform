@@ -58,7 +58,7 @@
     "heading": "Imprint",
     "contact": "Contact",
     "copyright": {
-      "title":"Copyright",
+      "title": "Copyright",
       "text": "<p>The content and works created by the site operators on these pages are subject to German copyright law. Downloads and copies of this site are only permitted for private and educational, non-commercial use.</p><p>Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. As soon as we become aware of any legal infringements, we will remove such content immediately.</p>"
     }
   },
@@ -200,13 +200,13 @@
     }
   },
   "email-form": {
-    "heading": "Email address",
-    "email": "Email address",
-    "email-description": "Your email address",
+    "heading": "Change email address",
+    "email": "New email address",
+    "email-description": "Your new email address",
     "email-error": "Please enter a valid email address",
-    "emailConfirmation": "Confirm email address",
-    "emailConfirmation-description": "Confirm your email address",
-    "emailConfirmation-error": "Please confirm your email address",
+    "emailConfirmation": "Confirm new email address",
+    "emailConfirmation-description": "Confirm your new email address",
+    "emailConfirmation-error": "Please confirm your new email address",
     "email-not-match-error": "The email addresses do not match",
     "submit": "Save",
     "cancel": "Cancel",
@@ -216,6 +216,16 @@
     "submit-errors": {
       "email-not-changed": "An error has occurred. Please check your entries and try again."
     }
+  },
+  "delete-account": {
+    "heading": "Delete account",
+    "description": "If you want to delete your account, you can do so here. Please note: This action cannot be undone.",
+    "button": "Delete account",
+    "alert-heading": "Are you sure?",
+    "alert-description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "error-message": "An error occurred. Please try again or contact us at mail@help2teach.de"
   },
   "sidebar": {
     "overview": "Overview",

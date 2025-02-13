@@ -16,7 +16,13 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState, useTransition } from "react";
-import { Card, CardContent, CardFooter, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { User } from "@/lib/supabase/types/additional.types";
 import { changeEmail } from "./actions";
 
@@ -82,10 +88,12 @@ export default function EmailChangeForm(props: EmailChangeFormProps) {
 
   return (
     <Form {...form}>
-      <Card className="pt-4">
+      <Card>
         <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardHeader>
+            <CardTitle>{t("heading")}</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-4">
-            <CardTitle className="mb-4">{t("heading")}</CardTitle>
             <div className="flex gap-2 justify-evenly">
               <FormField
                 control={form.control}

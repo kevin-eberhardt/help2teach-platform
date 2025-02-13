@@ -1,7 +1,14 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { useState, useTransition } from "react";
 import { sendPasswordResetMail } from "./actions";
 import { Check, Loader } from "lucide-react";
@@ -24,16 +31,20 @@ export default function PasswordChange({ email }: { email: string }) {
   }
 
   return (
-    <Card className="pt-4">
+    <Card>
+      <CardHeader>
+        <CardTitle>{t("heading")}</CardTitle>
+      </CardHeader>
       <CardContent>
-        <p>{t("info")}</p>
-        {error && (
-          <p className="text-destructive text-sm mt-4">
-            {t("submit-errors.password-not-changed")}
-          </p>
-        )}
+        <CardDescription>
+          <p>{t("info")}</p>
+          {error && (
+            <p className="text-destructive text-sm mt-4">
+              {t("submit-errors.password-not-changed")}
+            </p>
+          )}
+        </CardDescription>
       </CardContent>
-
       <CardFooter>
         <Button
           variant="outline"

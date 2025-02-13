@@ -17,7 +17,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState, useTransition } from "react";
 import { User } from "@/lib/supabase/types/additional.types";
-import { Card, CardContent, CardFooter, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { updateUserName } from "./actions";
 
 export function getUserFormSchema(t?: (key: string) => string) {
@@ -73,10 +79,12 @@ export default function UserForm(props: UserFormProps) {
 
   return (
     <Form {...form}>
-      <Card className="pt-4">
+      <Card>
         <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardHeader>
+            <CardTitle>{t("heading")}</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-4">
-            <CardTitle className="mb-4">{t("heading")}</CardTitle>
             <div className="flex gap-2 justify-evenly">
               <FormField
                 control={form.control}

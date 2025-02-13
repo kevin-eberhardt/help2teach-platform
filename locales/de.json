@@ -175,6 +175,16 @@
       "name-not-changed": "Es ist ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und versuche es erneut."
     }
   },
+  "delete-account": {
+    "heading": "Konto löschen",
+    "description": "Wenn du deinen Account löschen möchtest, kannst du das hier tun. Bitte beachte: Diese Aktion kann nicht rückgängig gemacht werden.",
+    "button": "Konto löschen",
+    "alert-heading": "Bist du dir sicher?",
+    "alert-description": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird dein Konto und deine Daten von unseren Servern permanent löschen.",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "error-message": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere uns über mail@help2teach.de"
+  },
   "password-change": {
     "heading": "Passwort ändern",
     "info": "Wenn du dein Passwort zurücksetzen möchtest, lass dir eine E-Mail mit einem Link dazu zusenden.",
@@ -187,13 +197,13 @@
     }
   },
   "email-form": {
-    "heading": "E-Mail-Adresse",
-    "email": "E-Mail-Adresse",
-    "email-description": "Deine E-Mail-Adresse",
+    "heading": "E-Mail-Adresse ändern",
+    "email": "Neue E-Mail-Adresse",
+    "email-description": "Deine neue E-Mail-Adresse",
     "email-error": "Bitte gib eine gültige E-Mail-Adresse ein",
-    "emailConfirmation": "E-Mail-Adresse bestätigen",
-    "emailConfirmation-description": "Deine E-Mail-Adresse bestätigen",
-    "emailConfirmation-error": "Bitte bestätige deine E-Mail-Adresse",
+    "emailConfirmation": "Neue E-Mail-Adresse bestätigen",
+    "emailConfirmation-description": "Deine neue E-Mail-Adresse bestätigen",
+    "emailConfirmation-error": "Bitte bestätige deine neue E-Mail-Adresse",
     "email-not-match-error": "Die E-Mail-Adressen stimmen nicht überein",
     "submit": "Speichern",
     "cancel": "Abbrechen",

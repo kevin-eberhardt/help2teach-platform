@@ -2,6 +2,7 @@
 import { User } from "@/lib/supabase/types/additional.types";
 import { UserFormValues } from "./user-form";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function updateUserName(user: User, values: UserFormValues) {
   const { first_name, last_name, full_name } = values;
@@ -34,6 +35,14 @@ export async function changeEmail(email: string) {
   const { error } = await supabase.auth.updateUser({
     email,
   });
+
+  return { error };
+}
+
+export async function deleteAccount(userId: string) {
+  const supabase = await createAdminClient();
+
+  const { error } = await supabase.auth.admin.deleteUser(userId);
 
   return { error };
 }
