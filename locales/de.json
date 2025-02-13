@@ -156,6 +156,7 @@
     "logout": "Abmelden"
   },
   "user-form": {
+    "heading": "Profil",
     "firstName": "Vorname",
     "firstName-description": "Dein Vorname",
     "firstName-error": "Bitte gib deinen Vornamen ein",
@@ -172,6 +173,35 @@
     },
     "submit-errors": {
       "name-not-changed": "Es ist ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und versuche es erneut."
+    }
+  },
+  "password-change": {
+    "heading": "Passwort ändern",
+    "info": "Wenn du dein Passwort zurücksetzen möchtest, lass dir eine E-Mail mit einem Link dazu zusenden.",
+    "button": "Link zum zurücksetzen des Passworts senden",
+    "submit-messages": {
+      "password-changed": "E-Mail mit Link zum Zurücksetzen des Passworts gesendet."
+    },
+    "submit-errors": {
+      "password-not-changed": "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut."
+    }
+  },
+  "email-form": {
+    "heading": "E-Mail-Adresse",
+    "email": "E-Mail-Adresse",
+    "email-description": "Deine E-Mail-Adresse",
+    "email-error": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "emailConfirmation": "E-Mail-Adresse bestätigen",
+    "emailConfirmation-description": "Deine E-Mail-Adresse bestätigen",
+    "emailConfirmation-error": "Bitte bestätige deine E-Mail-Adresse",
+    "email-not-match-error": "Die E-Mail-Adressen stimmen nicht überein",
+    "submit": "Speichern",
+    "cancel": "Abbrechen",
+    "submit-messages": {
+      "email-updated": "Es wurde eine E-Mail mit einem Bestätigungslink an deine neue und deine alte E-Mail-Adresse gesendet. Damit die Änderungen wirksam werden, musst du die Änderung bei beiden E-Mails bestätigen."
+    },
+    "submit-errors": {
+      "email-not-changed": "Es ist ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und versuche es erneut."
     }
   },
   "sidebar": {

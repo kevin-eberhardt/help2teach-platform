@@ -17,3 +17,23 @@ export async function updateUserName(user: User, values: UserFormValues) {
 
   return { data, error };
 }
+
+export async function sendPasswordResetMail(email: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/reset-password`,
+  });
+
+  return { error };
+}
+
+export async function changeEmail(email: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({
+    email,
+  });
+
+  return { error };
+}

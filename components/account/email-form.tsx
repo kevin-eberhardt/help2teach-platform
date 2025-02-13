@@ -16,58 +16,67 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState, useTransition } from "react";
-import { User } from "@/lib/supabase/types/additional.types";
 import { Card, CardContent, CardFooter, CardTitle } from "../ui/card";
-import { updateUserName } from "./actions";
+import { User } from "@/lib/supabase/types/additional.types";
+import { changeEmail } from "./actions";
 
-export function getUserFormSchema(t?: (key: string) => string) {
-  return z.object({
-    first_name: z.string().min(1, { message: t?.("firstName-error") }),
-    last_name: z.string().min(1, { message: t?.("lastName-error") }),
-    full_name: z.string().min(1, { message: t?.("fullName-error") }),
-  });
+export function getEmailChangeFormSchema(t?: (key: string) => string) {
+  return z
+    .object({
+      email: z
+        .string()
+        .email()
+        .min(1, { message: t?.("email-error") }),
+      emailConfirmation: z
+        .string()
+        .email()
+        .min(1, { message: t?.("emailConfirmation-error") }),
+    })
+    .refine((data) => data.email === data.emailConfirmation, {
+      path: ["emailConfirmation"],
+      message: t?.("email-not-match-error"),
+    });
 }
 
-export type UserFormValues = z.infer<
-  Awaited<ReturnType<typeof getUserFormSchema>>
+export type EmailChangeFormValues = z.infer<
+  Awaited<ReturnType<typeof getEmailChangeFormSchema>>
 >;
 
-type UserFormProps = {
-  user: User;
+type EmailChangeFormProps = {
+  email: User["email"];
 };
 
-export default function UserForm(props: UserFormProps) {
-  const t = useTranslations("user-form");
-  const [user, setUser] = useState<User>(props.user);
+export default function EmailChangeForm(props: EmailChangeFormProps) {
+  const t = useTranslations("email-form");
   const [error, setError] = useState<string | null>(null);
 
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(getUserFormSchema(t)),
+  const form = useForm<EmailChangeFormValues>({
+    resolver: zodResolver(getEmailChangeFormSchema(t)),
     defaultValues: {
-      first_name: user.user_metadata.first_name || "",
-      last_name: user.user_metadata.last_name || "",
-      full_name: user.user_metadata.full_name || "",
+      email: "",
+      emailConfirmation: "",
     },
   });
 
   const [formHasChanged, setFormHasChanged] = useState(false);
+  const [sent, setSent] = useState(false);
 
   useEffect(() => {
     const subscription = form.watch(() => setFormHasChanged(true));
     return () => subscription.unsubscribe();
   }, [form]);
 
-  async function onSubmit(values: UserFormValues) {
+  async function onSubmit(values: EmailChangeFormValues) {
     startTransition(async () => {
-      const { data, error } = await updateUserName(user, values);
+      const { error } = await changeEmail(values.email);
       if (error) {
         setError(error.message);
       } else {
-        setUser(data.user as unknown as User);
         setFormHasChanged(false);
       }
+      setSent(true);
     });
   }
 
@@ -80,56 +89,44 @@ export default function UserForm(props: UserFormProps) {
             <div className="flex gap-2 justify-evenly">
               <FormField
                 control={form.control}
-                name="first_name"
+                name="email"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>{t("firstName")}</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
-                      <Input type="text" {...field} />
+                      <Input type="email" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      {t("firstName-description")}
-                    </FormDescription>
+                    <FormDescription>{t("email-description")}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="last_name"
+                name="emailConfirmation"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>{t("lastName")}</FormLabel>
+                    <FormLabel>{t("emailConfirmation")}</FormLabel>
                     <FormControl>
-                      <Input type="text" {...field} />
+                      <Input type="email" {...field} />
                     </FormControl>
                     <FormDescription>
-                      {t("lastName-description")}
+                      {t("emailConfirmation-description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <FormField
-              control={form.control}
-              name="full_name"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>{t("fullName")}</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormDescription>{t("fullName-description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {error && (
+            {error ? (
               <FormMessage className="mt-4">
-                {t("submit-errors.name-not-changed")}
+                {t("submit-errors.email-not-changed")}
               </FormMessage>
-            )}
+            ) : sent ? (
+              <FormMessage className="mt-4 text-green-500">
+                {t("submit-messages.email-updated")}
+              </FormMessage>
+            ) : null}
           </CardContent>
           <CardFooter className="gap-4 justify-between">
             <Button type="reset" variant="outline" onClick={() => form.reset()}>

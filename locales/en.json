@@ -168,6 +168,55 @@
     "register": "Register",
     "logout": "Sign out"
   },
+  "user-form": {
+    "heading": "Profile",
+    "firstName": "First name",
+    "firstName-description": "Your first name",
+    "firstName-error": "Please enter your first name",
+    "lastName": "Last name",
+    "lastName-description": "Your last name",
+    "lastName-error": "Please enter your last name",
+    "fullName": "Display name",
+    "fullName-description": "Your display name",
+    "fullName-error": "Please enter your display name",
+    "submit": "Save",
+    "cancel": "Cancel",
+    "submit-messages": {
+      "user-updated": "Your user data has been successfully updated."
+    },
+    "submit-errors": {
+      "name-not-changed": "An error has occurred. Please check your entries and try again."
+    }
+  },
+  "password-change": {
+    "heading": "Change password",
+    "info": "If you want to reset your password, have an e-mail sent to you with a link to do so.",
+    "button": "Send link to reset the password",
+    "submit-messages": {
+      "password-changed": "E-mail with link to reset the password sent."
+    },
+    "submit-errors": {
+      "password-not-changed": "An error has occurred. Please try again later."
+    }
+  },
+  "email-form": {
+    "heading": "Email address",
+    "email": "Email address",
+    "email-description": "Your email address",
+    "email-error": "Please enter a valid email address",
+    "emailConfirmation": "Confirm email address",
+    "emailConfirmation-description": "Confirm your email address",
+    "emailConfirmation-error": "Please confirm your email address",
+    "email-not-match-error": "The email addresses do not match",
+    "submit": "Save",
+    "cancel": "Cancel",
+    "submit-messages": {
+      "email-updated": "An email with a confirmation link has been sent to your new and old email address. In order for the changes to take effect, you must confirm the change in both emails."
+    },
+    "submit-errors": {
+      "email-not-changed": "An error has occurred. Please check your entries and try again."
+    }
+  },
   "sidebar": {
     "overview": "Overview",
     "new-school-class": "New class",

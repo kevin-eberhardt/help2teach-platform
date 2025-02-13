@@ -75,11 +75,13 @@ export default function UserAvatar({ user }: { user: UserProps | null }) {
           </DropdownMenuContent>
         )}
       </DropdownMenu>
-      <AccountDialog
-        open={accountSettingsDialogOpen}
-        setOpen={setAccountSettingsDialogOpen}
-        user={user}
-      />
+      {user && (
+        <AccountDialog
+          open={accountSettingsDialogOpen}
+          setOpen={setAccountSettingsDialogOpen}
+          user={user}
+        />
+      )}
     </>
   );
 }

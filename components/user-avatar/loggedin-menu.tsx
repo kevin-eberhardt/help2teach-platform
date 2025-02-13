@@ -38,10 +38,13 @@ export default function LoggedInMenu() {
           <span>{t("logout")}</span>
         </DropdownMenuItem>
       </DropdownMenuGroup>
-      <AccountDialog
-        open={accountSettingsDialogOpen}
-        setOpen={setAccountSettingsDialogOpen}
-      />
+      {user && (
+        <AccountDialog
+          user={user}
+          open={accountSettingsDialogOpen}
+          setOpen={setAccountSettingsDialogOpen}
+        />
+      )}
     </>
   );
 }
