@@ -69,7 +69,7 @@ export default function Canvas({
     useSensor(MouseSensor),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
+        delay: 50,
         distance: 5,
         tolerance: 5,
       },

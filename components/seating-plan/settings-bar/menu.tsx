@@ -21,7 +21,6 @@ import { saveSeatingPlan } from "./actions";
 import { SeatingPlan } from "@/lib/supabase/types/additional.types";
 import { useRouter } from "next/navigation";
 import {
-  Panel,
   useReactFlow,
   getNodesBounds,
   getViewportForBounds,

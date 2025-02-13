@@ -6,7 +6,7 @@ import { SeatingPlanNode, SeatingPlanProps } from "@/lib/types/seating-plan";
 import dynamic from "next/dynamic";
 import SettingsBar from "./settings-bar";
 import { Json } from "@/lib/supabase/types/database.types";
-import { SeatingPlan } from "@/lib/supabase/types/additional.types";
+import { SeatingPlan as SeatingPlanType } from "@/lib/supabase/types/additional.types";
 import { saveSeatingPlan } from "./action";
 
 const Canvas = dynamic(() => import("@/components/seating-plan/canvas/index"), {
@@ -23,8 +23,7 @@ export default function SeatingPlan({
     setSeatingPlan(initialSeatingPlan);
   }, [initialSeatingPlan]);
 
-  const saveToDatabase = async (latestSeatingPlan: SeatingPlan) => {
-    console.log("Sitzplan wird gespeichert:", seatingPlan);
+  const saveToDatabase = async (latestSeatingPlan: SeatingPlanType) => {
     const { data, error } = await saveSeatingPlan(latestSeatingPlan);
     if (error) {
       console.error("Fehler beim Speichern des Sitzplans:", error);
@@ -32,7 +31,6 @@ export default function SeatingPlan({
       if (data) {
         setSeatingPlan(data);
       }
-      console.log("Sitzplan erfolgreich gespeichert:", data);
     }
   };
 
@@ -59,7 +57,7 @@ export default function SeatingPlan({
 
   return (
     <ReactFlowProvider>
-      <div className="relative h-[calc(100vh-120px)] md:h-[calc(100vh-60px)]">
+      <div className="relative h-[calc(100vh-120px)] md:h-[calc(100vh-120px)] lg:h-[calc(100vh-60px)]">
         <Suspense fallback={<div>Loading...</div>}>
           <SettingsBar
             seatingPlan={seatingPlan}
