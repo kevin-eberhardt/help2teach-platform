@@ -15,7 +15,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronRight, Users } from "lucide-react";
+import { ChevronRight, School, Users } from "lucide-react";
 import { SettingsNavItem } from "@/lib/types/layout";
 import { SchoolClass } from "@/lib/supabase/types/additional.types";
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -31,6 +31,13 @@ function getSettingsNavItems(
       icon: Users,
       isActive: true,
       url: `/app/${currentSchoolClassId}/students`,
+      items: [],
+    },
+    {
+      title: t ? t("school-class") : "School Class",
+      icon: School,
+      isActive: true,
+      url: `/app/${currentSchoolClassId}/settings`,
       items: [],
     },
     // {

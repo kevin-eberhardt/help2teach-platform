@@ -12,7 +12,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import LoggedOutMenu from "./loggedout-menu";
-import LoggedInMenu from "./loggedin-menu";
 import { User as UserProps } from "@/lib/supabase/types/additional.types";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -28,7 +27,7 @@ export default function UserAvatar({ user }: { user: UserProps | null }) {
   const avatarUrl = user?.user_metadata.avatar_url;
   const [isOpen, setIsOpen] = useState(false);
   const [accountSettingsDialogOpen, setAccountSettingsDialogOpen] =
-    useState(true);
+    useState(false);
   const router = useRouter();
   const t = useTranslations("user-menu");
   async function logout() {

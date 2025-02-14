@@ -322,5 +322,25 @@
     "description": "Die angeforderte Seite konnte nicht gefunden werden.",
     "to-app": "Zur Anwendung",
     "to-homepage": "Zur Startseite"
+  },
+  "settings-page": {
+    "heading": "Einstellungen",
+    "change-school-class-name": "Klasse umbenennen",
+    "delete-school-class": "Klasse löschen",
+    "change-school-class-name-form": {
+      "heading": "Klasse umbenennen",
+      "description": "Gib einen neuen Namen für die Klasse ein.",
+      "name": "Name",
+      "name-description": "Der neue Name der Klasse",
+      "name-error": "Bitte gib einen Namen für die Klasse ein",
+      "submit": "Umbenennen",
+      "cancel": "Abbrechen",
+      "submit-messages": {
+        "school-class-name-changed": "Die Klasse wurde erfolgreich umbenannt."
+      },
+      "submit-errors": {
+        "invalid-name": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut."
+      }
+    }
   }
 }

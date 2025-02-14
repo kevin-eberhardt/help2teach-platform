@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
+import { ChevronsUpDown, LogOut, User as UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -29,6 +22,8 @@ import { User } from "@/lib/supabase/types/additional.types";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AccountDialog } from "./account/dialog";
 
 export function UserNav({ user }: { user: User | null }) {
   const { isMobile } = useSidebar();
@@ -43,11 +38,13 @@ export function UserNav({ user }: { user: User | null }) {
     await supabase.auth.signOut();
     router.push("/");
   }
+  const [isOpen, setIsOpen] = useState(false);
+  const [accountDialogOpen, setAccountDialogOpen] = useState(false);
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -97,26 +94,26 @@ export function UserNav({ user }: { user: User | null }) {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            {/* <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            </DropdownMenuGroup> */}
+            {/* <DropdownMenuSeparator /> */}
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem onClick={() => setAccountDialogOpen(true)}>
+                <UserIcon />
+                {t("account")}
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
@@ -125,6 +122,11 @@ export function UserNav({ user }: { user: User | null }) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <AccountDialog
+          open={accountDialogOpen}
+          setOpen={setAccountDialogOpen}
+          user={user}
+        />
       </SidebarMenuItem>
     </SidebarMenu>
   );
