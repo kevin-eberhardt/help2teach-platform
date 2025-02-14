@@ -335,5 +335,38 @@
     "description": "The page you are looking for does not exist.",
     "to-app": "To the application",
     "to-homepage": "To the homepage"
+  },
+  "settings-page": {
+    "heading": "Settings",
+    "change-school-class-name": "Change class name",
+    "delete-school-class": "Delete class",
+    "change-school-class-name-form": {
+      "heading": "Change class name",
+      "description": "Enter a new name for the class.",
+      "name": "Name",
+      "name-description": "The new name of the class",
+      "name-error": "Please enter a name for the class",
+      "submit": "Change name",
+      "cancel": "Cancel",
+      "submit-messages": {
+        "school-class-name-changed": "The class has been successfully renamed."
+      },
+      "submit-errors": {
+        "invalid-name": "An error occurred. Please try again."
+      }
+    }
+  },
+  "delete-class-form": {
+    "heading": "Delete class",
+    "description": "If you want to delete your class, you can do so here. Note: This action cannot be undone.",
+    "delete-button": "Delete class",
+    "dialog": {
+      "heading": "Are you sure?",
+      "description": "This action cannot be undone. This will permanently delete your class and remove your data from our servers.",
+      "delete-button": "Delete",
+      "cancel-button": "Cancel"
+    },
+    "error-message": "An error occurred. Please try again or contact us at mail@help2teach.de",
+    "success-message": "The class has been successfully deleted."
   }
 }

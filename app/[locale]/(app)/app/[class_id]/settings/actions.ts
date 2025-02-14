@@ -10,3 +10,9 @@ export async function changeSchoolClassName(name: string, classId: number) {
 
   return { error };
 }
+
+export async function deleteSchoolClass(classId: number) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("classes").delete().eq("id", classId);
+  return { error };
+}

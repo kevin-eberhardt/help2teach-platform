@@ -9,6 +9,16 @@ import {
 import ChangeSchoolClassNameForm from "./change-name-form";
 import { notFound } from "next/navigation";
 import { getSchoolClassById } from "@/lib/supabase/queries";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import DeleteClassForm from "./delete-class-form";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("sidebar");
+  return {
+    title: `${t("settings")}`,
+  };
+}
 
 export default async function ClassSettingsPage({
   params,
@@ -28,18 +38,7 @@ export default async function ClassSettingsPage({
         currentName={currentSchoolClass.name}
       />
 
-      <Card className="border-destructive">
-        <CardHeader>
-          <CardTitle className="text-destructive">Klasse löschen</CardTitle>
-          <CardDescription>
-            Wenn du deine Klasse löschen möchtest, kannst du dies hier tun.
-            Beachte, dass diese Aktion nicht rückgängig gemacht werden kann.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Button variant="destructive">Löschen</Button>
-        </CardFooter>
-      </Card>
+      <DeleteClassForm classId={currentSchoolClass.id} />
     </div>
   );
 }

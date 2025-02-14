@@ -342,5 +342,18 @@
         "invalid-name": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut."
       }
     }
+  },
+  "delete-class-form": {
+    "heading": "Klasse löschen",
+    "description": "Wenn du deine Klasse löschen möchtest, kannst du dies hier tun. Beachte, dass diese Aktion nicht rückgängig gemacht werden kann.",
+    "delete-button": "Klasse löschen",
+    "dialog": {
+      "heading": "Bist du dir sicher?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird deine Klasse und deine Daten von unseren Servern permanent löschen.",
+      "delete-button": "Löschen",
+      "cancel-button": "Abbrechen"
+    },
+    "error-message": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere uns über mail@help2teach.de",
+    "success-message": "Die Klasse wurde erfolgreich gelöscht."
   }
 }
