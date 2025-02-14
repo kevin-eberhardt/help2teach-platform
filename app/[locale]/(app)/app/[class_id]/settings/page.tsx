@@ -30,9 +30,10 @@ export default async function ClassSettingsPage({
   if (!currentSchoolClass) {
     return notFound();
   }
+  const t = await getTranslations("settings-page");
   return (
     <div className="p-4 space-y-4">
-      <h1 className="text-3xl font-bold">Settings</h1>
+      <h1 className="text-3xl font-bold">{t("heading")}</h1>
       <ChangeSchoolClassNameForm
         classId={currentSchoolClass.id}
         currentName={currentSchoolClass.name}
