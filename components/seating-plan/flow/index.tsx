@@ -4,7 +4,6 @@ import {
   Background,
   BackgroundVariant,
   Controls as ReactFlowControls,
-  MiniMap,
   NodeTypes,
   ReactFlow,
   useNodesState,
@@ -80,7 +79,6 @@ export default function Flow({
         isUndoDisabled={undoStack.length === 1}
         isRedoDisabled={redoStack.length === 0}
       />
-      <MiniMap pannable zoomable nodeColor={"hsl(var(--accent))"} />
       <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
     </ReactFlow>
   );

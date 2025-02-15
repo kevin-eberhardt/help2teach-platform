@@ -118,7 +118,7 @@ export default function StudentList({
       >
         <div
           className={cn(
-            "relative h-full min-w-[200px] bg-sidebar p-4 shadow-lg"
+            "relative h-full min-w-[100px] xl:min-w-[180px] bg-sidebar p-4 shadow-lg"
           )}
         >
           {isOpen && (
@@ -128,7 +128,7 @@ export default function StudentList({
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="absolute right-2 top-2 z-10"
+                    className="absolute right-0 top-2 z-10 hidden xl:block"
                     onClick={toggleLock}
                   >
                     {isLocked ? (
