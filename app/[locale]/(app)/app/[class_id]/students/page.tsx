@@ -19,6 +19,7 @@ export default async function StudentsPage({
   const { class_id } = await params;
   const students = await getStudentsByClassId(class_id);
   const t = await getTranslations("students");
+
   return (
     <div className="p-4 flex flex-col gap-4">
       <div>
