@@ -129,7 +129,7 @@ export function GenderCell({
       >
         <SelectValue placeholder="Geschlecht auswählen" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent onSelect={onBlur}>
         {GENDERS.map((g) => (
           <SelectItem key={g} value={g}>
             {t("edit-table.gender-select", { gender: g })}

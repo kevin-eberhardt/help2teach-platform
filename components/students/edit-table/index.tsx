@@ -95,7 +95,7 @@ export function StudentsEditTable<TData, TValue>({
   function handleAdd() {
     addStudent(schoolClassId)
       .then((student) => {
-        setData([student as unknown as TData, ...data]);
+        setData([...data, student as unknown as TData]);
         const hasPagination =
           pagination.pageIndex * pagination.pageSize < data.length;
         if (hasPagination && table.getCanNextPage()) {
