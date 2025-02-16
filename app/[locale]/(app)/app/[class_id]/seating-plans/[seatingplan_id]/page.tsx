@@ -34,7 +34,7 @@ export default async function SeatingPlanPage({
   // update nodes of type "student" and check if the student has changed
   // if so, update the student in the nodes
   // if not, return the student
-  if (seatingPlan.nodes && (seatingPlan.nodes as Json[]).length > 0) {
+  if (seatingPlan.nodes) {
     const nodes = seatingPlan.nodes as unknown as SeatingPlanNode[];
     const reIdentifiedNodes = nodes.map((node: SeatingPlanNode) => {
       if (node.type === "student") {
