@@ -3,7 +3,7 @@ import { Viewport } from "@xyflow/react";
 import GenericNode from "../nodes/generic";
 import { RectangleHorizontal, TextCursorInput } from "lucide-react";
 import { ONE_SEAT_DESK_SETTINGS, TWO_SEATS_DESK_SETTINGS } from "../utils";
-import { Node } from "@/lib/types/seating-plan";
+import { Node, NodeData } from "@/lib/types/seating-plan";
 import { snapCenterToCursor } from "@dnd-kit/modifiers";
 
 export default function ToolbarOverlay({
@@ -14,7 +14,10 @@ export default function ToolbarOverlay({
   active: Active | null;
 }) {
   const zoom = viewPort?.zoom || 1;
-  const current = active?.data.current as Node;
+  const current = active?.data.current as Node<
+    NodeData,
+    "oneSeatDesk" | "twoSeatsDesk" | "text"
+  >;
   if (current) {
     if (current.type === "twoSeatsDesk") {
       return (

@@ -1,4 +1,5 @@
-import { Database, Tables } from "./database.types.ts";
+import { Database, Tables } from "./database.types";
+
 export type SchoolClass = Tables<"classes">;
 export type School = Tables<"schools">;
 export type SchoolClassWithSchool = SchoolClass & {

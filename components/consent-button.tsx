@@ -2,7 +2,9 @@
 export default function ConsentButton() {
   function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    document.querySelector("button.CookiebotWidget-logo")?.click();
+    (
+      document.querySelector("button.CookiebotWidget-logo") as HTMLElement
+    )?.click();
     document
       .getElementById("CookiebotWidget")
       ?.setAttribute("style", "visibility: visible");

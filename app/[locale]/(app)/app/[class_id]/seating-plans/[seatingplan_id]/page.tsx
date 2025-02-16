@@ -3,7 +3,7 @@ import {
   getSeatingPlanById,
   getStudentsByClassId,
 } from "@/lib/supabase/queries";
-import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
+import { SeatingPlan as SeatingPlanProps } from "@/lib/supabase/types/additional.types";
 import { Json } from "@/lib/supabase/types/database.types";
 import {
   OneSeatDeskNodeProps,
@@ -34,7 +34,7 @@ export default async function SeatingPlanPage({
   // update nodes of type "student" and check if the student has changed
   // if so, update the student in the nodes
   // if not, return the student
-  if (seatingPlan.nodes && seatingPlan.nodes.length > 0) {
+  if (seatingPlan.nodes && (seatingPlan.nodes as Json[]).length > 0) {
     const nodes = seatingPlan.nodes as unknown as SeatingPlanNode[];
     const reIdentifiedNodes = nodes.map((node: SeatingPlanNode) => {
       if (node.type === "student") {

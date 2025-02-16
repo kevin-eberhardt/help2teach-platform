@@ -4,7 +4,6 @@ import { useCallback } from "react";
 export function ViewportLogger({
   setViewPort,
 }: {
-  viewPort: Viewport | null;
   setViewPort: (viewPort: Viewport) => void;
 }) {
   const handleViewportChange = useCallback(

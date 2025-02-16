@@ -26,14 +26,15 @@ import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { addStudent, deleteStudent, updateStudent } from "./actions";
+import { Student } from "@/lib/supabase/types/additional.types";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends Student, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   schoolClassId: number;
 }
 
-export function StudentsEditTable<TData, TValue>({
+export function StudentsEditTable<TData extends Student, TValue>({
   columns,
   data: initialData,
   schoolClassId,

@@ -41,10 +41,18 @@ export type TwoSeatsDeskNodeProps = Node<
   "twoSeatsDesk"
 >;
 
-export type GenericNodeProps<T = unknown> = React.HTMLProps<HTMLDivElement> & {
-  data?: T;
+export interface NodeData {
+  rotation?: number;
+  student?: Student;
+  students?: Array<Student>;
+  [key: string]: unknown;
+}
+
+export type GenericNodeProps = Omit<React.HTMLProps<HTMLDivElement>, "data"> & {
+  data: NodeData;
   type?: NodeType;
 };
+
 export type StudentDraggable = Active["data"] & {
   type: "student";
 };
@@ -54,6 +62,7 @@ export type SeatNodeProps = Over["data"] & {
     sortable: SortableData["sortable"];
   };
 };
+
 export type StudentNodeProps = Node<Student, "student">;
 export type StudentSidebarProps = Node<Student, "student-list">;
 export type SeatingPlanNodeProps = NodeProps;
