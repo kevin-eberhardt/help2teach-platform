@@ -41,7 +41,7 @@ export default async function ClassLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string; class_id: string };
+  params: Promise<{ locale: string; class_id: string }>;
 }) {
   const { class_id } = await params;
   const cookieStore = await cookies();

@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function StudentsPage({
   params,
 }: {
-  params: { locale: string; class_id: string };
+  params: Promise<{ locale: string; class_id: string }>;
 }) {
   const { class_id } = await params;
   const students = await getStudentsByClassId(class_id);
