@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Combine, Replace, Sparkle } from "lucide-react";
+import { Combine, Replace, ShieldCheck, Sparkle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function FeaturesSection() {
@@ -39,6 +39,10 @@ export default function FeaturesSection() {
             </CardDescription>
           </CardHeader>
         </Card>
+      </div>
+      <div className="flex gap-2">
+        <ShieldCheck className="text-primary" />
+        <p>{t("gdpr")}</p>
       </div>
     </section>
   );

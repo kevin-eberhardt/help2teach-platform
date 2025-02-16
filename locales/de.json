@@ -35,7 +35,8 @@
       "feature-3": {
         "heading": "Individuell",
         "description": "Erstelle für unterschiedliche Anlässe oder Unterrichtsphasen verschiedene Sitzpläne und speichere diese für eine einfache Verwaltung."
-      }
+      },
+      "gdpr": "Alle Daten werden auf DSGVO-konformen Servern in Deutschland gespeichert."
     },
     "info": {
       "heading": "Effizientes Klassenmanagement leicht gemacht mit Help2Teach – Der innovative Begleiter für Lehrer*innen",
@@ -44,6 +45,11 @@
     "tutorial-video": {
       "heading": "Im Handumdrehen einsatzbereit",
       "text": "In nur 2 Minuten zum perfekten Sitzplan"
+    },
+    "call-to-action": {
+      "badge": "Jetzt loslegen",
+      "heading": "Jetzt kostenlos starten!",
+      "text": "Organisiere deine Schulklasse mühelos – erstelle individuelle Sitzpläne, behalte den Überblick und wechsle flexibel zwischen Klassen. Alles kostenlos und intuitiv."
     }
   },
   "locale-switcher": {
@@ -234,7 +240,11 @@
       "description": "Vielen Dank, dass du Help2Teach von Anfang an nutzt! Wir arbeiten fleißig daran, die Plattform weiter auszubauen – schon jetzt kannst du deine Schüler*innen anlegen und Sitzpläne erstellen. 🚀"
     },
     "seating-plans": "Sitzpläne",
-    "see-all-button": "Alle anzeigen"
+    "see-all-button": "Alle anzeigen",
+    "feedback": {
+      "text": "Hast du Ideen, die du gerne in Help2Teach sehen würdest? Wir freuen uns darauf! Teile uns deinen Vorschlag mit einer kurzen Beschreibung mit – wir sind gespannt. 🙂",
+      "button": "Idee vorschlagen"
+    }
   },
   "school-class": {
     "create-page": {

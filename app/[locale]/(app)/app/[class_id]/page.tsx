@@ -96,18 +96,16 @@ export default async function ClassPage({
           )}
         </div>
       </div>
-      <div className="p-4 bg-accent text-center">
-        <p>
-          Hast du Ideen, die du gerne in Help2Teach sehen würdest? Wir freuen
-          uns darauf! Teile uns deinen Vorschlag mit einer kurzen Beschreibung
-          mit – wir sind gespannt. 🙂
-        </p>
-        <Link
-          href="https://github.com/orgs/Help2Teach/discussions"
-          target="_blank"
-        >
-          <Button variant="outline">Idee vorschlagen</Button>
-        </Link>
+      <div className="p-4 bg-sidebar text-center space-y-4">
+        <p>{t("feedback.text")}</p>
+        <div>
+          <Link
+            href="https://github.com/orgs/Help2Teach/discussions"
+            target="_blank"
+          >
+            <Button variant="outline">{t("feedback.button")}</Button>
+          </Link>
+        </div>
       </div>
       <Footer />
     </main>

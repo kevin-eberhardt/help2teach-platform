@@ -1,3 +1,4 @@
+import CallToActionSection from "@/components/ui/homepage-sections/call-to-action";
 import DescriptionSection from "@/components/ui/homepage-sections/description";
 import FeaturesSection from "@/components/ui/homepage-sections/features";
 import HeroSection from "@/components/ui/homepage-sections/hero";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <FeaturesSection />
       <VideoSection />
       <DescriptionSection />
+      <CallToActionSection />
     </div>
   );
 }

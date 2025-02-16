@@ -35,7 +35,8 @@
       "feature-3": {
         "heading": "Individual",
         "description": "Create different seating plans for different occasions or teaching phases and store them for easy management."
-      }
+      },
+      "gdpr": "All data is stored on GDPR-compliant servers in Germany."
     },
     "info": {
       "heading": "Efficient class management made easy with Help2Teach - The innovative companion for teachers",
@@ -44,6 +45,11 @@
     "tutorial-video": {
       "heading": "Get up and running in no time",
       "text": "See how to go from zero to a seating plan in 2 minutes"
+    },
+    "call-to-action": {
+      "badge": "Get started",
+      "heading": "Start now for free!",
+      "text": "Organize your school class effortlessly - create individual seating plans, keep an overview and switch flexibly between classes. Everything is free and intuitive."
     }
   },
   "locale-switcher": {
@@ -247,7 +253,11 @@
       "description": "Thank you for using Help2Teach from the start! We are working hard to continue developing the platform – you can already create your students and seating plans. 🚀"
     },
     "seating-plans": "Seating plans",
-    "see-all-button": "See all"
+    "see-all-button": "See all",
+    "feedback": {
+      "text": "Do you have any ideas that you would like to see in Help2Teach? We are looking forward to it! Let us know your suggestion with a short description - we're excited 🙂",
+      "button": "Suggest an idea"
+    }
   },
   "school-class": {
     "create-page": {
