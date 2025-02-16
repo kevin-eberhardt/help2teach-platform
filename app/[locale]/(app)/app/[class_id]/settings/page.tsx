@@ -1,11 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import ChangeSchoolClassNameForm from "./change-name-form";
 import { notFound } from "next/navigation";
 import { getSchoolClassById } from "@/lib/supabase/queries";

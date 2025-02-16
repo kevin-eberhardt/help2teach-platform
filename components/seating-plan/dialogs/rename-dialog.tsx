@@ -29,7 +29,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { renameSeatingPlan } from "./actions";
 import { useRouter } from "@/lib/i18n/routing";
-import { useToast } from "@/hooks/use-toast";
 
 export function getFormSchema(t?: (key: string) => string) {
   return z.object({
@@ -55,7 +54,6 @@ export default function RenameDialog({
   const t = useTranslations("seating-plan");
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const toast = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(getFormSchema(t)),
@@ -71,7 +69,6 @@ export default function RenameDialog({
       } else {
         onOpenChange(false);
         router.refresh();
-        // TODO: Success toast
       }
     });
   }

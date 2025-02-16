@@ -118,6 +118,7 @@
     "passwordConfirmation-error": "Please confirm your password",
     "passwords-do-not-match-error": "The passwords do not match",
     "submit": "Register",
+    "register-with-google": "Register with Google",
     "login": "Already registered? Sign in here.",
     "submit-messages": {
       "confirmation-sent": "A confirmation email has been sent to your email address. Please confirm your email address to continue."

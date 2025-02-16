@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { useReactFlow } from "@xyflow/react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { ONE_SEAT_DESK_SETTINGS } from "../../utils";
 
@@ -11,7 +10,6 @@ export default function TextNodeInput({
   id: string;
   text: string;
 }) {
-  const t = useTranslations("seating-plan");
   const [value, setValue] = useState(text);
 
   const { setNodes } = useReactFlow();

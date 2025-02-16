@@ -51,12 +51,11 @@ export default function StudentList({
   defaultOpen = true,
   width = "auto",
   className,
-  students: initialStudents,
+  students,
   nodes: initialNodes,
   ...props
 }: StudentListProps) {
   const [nodes, setNodes] = useState<SeatingPlanNode[]>(initialNodes);
-  const [students, setStudents] = useState<Student[]>(initialStudents);
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isLocked, setIsLocked] = useState(true);
 

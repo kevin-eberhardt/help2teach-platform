@@ -41,7 +41,7 @@ export type TwoSeatsDeskNodeProps = Node<
   "twoSeatsDesk"
 >;
 
-export type GenericNodeProps<T = any> = React.HTMLProps<HTMLDivElement> & {
+export type GenericNodeProps<T = unknown> = React.HTMLProps<HTMLDivElement> & {
   data?: T;
   type?: NodeType;
 };

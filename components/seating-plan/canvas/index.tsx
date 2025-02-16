@@ -293,7 +293,7 @@ export default function Canvas({
         width: "100%",
       }}
     >
-      <ViewportLogger setViewPort={setViewPort} viewPort={viewPort} />
+      <ViewportLogger setViewPort={setViewPort} />
       <DndContext
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}

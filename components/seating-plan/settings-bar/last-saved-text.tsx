@@ -6,9 +6,9 @@ export default function LastSavedText({
 }: {
   lastSavedDate: SeatingPlan["edited_at"];
 }) {
-  if (!lastSavedDate) return null;
   const t = useTranslations("seating-plan");
   const format = useFormatter();
+  if (!lastSavedDate) return null;
   const lastSaved = format.dateTime(new Date(lastSavedDate), {
     year: "numeric",
     month: "short",

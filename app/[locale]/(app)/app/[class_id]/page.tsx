@@ -9,12 +9,11 @@ import {
   getSeatingPlansByClassId,
   getUser,
 } from "@/lib/supabase/queries";
-import { Heart, X } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Params } from "next/dist/server/request/params";
 import { notFound } from "next/navigation";
-import Loading from "./loading";
 
 export async function generateMetadata({
   params,

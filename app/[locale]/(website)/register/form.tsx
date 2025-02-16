@@ -18,6 +18,8 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import register from "./action";
+import { createClient } from "@/lib/supabase/client";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export function getRegisterFormSchema(t?: (key: string) => string) {
   return z
@@ -74,11 +76,40 @@ export default function RegisterForm(props: RegisterFormProps) {
       passwordConfirmation: "",
     },
   });
+
   function onSubmit(values: RegisterFormValues) {
     startTransition(() => {
       register(values);
+      sendGTMEvent({ event: "register", method: "email" });
     });
   }
+
+  async function registerWithGoogle() {
+    const supabase = await createClient();
+
+    const currentUrl = new URL(window.location.href);
+
+    const cleanedPath = currentUrl.pathname
+      .replace(/\/{2,}/g, "/")
+      .split("/")
+      .slice(0, 2)
+      .join("/");
+
+    const redirectUrl = `${currentUrl.origin}${cleanedPath}/auth/callback`;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: redirectUrl,
+      },
+    });
+    if (error) {
+      console.error("Error logging in with Google:", error);
+    } else {
+      sendGTMEvent({ event: "register", method: "google" });
+    }
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -159,8 +190,16 @@ export default function RegisterForm(props: RegisterFormProps) {
             {t("login")}
           </Link>
         </div>
-        <Button type="submit" loading={isPending}>
+        <Button type="submit" loading={isPending} className="w-full">
           {t("submit")}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={registerWithGoogle}
+        >
+          {t("register-with-google")}
         </Button>
       </form>
       {error && message === "user_already_exists" ? (

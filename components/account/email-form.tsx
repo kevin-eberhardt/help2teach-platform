@@ -61,7 +61,7 @@ export default function EmailChangeForm(props: EmailChangeFormProps) {
   const form = useForm<EmailChangeFormValues>({
     resolver: zodResolver(getEmailChangeFormSchema(t)),
     defaultValues: {
-      email: "",
+      email: props.email || "",
       emailConfirmation: "",
     },
   });

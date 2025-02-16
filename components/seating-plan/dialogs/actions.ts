@@ -23,7 +23,7 @@ export async function renameSeatingPlan(
   name: string
 ) {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("seating_plans")
     .update({ name })
     .eq("id", seatingPlanId)

@@ -5,7 +5,7 @@ import { select } from "d3-selection";
 import { drag } from "d3-drag";
 import React, { useEffect, useRef, useState } from "react";
 const GenericNode = React.forwardRef<HTMLDivElement, GenericNodeProps>(
-  ({ id, children, className, style, data, selected }, ref) => {
+  ({ id, children, className, style, data, selected }) => {
     const rotateControlRef = useRef(null);
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(
@@ -46,7 +46,7 @@ const GenericNode = React.forwardRef<HTMLDivElement, GenericNodeProps>(
         setRotation(180 - deg);
         updateNodeInternals(id ? id : "");
       });
-      // @ts-ignore
+      // @ts-expect-error Common error
       selection.call(dragHandler);
     }, [updateNodeInternals]);
 

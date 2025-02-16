@@ -105,6 +105,7 @@
     "passwordConfirmation-error": "Bitte bestätige dein Passwort",
     "passwords-do-not-match-error": "Die Passwörter stimmen nicht überein",
     "submit": "Registrieren",
+    "register-with-google": "Mit Google registrieren",
     "login": "Bereits registriert? Hier anmelden.",
     "submit-messages": {
       "confirmation-sent": "Eine Bestätigungsmail wurde an deine E-Mail-Adresse gesendet. Bitte bestätige deine E-Mail-Adresse, um fortzufahren."

@@ -2,7 +2,6 @@ import { useOnViewportChange, Viewport } from "@xyflow/react";
 import { useCallback } from "react";
 
 export function ViewportLogger({
-  viewPort,
   setViewPort,
 }: {
   viewPort: Viewport | null;
