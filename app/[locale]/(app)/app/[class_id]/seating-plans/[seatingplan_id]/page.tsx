@@ -3,6 +3,7 @@ import {
   getSeatingPlanById,
   getStudentsByClassId,
 } from "@/lib/supabase/queries";
+import { SeatingPlanProps } from "@/lib/supabase/types/additional.types";
 import { Json } from "@/lib/supabase/types/database.types";
 import {
   OneSeatDeskNodeProps,
@@ -15,10 +16,12 @@ import { notFound } from "next/navigation";
 export default async function SeatingPlanPage({
   params,
 }: {
-  params: { locale: string; class_id: string; seatingplan_id: string };
+  params: Promise<{ locale: string; class_id: string; seatingplan_id: string }>;
 }) {
   const { seatingplan_id, class_id } = await params;
-  const seatingPlan = await getSeatingPlanById(seatingplan_id);
+  const seatingPlan = (await getSeatingPlanById(
+    seatingplan_id
+  )) as SeatingPlanProps;
   const students = await getStudentsByClassId(class_id);
   if (!students) {
     return notFound();
