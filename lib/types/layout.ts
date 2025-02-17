@@ -1,3 +1,9 @@
+export type HeaderNavItem = {
+  title: string;
+  href: string;
+  description?: string;
+  items?: Array<{ title: string; href: string }>;
+};
 export type NavItem = {
   title: string;
   url: string;

@@ -114,3 +114,9 @@
 #CookiebotWidget .CookiebotWidget-logo {
   display: none !important;
 }
+#mobile-nav {
+  @apply pt-10;
+}
+#mobile-nav > button {
+  @apply md:right-14 top-8 lg:top-10;
+}

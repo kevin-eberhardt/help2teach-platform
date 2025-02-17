@@ -12,6 +12,11 @@
     "open-menu": "Open menu",
     "copy": "Copy"
   },
+  "header": {
+    "home": "Home",
+    "cta-button-logged-out": "Get started",
+    "cta-button-logged-in": "To App"
+  },
   "homepage": {
     "metadata": {
       "title": "Help2Teach - Class management rethought.",

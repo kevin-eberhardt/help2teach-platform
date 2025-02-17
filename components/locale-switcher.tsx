@@ -33,7 +33,7 @@ export default function LocaleSwitcher() {
 
   return (
     <Select onValueChange={onChange} value={value}>
-      <SelectTrigger className="w-32">
+      <SelectTrigger className="w-auto">
         <SelectValue placeholder={t("locale", { locale: locale })} />
       </SelectTrigger>
       <SelectContent>

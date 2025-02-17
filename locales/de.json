@@ -12,6 +12,11 @@
     "open-menu": "Menü öffnen",
     "copy": "Kopie"
   },
+  "header": {
+    "home": "Home",
+    "cta-button-logged-out": "Jetzt loslegen",
+    "cta-button-logged-in": "Zur App"
+  },
   "homepage": {
     "metadata": {
       "title": "Help2Teach - Klassenmanagement neu gedacht.",

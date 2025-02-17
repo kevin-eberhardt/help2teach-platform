@@ -52,7 +52,7 @@ export function AccountDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-hidden p-0 max-w-full md:max-h-[500px] md:max-w-[700px] lg:max-w-[900px]">
+      <DialogContent className="overflow-scroll lg:overflow-hidden p-0 max-w-full md:max-h-[500px] md:max-w-[700px] lg:max-w-[900px]">
         <DialogTitle className="sr-only">Account</DialogTitle>
         <DialogDescription className="sr-only">
           Change your account settings here.
@@ -82,7 +82,7 @@ export function AccountDialog({
               </SidebarGroup>
             </SidebarContent>
           </Sidebar>
-          <main className="flex h-auto md:h-[480px] flex-1 flex-col overflow-hidden">
+          <main className="flex h-auto max-h-screen md:h-[480px] flex-1 flex-col overflow-scroll lg:overflow-hidden">
             <div className="flex flex-1 flex-col gap-6 p-4 pt-4">
               <h2 className="text-2xl font-bold">Account</h2>
               {/* Desktop View: Conditional Rendering */}
