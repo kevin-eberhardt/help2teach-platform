@@ -80,11 +80,9 @@ export default async function Header() {
               {navigationItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   {item.href ? (
-                    <>
-                      <NavigationMenuLink>
-                        <Button variant="ghost">{item.title}</Button>
-                      </NavigationMenuLink>
-                    </>
+                    <NavigationMenuLink href={item.href}>
+                      <Button variant="ghost">{item.title}</Button>
+                    </NavigationMenuLink>
                   ) : (
                     <>
                       <NavigationMenuTrigger className="font-medium text-sm">
