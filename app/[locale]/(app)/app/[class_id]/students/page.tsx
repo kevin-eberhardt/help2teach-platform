@@ -22,7 +22,7 @@ export default async function StudentsPage({
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <div>
+      <div className="space-y-2">
         <h1 className="text-3xl font-bold">{t("page.heading")}</h1>
         <p>{t("page.description")}</p>
       </div>
