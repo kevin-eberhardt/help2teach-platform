@@ -141,10 +141,12 @@ export default function LoginForm(props: LoginFormProps) {
           {t("login-with-google")}
         </Button>
       </form>
-      {error && message === "invalid_credentials" && (
+      {error && message === "invalid_credentials" ? (
         <FormMessage className="mt-4">
           {t("submit-errors.invalid-credentials")}
         </FormMessage>
+      ) : (
+        <FormMessage className="mt-4">{message}</FormMessage>
       )}
     </Form>
   );

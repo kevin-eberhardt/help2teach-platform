@@ -5,7 +5,7 @@ import { select } from "d3-selection";
 import { drag } from "d3-drag";
 import React, { useEffect, useRef, useState } from "react";
 const GenericNode = React.forwardRef<HTMLDivElement, GenericNodeProps>(
-  ({ id, children, className, style, data, selected }) => {
+  ({ id, children, className, style, data, selected }, ref) => {
     const rotateControlRef = useRef(null);
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(
@@ -61,6 +61,7 @@ const GenericNode = React.forwardRef<HTMLDivElement, GenericNodeProps>(
           ...style,
           transform: `rotate(${rotation}deg)`,
         }}
+        ref={ref}
       >
         <div
           ref={rotateControlRef}
