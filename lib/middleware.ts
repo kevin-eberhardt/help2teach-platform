@@ -13,6 +13,7 @@ const localeLandingPaths = [
 
 export async function handleRequest(request: NextRequest, user: User | null) {
   const excludePaths = [
+    "/api",
     "/login",
     "/register",
     "/forgot-password",

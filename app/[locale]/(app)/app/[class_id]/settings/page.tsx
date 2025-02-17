@@ -30,7 +30,6 @@ export default async function ClassSettingsPage({
         classId={currentSchoolClass.id}
         currentName={currentSchoolClass.name}
       />
-
       <DeleteClassForm classId={currentSchoolClass.id} />
     </div>
   );
