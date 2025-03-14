@@ -62,7 +62,7 @@ export default async function ClassLayout({
             <Separator orientation="vertical" className="mr-2 h-4" />
             <SidebarBreadcrumbs currentSchoolClass={currentSchoolClass} />
           </div>
-          <div className="px-4">
+          <div className="hidden md:block px-4">
             <LocaleSwitcher />
           </div>
         </header>

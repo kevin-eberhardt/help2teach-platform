@@ -10,7 +10,7 @@ export default async function CreateSchoolClassPage({
   const t = await getTranslations({ locale, namespace: "school-class" });
 
   return (
-    <div className="p-4 w-full md:max-w-lg mx-auto">
+    <div className="p-4 w-full md:max-w-lg mx-auto mt-4">
       <h1 className="text-4xl mb-4">{t("create-page.heading")}</h1>
       <p className="mb-6">
         {t.rich("create-page.description", {

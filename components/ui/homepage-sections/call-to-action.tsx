@@ -3,8 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/lib/i18n/routing";
+import { User } from "@/lib/supabase/types/additional.types";
 
-export default async function CallToActionSection() {
+export default async function CallToActionSection({ user }: { user: User }) {
   const t = await getTranslations("homepage.call-to-action");
   return (
     <div className="w-full bg-sidebar">
@@ -22,7 +23,7 @@ export default async function CallToActionSection() {
             </p>
           </div>
           <div className="flex flex-row gap-4">
-            <Link href="/login">
+            <Link href={`${user ? "/app" : "/register"}`}>
               <Button className="gap-4">
                 {t("badge")} <MoveRight className="w-4 h-4" />
               </Button>

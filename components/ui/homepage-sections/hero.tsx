@@ -6,8 +6,9 @@ import { useTranslations } from "next-intl";
 import { Button } from "../button";
 import { ArrowRight, PlayCircle } from "lucide-react";
 import { Link } from "@/lib/i18n/routing";
+import { User } from "@/lib/supabase/types/additional.types";
 
-export default function HeroSection() {
+export default function HeroSection({ user }: { user: User }) {
   const t = useTranslations("homepage");
 
   function scrollSmoothly() {
@@ -30,7 +31,10 @@ export default function HeroSection() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 md:flex-row">
-                <Link href="/register" className="w-full md:w-auto">
+                <Link
+                  href={`${user ? "/app" : "/register"}`}
+                  className="w-full md:w-auto"
+                >
                   <Button size="lg" className="gap-2 w-full">
                     {t("hero.start-button")}
                     <ArrowRight className="h-4 w-4" />

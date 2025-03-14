@@ -57,7 +57,7 @@ export default function SeatingPlan({
 
   return (
     <ReactFlowProvider>
-      <div className="relative h-[calc(100vh-120px)] xl:h-[calc(100vh-70px)]">
+      <div className="relative h-[93vh] md:landscape:h-[85vh] lg:portrait:h-[95vh] lg:landscape:h-[93vh] lg:h-[calc(100vh-120px)] xl:h-[calc(100vh-70px)]">
         <Suspense fallback={<div>Loading...</div>}>
           <SettingsBar
             seatingPlan={seatingPlan}
